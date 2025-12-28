@@ -1,0 +1,28 @@
+{% extends 'core/base.html' %}
+{% block login_button %}
+  <div class="top-links">
+    <a href="{% url 'core:about_triprep' %}" class="top-link what-link">What Are We</a>
+    <a href="{% url 'core:login' %}?next=/" class="top-link login-link">Login</a>
+  </div>
+
+  <!-- Mobile hamburger (CSS-only) -->
+  <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden>
+  <label for="nav-toggle" class="hamburger" aria-hidden="true">
+    <span></span>
+    <span></span>
+    <span></span>
+  </label>
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="{% url 'core:about_triprep' %}" class="mobile-link">What Are We</a>
+    <a href="{% url 'core:login' %}?next=/" class="mobile-link">Login</a>
+  </nav>
+{% endblock %}
+{% block content %}
+  <section class="hero">
+    <h1 class="hero-title">Everything about your travels</h1>
+    <p class="hero-sub">Plan, record and relive your trips — simple, light and beautiful.</p>
+    <div class="hero-actions">
+      <a href="/signup/" class="btn-signup">SIGN UP</a>
+    </div>
+  </section>
+{% endblock %}

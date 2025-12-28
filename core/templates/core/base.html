@@ -1,0 +1,18 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>TripRep</title>
+  <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+</head>
+<body class="{% block body_class %}{% endblock %}">
+  {% block login_button %}{% endblock %}
+  <main class="site-main">
+    <div class="container">
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+</body>
+</html> 

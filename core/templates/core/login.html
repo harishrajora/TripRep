@@ -1,0 +1,19 @@
+{% extends 'core/base.html' %}
+
+{% block body_class %}login-page{% endblock %}
+
+{% block content %}
+  <div class="login-card">
+    <h2 style="margin-top:0">Sign in</h2>
+    <form method="post" class="login-form">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      <label for="id_username">Username</label>
+      {{ form.username }}
+      <label for="id_password">Password</label>
+      {{ form.password }}
+      <p class="create-account"><a href="/signup/">Create an account</a></p>
+      <button type="submit">Sign in</button>
+    </form>
+  </div>
+{% endblock %}

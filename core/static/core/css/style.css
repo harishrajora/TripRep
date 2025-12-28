@@ -1,0 +1,186 @@
+/* Basic, clean and light styling for TripRep */
+:root{
+  --blue:#007bff;
+  --blue-hover:#0069e0;
+  --accent:#ffd1b8; /* lighter orange */
+  --accent-hover:#ffc39a;
+  --link-alt:#2563eb; /* alternate link color */
+  --link-alt-hover:#1f4ecc;
+  --bg:#ffffff;
+  --muted: #6b7280;
+  --card: rgba(15, 23, 42, 0.03);
+} 
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background:var(--bg);
+  color:#0f172a;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* Grouped top-right links */
+.top-links{
+  position:absolute; /* inside container for consistent margins */
+  top:2rem;
+  right:4rem; /* moved inward from the edge */
+  display:flex;
+  gap:1rem;
+  align-items:center;
+  z-index:30;
+}
+
+.top-link{
+  font-size:1rem;
+  color:var(--link-alt);
+  text-decoration:none;
+  font-weight:700;
+  letter-spacing:0.2px;
+  transition:transform 160ms ease, color 120ms ease;
+}
+.top-link:hover{color:var(--link-alt-hover);transform:translateY(-1px);text-decoration:underline}
+
+.login-btn{ /* preserved for future use */
+  position:absolute;
+  top:2rem;
+  right:4rem;
+  background:var(--blue);
+  color:#fff;
+  padding:0.85rem 1.15rem; /* larger touch target */
+  border-radius:10px;
+  box-shadow:0 10px 30px rgba(3,102,214,0.12);
+}
+
+/* Keep .login-link for backward compatibility but rely on .top-link for layout */
+.login-link{padding:0;min-width:0;color:var(--link-alt);background:transparent;border-radius:0;text-decoration:none}
+.login-link:hover{color:var(--link-alt-hover);text-decoration:underline}
+
+.site-main{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:6rem 2rem}
+.container{
+  position:relative; /* enable absolute inside */
+  max-width:1100px;
+  width:100%;
+  padding:5rem; /* more margin inside */
+  border-radius:14px;
+  background:linear-gradient(180deg, rgba(0,0,0,0.01), rgba(0,0,0,0.02));
+  box-shadow:0 10px 30px rgba(2,6,23,0.04);
+}
+
+.hero{ text-align:left }
+.hero-title{
+  margin:0 0 0.6rem 0;
+  font-weight:800;
+  font-size:clamp(2rem,6vw,4.5rem);
+  line-height:1.03;
+  color:#0b1220;
+  transition:transform 300ms ease;
+}
+.hero-sub{
+  margin:0;
+  color:var(--muted);
+  font-size:1.1rem;
+}
+
+/* Hero actions (CTA) */
+.hero-actions{
+  margin-top:1.25rem;
+}
+.btn-signup{
+  display:inline-block;
+  padding:0.95rem 1.8rem;
+  font-size:1.125rem;
+  font-weight:800;
+  border-radius:12px;
+  background:var(--accent);
+  color:#fff;
+  text-decoration:none;
+  box-shadow:0 8px 28px rgba(255,155,107,0.08);
+  transition:transform 160ms ease, box-shadow 160ms ease;
+}
+.btn-signup:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(255,155,107,0.12);background:var(--accent-hover)}
+
+/* Create account small link under login */
+.create-account{margin-top:.5rem;text-align:center;font-size:.95rem}
+.create-account a{color:var(--link-alt);text-decoration:none;font-weight:600}
+.create-account a:hover{color:var(--link-alt-hover);text-decoration:underline}
+
+/* Hamburger and mobile nav (CSS-only) */
+.hamburger{display:none;position:absolute;top:1.6rem;right:1.6rem;width:36px;height:30px;cursor:pointer;z-index:40}
+.hamburger span{display:block;height:3px;background:#0b1220;margin:6px 0;border-radius:2px;transition:transform 180ms cubic-bezier(.2,.9,.3,1), opacity 160ms ease}
+
+.nav-toggle{display:none}
+
+.mobile-nav{position:absolute;top:3.6rem;right:1rem;background:#ffffff;padding:0.5rem;border-radius:8px;box-shadow:0 10px 30px rgba(2,6,23,0.06);min-width:160px;max-height:0;overflow:hidden;opacity:0;transform:translateY(-6px) scale(.98);pointer-events:none;transition:opacity .22s ease, transform .22s cubic-bezier(.2,.9,.3,1), max-height .26s ease}
+.mobile-nav .mobile-link{display:block;padding:0.75rem 1rem;color:var(--link-alt);text-decoration:none;font-weight:700;border-radius:6px;opacity:0;transform:translateY(-6px);transition:opacity .18s ease, transform .22s cubic-bezier(.2,.9,.3,1)}
+.mobile-nav .mobile-link:hover{background:rgba(37,99,235,0.06);color:var(--link-alt-hover)}
+
+.nav-toggle:checked + .hamburger span:nth-child(1){transform:translateY(9px) rotate(45deg)}
+.nav-toggle:checked + .hamburger span:nth-child(2){opacity:0}
+.nav-toggle:checked + .hamburger span:nth-child(3){transform:translateY(-9px) rotate(-45deg)}
+.nav-toggle:checked + .hamburger + .mobile-nav{opacity:1;transform:translateY(0) scale(1);max-height:360px;pointer-events:auto}
+.nav-toggle:checked + .hamburger + .mobile-nav .mobile-link{opacity:1;transform:translateY(0)}
+
+@media (max-width:640px){
+  .container{padding:2.5rem}
+  .login-btn{top:1rem;right:1rem;padding:0.7rem 0.9rem;font-size:0.95rem;min-width:72px}
+  .top-links{top:1rem;right:1rem;gap:.6rem}
+  .top-link{font-size:0.95rem}
+  .top-links{display:none}
+  .hamburger{display:block}
+  .top-links{display:none}
+  .mobile-nav{right:1rem;left:1rem;top:3.6rem}
+  .top-link{display:none}
+}
+
+/* Login page minimal, mostly white */
+body.login-page{
+  background:#ffffff;
+  color:#0b1220;
+}
+.login-card{
+  max-width:500px;
+  width:100%;
+  margin:0 auto;
+  padding:2.5rem;
+  border-radius:12px;
+  background:#ffffff;
+  box-shadow:0 8px 26px rgba(2,6,23,0.04);
+  border:1px solid rgba(15,23,42,0.04);
+}
+.login-form label{display:block;margin-bottom:.4rem;font-weight:600}
+.login-form input[type="text"],.login-form input[type="password"]{
+  width:100%;
+  padding:1rem 1rem;
+  margin-bottom:1rem;
+  border-radius:10px;
+  border:1px solid rgba(15,23,42,0.08);
+  font-size:1rem;
+}
+.login-form button{
+  width:100%;
+  padding:0.95rem;
+  border-radius:10px;
+  border:0;
+  background:var(--blue);
+  color:#fff;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:0 6px 18px rgba(2,6,23,0.04);
+  transition:transform 140ms ease, box-shadow 140ms ease;
+}
+.login-form button:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(2,6,23,0.06)}
+
+/* Coming Soon page */
+.coming-soon{
+  min-height:60vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  font-size:clamp(1.25rem,2.5vw,2rem);
+  color:#0b1220;
+}
+ 
