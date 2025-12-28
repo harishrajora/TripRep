@@ -29,6 +29,6 @@ This repository contains a small Django starter project with a clean, light home
 
    python manage.py runserver
 
-5. Open http://127.0.0.1:8000/ to view the homepage. Use the top-right "Login" button or visit http://127.0.0.1:8000/admin/ to sign in (user: `hrajora` / `hrajora`).
+5. Open http://127.0.0.1:8000/ to view the homepage. Use the top-right "Login" button or visit http://127.0.0.1:8000/admin/ to sign in.
 
 **Note:** The automatic superuser creation is convenient for testing and local development. Remove or adapt `core/signals.py` before deploying to production.
