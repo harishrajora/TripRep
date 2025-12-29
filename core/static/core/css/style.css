@@ -2,7 +2,7 @@
 :root{
   --blue:#007bff;
   --blue-hover:#0069e0;
-  --accent:#ffd1b8; /* lighter orange */
+  --accent:#a3001b; /* lighter orange */
   --accent-hover:#ffc39a;
   --link-alt:#000000; /* alternate link color */
   --link-alt-hover:#1f4ecc;
@@ -114,7 +114,7 @@ body{
   background:var(--accent);
   color:#fff;
   text-decoration:none;
-  box-shadow:0 8px 28px rgba(255,155,107,0.08);
+  box-shadow:0 8px 28px rgb(75, 11, 11);
   transition:transform 160ms ease, box-shadow 160ms ease;
 }
 .btn-signup:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(255,155,107,0.12);background:var(--accent-hover)}
