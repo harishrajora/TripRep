@@ -7,12 +7,12 @@
   <title>TripRep</title>
   <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
 </head>
-<body class="{% block body_class %}{% endblock %}">
-  {% block login_button %}{% endblock %}
+<body>
   <main class="site-main">
     <div class="container">
+      {% block login_button %}{% endblock %}
       {% block content %}{% endblock %}
     </div>
   </main>
 </body>
-</html> 
+</html>
