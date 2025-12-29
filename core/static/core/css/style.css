@@ -125,7 +125,7 @@ body{
 .create-account a:hover{color:var(--link-alt-hover);text-decoration:underline}
 
 /* Hamburger and mobile nav (CSS-only) */
-.hamburger{display:none;position:absolute;top:0.4rem;right:1.6rem;width:36px;height:30px;cursor:pointer;z-index:40}
+.hamburger{display:none;position:absolute;top:1.7rem;right:1.9rem;width:36px;height:30px;cursor:pointer;z-index:40}
 .hamburger span{display:block;height:3px;background:#0b1220;margin:6px 0;border-radius:2px;transition:transform 180ms cubic-bezier(.2,.9,.3,1), opacity 160ms ease}
 
 .nav-toggle{display:none}
