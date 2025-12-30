@@ -19,18 +19,19 @@ def about_triprep(request):
 def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
-        print("Form Cleaned Data")
-        print(form.cleaned_data)
         if form.is_valid():
             # Create the user
+            first_name=form.cleaned_data['first_name']
             user = User.objects.create_user(
                 username=form.cleaned_data['email'],  # Using email as username
                 email=form.cleaned_data['email'],
-                password=form.cleaned_data['password']
+                password=form.cleaned_data['password'],
+                first_name=form.cleaned_data['first_name'],
+                last_name=form.cleaned_data['last_name']
             )
             # Log the user in automatically
             login(request, user)
-            return redirect('dashboard')  # Redirect to your home page
+            return render(request, 'core/dashboard.html', {'first_name': first_name})
     else:
         form = SignupForm()
     

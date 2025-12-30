@@ -3,6 +3,14 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
 class SignupForm(forms.Form):
+    first_name = forms.CharField(
+        max_length=150,
+        widget=forms.TextInput(attrs={'placeholder': 'First Name'})
+    )
+    last_name = forms.CharField(
+        max_length=150,
+        widget=forms.TextInput(attrs={'placeholder': 'Last Name'})
+    )
     email = forms.EmailField(
         max_length=254,
         widget=forms.EmailInput(attrs={'placeholder': 'Email'})

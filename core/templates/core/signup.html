@@ -8,6 +8,12 @@
     <form method="post" class="login-form">
       {% csrf_token %}
       {{ form.non_field_errors }}
+      <label for="id_first_name">First Name</label>
+      {{ form.first_name }}
+      {{ form.first_name.errors }}
+      <label for="id_last_name">Last Name</label>
+      {{ form.last_name }}
+      {{ form.last_name.errors }}
       <label for="id_email">Email ID</label>
       {{ form.email }}
       {{ form.email.errors }}
