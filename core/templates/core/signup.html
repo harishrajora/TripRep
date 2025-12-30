@@ -4,18 +4,20 @@
 
 {% block content %}
   <div class="login-card">
-    <h2 style="margin-top:0">Sign In</h2>
+    <h2 style="margin-top:0">Sign Up</h2>
     <form method="post" class="login-form">
       {% csrf_token %}
       {{ form.non_field_errors }}
-      <label for="id_username">Username</label>
-      {{ form.username }}
-      {{ form.username.errors }}
+      <label for="id_email">Email ID</label>
+      {{ form.email }}
+      {{ form.email.errors }}
       <label for="id_password">Password</label>
       {{ form.password }}
       {{ form.password.errors }}
-      <p class="create-account"><a href="/signup/">Create an account</a></p>
-      <button type="submit">SIGN IN</button>
+      <label for="id_repeat_password">Repeat Password</label>
+      {{ form.repeat_password }}
+      {{ form.repeat_password.errors }}
+      <button type="submit">Create Account</button>
     </form>
   </div>
 {% endblock %}

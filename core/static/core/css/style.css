@@ -161,14 +161,14 @@ body.login-page{
   max-width:500px;
   width:100%;
   margin:0 auto;
-  padding:2.5rem;
+  padding:3.5rem;
   border-radius:12px;
-  background:#ffffff;
+  background: linear-gradient(180deg, rgba(185, 45, 45, 0.952), rgba(0,0,0,0.02));
   box-shadow:0 8px 26px rgba(2,6,23,0.04);
-  border:1px solid rgba(15,23,42,0.04);
+  border:2px solid rgba(15,23,42,0.04);
 }
 .login-form label{display:block;margin-bottom:.4rem;font-weight:600}
-.login-form input[type="text"],.login-form input[type="password"]{
+.login-form input[type="text"],.login-form input[type="email"],.login-form input[type="password"]{
   width:100%;
   padding:1rem 1rem;
   margin-bottom:1rem;
