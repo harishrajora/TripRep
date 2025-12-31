@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import login
+from django.contrib.auth import login as auth_login
+from django.contrib.auth.forms import AuthenticationForm
 from .forms import SignupForm
 
 
@@ -30,8 +31,10 @@ def signup(request):
                 last_name=form.cleaned_data['last_name']
             )
             # Log the user in automatically
-            login(request, user)
-            return render(request, 'core/dashboard.html', {'first_name': first_name})
+            auth_login(request, user)
+            # Preserve the first name across the redirect so dashboard can greet the user
+            request.session['first_name'] = first_name
+            return redirect('core:dashboard')
     else:
         form = SignupForm()
     
@@ -41,9 +44,17 @@ def dashboard(request):
     print("Inside dashboard view")
     if request.user.is_anonymous:
         print("User is anonymous, redirecting to login")
-        return render(request, 'core/login.html')
-    return render(request, 'core/dashboard.html')
+        return redirect('core:login')
+    # Get first_name from session (set during signup) or fall back to the user's first_name
+    first_name = request.session.pop('first_name', None) or request.user.first_name
+    return render(request, 'core/dashboard.html', {'first_name': first_name})
 
-def login(request):
-    print("Inside login view")
-    return render(request, 'core/login.html')
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            auth_login(request, form.get_user())
+            return redirect('core:dashboard')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'core/login.html', {'form': form})
