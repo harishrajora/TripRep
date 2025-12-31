@@ -1,5 +1,30 @@
 {% extends 'core/base.html' %}
 
+{% block login_button %}
+  <div class="top-links">
+    <a href="{% url 'core:about_triprep' %}" class="top-link what-link">What Are We</a>
+    <form method="post" action="{% url 'core:logout' %}" style="display:inline">
+      {% csrf_token %}
+      <button type="submit" class="top-link login-link" style="background:transparent;border:0;padding:0">Logout</button>
+    </form>
+  </div>
+
+  <!-- Mobile hamburger (CSS-only) -->
+  <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden>
+  <label for="nav-toggle" class="hamburger" aria-hidden="true">
+    <span></span>
+    <span></span>
+    <span></span>
+  </label>
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="{% url 'core:about_triprep' %}" class="mobile-link">What Are We</a>
+    <form method="post" action="{% url 'core:logout' %}">
+      {% csrf_token %}
+      <button type="submit" class="mobile-link" style="background:transparent;border:0;padding:0;text-align:left">Logout</button>
+    </form>
+  </nav>
+{% endblock %}
+
 {% block content %}
   <section class="coming-soon">
     <div> <strong>Hi!! {{first_name}}</strong> </div>

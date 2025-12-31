@@ -38,4 +38,12 @@ def signup(request):
     return render(request, 'core/signup.html', {'form': form})
 
 def dashboard(request):
+    print("Inside dashboard view")
+    if request.user.is_anonymous:
+        print("User is anonymous, redirecting to login")
+        return render(request, 'core/login.html')
     return render(request, 'core/dashboard.html')
+
+def login(request):
+    print("Inside login view")
+    return render(request, 'core/login.html')
