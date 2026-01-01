@@ -3,11 +3,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import SignupForm
+from .models import Tickets
 
 
 def index(request):
     return render(request, 'core/index.html')
-
 
 def about_triprep(request):
     """Render a simple About page (Coming Soon)."""
@@ -50,7 +50,20 @@ def login_view(request):
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
+            print("User logged in:", form.get_user())
             return redirect('core:dashboard')
     else:
         form = AuthenticationForm()
     return render(request, 'core/login.html', {'form': form})
+
+def logout_view(request):
+    from django.contrib.auth import logout
+    print("Logging out user:", request.user)
+    logout(request)
+    return redirect('core:index')
+
+def tickets(request):
+    if request.user.is_anonymous:
+        return redirect('core:login')
+    tickets = Tickets.objects.filter(user=request.user)
+    return render(request, 'core/tickets.html', {'tickets': tickets})

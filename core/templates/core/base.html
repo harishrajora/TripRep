@@ -11,9 +11,11 @@
   <main class="site-main">
     <div class="container">
       <div class="top-links">
+    <a href="{% url 'core:index' %}" class="top-link what-link">Home</a>
     <a href="{% url 'core:about_triprep' %}" class="top-link what-link">What Are We</a>
     {% if user.is_authenticated %}
-    <a href="{% url 'core:dashboard' %}" class="mobile-link">Dashboard</a>
+    <a href="{% url 'core:dashboard' %}" class="top-link what-link">Dashboard</a>
+    <a href="{% url 'core:logout' %}" class="top-link what-link">Logout</a>
     {% else %}
     <a href="{% url 'core:login' %}?next=/" class="top-link login-link">Login</a>
     {% endif %}
@@ -28,6 +30,7 @@
     <a href="{% url 'core:about_triprep' %}" class="mobile-link">What Are We</a>
     {% if user.is_authenticated %}
     <a href="{% url 'core:dashboard' %}" class="mobile-link">Dashboard</a>
+    <a href="{% url 'core:logout' %}" class="mobile-link">Logout</a>
     {% else %}
     <a href="{% url 'core:login' %}?next=/" class="mobile-link">Login</a>
     {% endif %}
