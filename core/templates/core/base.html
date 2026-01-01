@@ -10,7 +10,28 @@
 <body>
   <main class="site-main">
     <div class="container">
-      {% block login_button %}{% endblock %}
+      <div class="top-links">
+    <a href="{% url 'core:about_triprep' %}" class="top-link what-link">What Are We</a>
+    {% if user.is_authenticated %}
+    <a href="{% url 'core:dashboard' %}" class="mobile-link">Dashboard</a>
+    {% else %}
+    <a href="{% url 'core:login' %}?next=/" class="top-link login-link">Login</a>
+    {% endif %}
+  </div>
+  <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden>
+  <label for="nav-toggle" class="hamburger" aria-hidden="true">
+    <span></span>
+    <span></span>
+    <span></span>
+  </label>
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="{% url 'core:about_triprep' %}" class="mobile-link">What Are We</a>
+    {% if user.is_authenticated %}
+    <a href="{% url 'core:dashboard' %}" class="mobile-link">Dashboard</a>
+    {% else %}
+    <a href="{% url 'core:login' %}?next=/" class="mobile-link">Login</a>
+    {% endif %}
+  </nav>
       {% block content %}{% endblock %}
     </div>
   </main>

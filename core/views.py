@@ -13,10 +13,6 @@ def about_triprep(request):
     """Render a simple About page (Coming Soon)."""
     return render(request, 'core/about_triprep.html')
 
-# def signup(request):
-#     """Render a simple Signup page (Coming Soon)."""
-#     return render(request, 'core/signup.html')
-
 def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
@@ -41,9 +37,9 @@ def signup(request):
     return render(request, 'core/signup.html', {'form': form})
 
 def dashboard(request):
-    print("Inside dashboard view")
+    print("Dashboard accessed by user:", request.user)
     if request.user.is_anonymous:
-        print("User is anonymous, redirecting to login")
+        print("User is anonymous and not logged in, redirecting to login")
         return redirect('core:login')
     # Get first_name from session (set during signup) or fall back to the user's first_name
     first_name = request.session.pop('first_name', None) or request.user.first_name

@@ -26,7 +26,14 @@
 {% endblock %}
 
 {% block content %}
-  <section class="coming-soon">
-    <div> <strong>Hi!! {{first_name}}</strong> </div>
-  </section>
+  <!-- <section class="coming-soon"> -->
+    <div class="dashboard-grid">
+      <div class="greeting"><strong>Hi!! {{first_name}}</strong></div><br>
+      <a href="#" class="tickets-card" aria-label="Tickets" role="link">
+        <div class="tickets-inner">
+          <div class="tickets-title">TICKETS</div>
+        </div>
+      </a>
+    </div>
+  <!-- </section> -->
 {% endblock %}
