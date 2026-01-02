@@ -15,7 +15,23 @@
        </section>
       <div class="form-group">
         <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required>
+        <input type="text" id="title" name="title" required><br>
+        <label for="source">Source:</label>
+        <input type="text" id="source" name="source" required><br>
+        <label for="destination">Destination:</label>
+        <input type="text" id="destination" name="destination" required><br>
+        <label for="ticket_type">Ticket Type:</label>
+        <select name="ticket_type_dropdown" id="ticket_type_dropdown" required>
+            <option value="flight">Flight</option>
+            <option value="train">Train</option>
+            <option value="bus">Bus</option>
+            <option value="ferry">Ferry</option>
+            <option value="other">Other</option>
+        </select><br>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4" required></textarea><br>
+        <label for="date_of_journey">Date of Journey:</label>
+        <input type="date" id="date_of_journey" name="date_of_journey" required><br>
       </div>
     
 

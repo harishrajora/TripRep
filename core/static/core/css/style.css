@@ -422,3 +422,118 @@ body.login-page{
     margin-right: 0;
   }
 }
+
+/* # CSS for ticket PDF upload - add_ticket.html */
+
+.form-group {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  margin-top: 20px;
+}
+
+.form-group label:first-of-type {
+  margin-top: 0;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #333;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="date"]:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-group input[type="text"]:hover,
+.form-group input[type="date"]:hover,
+.form-group select:hover,
+.form-group textarea:hover {
+  border-color: #aaa;
+}
+
+.form-group select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.5;
+}
+
+.form-group br {
+  display: none;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .form-group {
+    padding: 15px;
+  }
+  
+  .form-group label {
+    font-size: 15px;
+    margin-top: 16px;
+  }
+  
+  .form-group input[type="text"],
+  .form-group input[type="date"],
+  .form-group select,
+  .form-group textarea {
+    padding: 12px 14px;
+    font-size: 16px; /* Keep at 16px to prevent zoom on iOS */
+  }
+}
+
+@media (max-width: 480px) {
+  .form-group {
+    padding: 10px;
+    max-width: 100%;
+  }
+  
+  .form-group label {
+    font-size: 14px;
+    margin-top: 14px;
+  }
+  
+  .form-group input[type="text"],
+  .form-group input[type="date"],
+  .form-group select,
+  .form-group textarea {
+    padding: 11px 12px;
+  }
+  
+  .form-group textarea {
+    min-height: 100px;
+  }
+}
