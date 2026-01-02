@@ -10,6 +10,7 @@ class Tickets(models.Model):
     description = models.TextField()
     date_of_journey = models.DateField()
     uploaded_at = models.DateTimeField(auto_now_add=True)
+    ticket_type = models.CharField(max_length=100, null=False, blank=False)
 
     def __str__(self):
         return self.title
