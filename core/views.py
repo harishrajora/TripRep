@@ -67,3 +67,9 @@ def tickets(request):
         return redirect('core:login')
     tickets = Tickets.objects.filter(user=request.user)
     return render(request, 'core/tickets.html', {'tickets': tickets})
+
+def add_ticket(request):
+    print(f"Request Method = {request.method}")
+    if request.user.is_anonymous:
+        return redirect('core:login')
+    return render(request, 'core/add_ticket.html')
