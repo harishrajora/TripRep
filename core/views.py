@@ -73,3 +73,6 @@ def add_ticket(request):
     if request.user.is_anonymous:
         return redirect('core:login')
     return render(request, 'core/add_ticket.html')
+
+def create_ticket(request):
+    pass

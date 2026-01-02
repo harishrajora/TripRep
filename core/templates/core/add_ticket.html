@@ -2,3 +2,21 @@
 
 {% block title %}Add Ticket{% endblock %}
 
+{% block content %}
+  <section class="add-ticket-section">
+    <h1 class="add-ticket-title">Add a New Ticket</h1>
+    <form method="post" action="{% url 'core:create_ticket' %}" class="add-ticket-form">
+      {% csrf_token %}
+      <section class="ticket-pdf-upload">
+        <div class="form-group">
+          <label for="ticket_pdf">Upload Ticket PDF:</label>
+          <input type="file" id="ticket_pdf" name="ticket_pdf" accept="application/pdf" required>
+        </div> 
+       </section>
+      <div class="form-group">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+      </div>
+    
+
+{% endblock %}

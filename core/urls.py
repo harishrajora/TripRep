@@ -13,4 +13,5 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('tickets/', views.tickets, name='tickets'),
     path('add_ticket/', views.add_ticket, name='add_ticket'),
+    path('create_ticket/', views.create_ticket, name='create_ticket'),
 ]
