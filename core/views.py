@@ -84,7 +84,14 @@ def process_file(file):
     # load API key from settings
     genai_api_key = settings.GENAI_API_KEY
     client = genai.Client(api_key=genai_api_key)
-    prompt = "Summarize this document"
+    prompt = "Check whether this is a ticket of any kind or not. If it is a ticket, your response should" \
+    "start with 'Yes, this is a ticket. Then list down the following things in a JSON format: \n" \
+    "1. Source \n 2. Destination \n 3. Ticket Type \n 4. Description \n 5. Date of Journey \n 6. Title" \
+    "There are few things to remember while extracting the information. The ticket type should be categorized" \
+    " as one of the following: Flight, Bus, Train, Ferry, Other. The Title field should be a short title for the " \
+    "ticket. If any information is missing, use 'Not Found' as the value for that field. the description should" \
+    "not exceed 100 words. If it is not a ticket, response should start with 'No, it's not a ticket'. In this" \
+    "case, you don't need to populate the values but return only a single sentence."
     response = client.models.generate_content(
     model="gemini-2.5-flash",
     contents=[
