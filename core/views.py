@@ -6,6 +6,9 @@ from .forms import SignupForm
 from .models import Tickets
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
+from google import genai
+from google.genai import types
+from django.conf import settings
 
 def index(request):
     return render(request, 'core/index.html')
@@ -75,6 +78,23 @@ def add_ticket(request):
         return redirect('core:login')
     return render(request, 'core/add_ticket.html')
 
+def process_file(file):
+    file_pdf = file.read()
+
+    # load API key from settings
+    genai_api_key = settings.GENAI_API_KEY
+    client = genai.Client(api_key=genai_api_key)
+    prompt = "Summarize this document"
+    response = client.models.generate_content(
+    model="gemini-2.5-flash",
+    contents=[
+        types.Part.from_bytes(
+            data=file_pdf,
+            mime_type='application/pdf',
+        ),
+        prompt])
+    print(response.text)
+
 @require_http_methods(["POST"])
 def create_ticket(request):
     if request.FILES.get('file'):
@@ -82,6 +102,7 @@ def create_ticket(request):
         # Process your file here
         print(f"File name: {uploaded_file.name}")
         print(f"File size: {uploaded_file.size}")
+        process_file(uploaded_file)
         return JsonResponse({
                 'status': 'success',
                 'message': 'File uploaded successfully',

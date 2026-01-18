@@ -1,4 +1,6 @@
 from pathlib import Path
+from dotenv import load_dotenv
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -69,3 +71,5 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 LOGIN_REDIRECT_URL = '/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField' 
+load_dotenv(os.path.join(BASE_DIR, '.env'))
+GENAI_API_KEY = os.getenv('genai_api_key')
