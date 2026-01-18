@@ -9,7 +9,8 @@
     <center>
     <h1 class="add-ticket-title">Add A New Ticket</h1>
     </center>
-    <form method="post" action="{% url 'core:create_ticket' %}" class="add-ticket-form">
+    <!-- <form method="post" action="{% url 'core:create_ticket' %}" class="add-ticket-form"> -->
+    <form method="post" class="add-ticket-form">
       {% csrf_token %}
       <section class="ticket-pdf-upload">
         <div class="form-group">
@@ -17,8 +18,13 @@
           <input type="file" id="ticket_pdf" name="ticket_pdf" accept="application/pdf" required>
           <br>
         </div>
-        <button type="button" id="process_pdf_btn" class="btn-process-pdf">Confirm PDF</button> 
+        <!-- <center>
+        <a href="{% url 'core:process_ticket_pdf' %}">
+          <button type="submit" id="process_pdf_btn" class="btn-process-pdf">Confirm Ticket</button>
+        </a>
+        </center> -->
        </section>
+      </form>
       <div class="form-group" id = "ticket_upload_options" style="visibility: hidden;">
         <label for="title">Title:</label>
         <input type="text" id="title" name="title" required><br>

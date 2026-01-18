@@ -341,7 +341,7 @@ body.login-page{
 }
 
 .ticket-pdf-upload input[type="file"]:hover {
-  background: rgba(255, 255, 255, 1);
+  /* background: rgba(255, 255, 255, 1); */
   border-color: rgba(255, 255, 255, 0.6);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   transform: translateY(-2px);

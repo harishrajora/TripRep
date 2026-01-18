@@ -4,7 +4,8 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import SignupForm
 from .models import Tickets
-
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
 
 def index(request):
     return render(request, 'core/index.html')
@@ -74,5 +75,24 @@ def add_ticket(request):
         return redirect('core:login')
     return render(request, 'core/add_ticket.html')
 
+@require_http_methods(["POST"])
 def create_ticket(request):
-    pass
+    if request.FILES.get('file'):
+        uploaded_file = request.FILES['file']
+        # Process your file here
+        print(f"File name: {uploaded_file.name}")
+        print(f"File size: {uploaded_file.size}")
+        return JsonResponse({
+                'status': 'success',
+                'message': 'File uploaded successfully',
+                'filename': uploaded_file.name,
+            }, status=200)
+    else:
+        return JsonResponse({
+                'status': 'error',
+                'message': 'No file uploaded'
+            }, status=400)
+
+def process_ticket_pdf(request):
+    print(f"Request Method = {request.method}")
+    return

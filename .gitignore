@@ -4,6 +4,9 @@ __pycache__/
 *$py.class
 *.so
 
+# demo py because it is for internal experiments only
+demo.py
+
 # Virtual environments
 .env
 .venv
