@@ -100,7 +100,8 @@ def process_file(file):
             mime_type='application/pdf',
         ),
         prompt])
-    print(response.text)
+    print("Response from GenAI received")
+    return response.text
 
 @require_http_methods(["POST"])
 def create_ticket(request):
@@ -109,17 +110,31 @@ def create_ticket(request):
         # Process your file here
         print(f"File name: {uploaded_file.name}")
         print(f"File size: {uploaded_file.size}")
-        process_file(uploaded_file)
-        return JsonResponse({
-                'status': 'success',
-                'message': 'File uploaded successfully',
-                'filename': uploaded_file.name,
-            }, status=200)
+        response = process_file(uploaded_file)
+        json_response = response.split("{")
+        if json_response[0].strip().startswith("Yes,"):
+            print("The uploaded file is recognized as a ticket.")
+            # Reconstruct the JSON part
+            json_part = "{" + "{".join(json_response[1:])
+            json_part = json_part[:-3]
+            import json
+            ticket_data = json.loads(json_part)
+            return JsonResponse({
+                    'status': 'success',
+                    'message': 'File uploaded successfully',
+                    'filename': uploaded_file.name,
+                    'ticket_data': ticket_data
+                }, status=200)
+        else:
+            return JsonResponse({
+                    'status': 'error',
+                    'message': 'The uploaded file is not recognized as a ticket.',
+                }, status=400)
     else:
         return JsonResponse({
                 'status': 'error',
                 'message': 'No file uploaded'
-            }, status=400)
+            }, status=404)
 
 def process_ticket_pdf(request):
     print(f"Request Method = {request.method}")
