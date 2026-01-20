@@ -21,7 +21,8 @@ document.getElementById('ticket_pdf').addEventListener('change', function(event)
     .then(response => response.json())
     .then(data => {
         if (data.status === 'success') {
-            document.getElementById('status').textContent = 'File uploaded: ' + data.filename;
+            console.log("File uploaded successfully");
+            document.querySelector('#ticket_upload_options').style.visibility = 'visible';
         } else {
             document.getElementById('status').textContent = 'Error: ' + data.message;
         }
@@ -30,8 +31,6 @@ document.getElementById('ticket_pdf').addEventListener('change', function(event)
         console.error('Error:', error);
         // document.getElementById('status').textContent = 'Upload failed';
     });
-
-    document.querySelector('#ticket_upload_options').style.visibility = 'visible';
   } else {
     // No file selected
     console.log("No file selected");
