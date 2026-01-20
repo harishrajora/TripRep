@@ -86,9 +86,12 @@ def process_file(file):
     client = genai.Client(api_key=genai_api_key)
     prompt = "Check whether this is a ticket of any kind or not. If it is a ticket, your response should" \
     "start with 'Yes, this is a ticket. Then list down the following things in a JSON format: \n" \
-    "1. Source \n 2. Destination \n 3. Ticket Type \n 4. Description \n 5. Date of Journey \n 6. Title" \
-    "There are few things to remember while extracting the information. The ticket type should be categorized" \
-    " as one of the following: Flight, Bus, Train, Ferry, Other. The Title field should be a short title for the " \
+    "1. Source \n 2. Destination \n 3. Ticket Type \n 4. Description \n 5. Date of Journey \n 6. Title \n " \
+    "7. Booked Through \n\n"
+    "There are few things to remember while extracting the information. The 'Ticket Type' should have value strctly" \
+    " as one of the following: Flight, Bus, Train, Ferry, Other. No other word should be used in addition to this. "
+    "The 'Booked Through' field means the website"
+    "used for booking the ticket. For ex, Agoda or Booking.com. The Title field should be a short title for the " \
     "ticket. If any information is missing, use 'Not Found' as the value for that field. the description should" \
     "not exceed 100 words. If it is not a ticket, response should start with 'No, it's not a ticket'. In this" \
     "case, you don't need to populate the values but return only a single sentence."

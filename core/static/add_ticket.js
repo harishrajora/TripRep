@@ -22,15 +22,30 @@ document.getElementById('ticket_pdf').addEventListener('change', function(event)
     .then(data => {
         if (data.status === 'success') {
             console.log("File uploaded successfully");
-            document.querySelector('#ticket_upload_options').style.visibility = 'visible';
-        } else {
-            document.getElementById('status').textContent = 'Error: ' + data.message;
+            // console.log(response);
+            console.log("Data::::");
+            console.log(data);
+            title = data.ticket_data['Title'];
+            source = data.ticket_data['Source'];
+            destination = data.ticket_data['Destination'];
+            // ticket_type = data.ticket_data['Ticket Type'];
+            description = data.ticket_data['Description'];
+            date_of_journey = data.ticket_data['Date of Journey'];
+            booked_through = data.ticket_data['Booked Through'];
+            document.querySelector('#title').value = title;
+            document.querySelector('#source').value = source;
+            document.querySelector('#destination').value = destination;
+            // document.querySelector('#ticket_type').value = ticket_type;
+            document.querySelector('#description').value = description;
+            document.querySelector('#date_of_journey').value = date_of_journey;
+            document.querySelector('#booked_through').value = booked_through;
         }
     })
     .catch(error => {
         console.error('Error:', error);
         // document.getElementById('status').textContent = 'Upload failed';
     });
+    document.querySelector('#ticket_upload_options').style.visibility = 'visible';
   } else {
     // No file selected
     console.log("No file selected");
