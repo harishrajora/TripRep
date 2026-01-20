@@ -9,6 +9,7 @@ from django.views.decorators.http import require_http_methods
 from google import genai
 from google.genai import types
 from django.conf import settings
+from django.utils import timezone
 
 def index(request):
     return render(request, 'core/index.html')
@@ -142,3 +143,30 @@ def create_ticket(request):
 def process_ticket_pdf(request):
     print(f"Request Method = {request.method}")
     return
+
+def save_ticket(request):
+    if request.method == 'POST':
+        if request.user.is_anonymous:
+            return redirect('core:login')
+        title = request.POST.get('title')
+        source = request.POST.get('source')
+        destination = request.POST.get('destination')
+        description = request.POST.get('description')
+        date_of_journey = request.POST.get('date_of_journey')
+        ticket_type = request.POST.get('ticket_type_dropdown')
+        booked_through = request.POST.get('booked_through')
+        ticket = Tickets(
+            user=request.user,
+            title=title,
+            source=source,
+            destination=destination,
+            description=description,
+            date_of_journey=date_of_journey,
+            ticket_type=ticket_type,
+            booked_through=booked_through,
+        )
+        ticket.save()
+        print(f"Ticket '{title}' saved for user {request.user.username}")
+        return redirect('core:tickets')
+    else:
+        return redirect('core:add_ticket')
