@@ -2,6 +2,9 @@
 {% block title %}Your Tickets{% endblock %}
 {% block content %}
   {% if tickets %}
+    <div class="hero-actions">
+      <a href="{% url 'core:add_ticket' %}" class="btn-signup">ADD A TICKET</a>
+    </div>
     <ul class="tickets-list">
       {% for ticket in tickets %}
         <li class="ticket-item">
