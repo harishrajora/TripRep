@@ -10,7 +10,7 @@
     <h1 class="add-ticket-title">Add A New Ticket</h1>
     </center>
     <!-- <form method="post" action="{% url 'core:create_ticket' %}" class="add-ticket-form"> -->
-    <form method="post" class="add-ticket-form">
+    <form method="post" action="{% url 'core:save_ticket' %}" class="add-ticket-form" enctype="multipart/form-data">
       {% csrf_token %}
       <section class="ticket-pdf-upload">
         <div class="form-group">
@@ -24,9 +24,6 @@
         </a>
         </center> -->
        </section>
-      </form>
-      <form method="post" action="{% url 'core:save_ticket' %}" class="add-ticket-form">
-      {% csrf_token %}
       <div class="form-group" id = "ticket_upload_options" style="visibility: visible;">
         <label for="title">Title:</label>
         <input type="text" id="title" name="title" required><br>

@@ -215,6 +215,7 @@ body.login-page{
   justify-content:flex-start;
   padding:1rem;
   width:100%;
+  height: auto;
 }
 .dashboard-grid .greeting{ font-size:1.2rem; color:#0b1220; font-weight:800; }
 
@@ -225,7 +226,7 @@ body.login-page{
   justify-content:center;
   position:relative;
   width:340px;
-  height:170px;
+  height:auto;
   padding:20px;
   border-radius:14px;
   text-decoration:none;
@@ -239,7 +240,7 @@ body.login-page{
   box-shadow: 0 22px 50px rgba(3,54,106,0.28), 0 6px 18px rgba(14,165,233,0.06) inset;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  overflow:hidden;
+  /* overflow:auto; */
   transition: transform 260ms cubic-bezier(.2,.9,.3,1), box-shadow 260ms ease, opacity 160ms ease;
   transform-style:preserve-3d;
   will-change: transform, box-shadow;

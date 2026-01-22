@@ -1,0 +1,19 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Display Ticket{% endblock %}
+
+{% block content %}
+  <section class="hero">
+    <h1 class="hero-title"> {{ ticket.title }} </h1>
+    <div class="ticket-details">
+      <p><strong>Source:</strong> {{ ticket.source }}</p>
+      <p><strong>Destination:</strong> {{ ticket.destination }}</p>
+      <p><strong>Date of Journey:</strong> {{ ticket.date_of_journey }}</p>
+      <p><strong>Uploaded at:</strong> {{ ticket.uploaded_at }}</p>
+      <div class="ticket-pdf">
+        <h2><a href="{{ ticket.ticket_file.url }}" target="_blank" rel="noopener noreferrer">Download Ticket PDF:</a></h2>
+        
+      </div>
+    </div>
+  </section>  
+{% endblock %}

@@ -5,15 +5,19 @@
     <div class="hero-actions">
       <a href="{% url 'core:add_ticket' %}" class="btn-signup">ADD A TICKET</a>
     </div>
-    <ul class="tickets-list">
+    <!-- <ul class="tickets-list"> -->
+
       {% for ticket in tickets %}
-        <li class="ticket-item">
+      <div class="dashboard-grid">
+      <a href="{% url 'core:view_ticket' ticket.id %}" class="tickets-card" aria-label="Tickets" role="link">
+        <div class="tickets-inner">
           <h2 class="ticket-title">{{ ticket.title }}</h2>
-          <p class="ticket-route"><strong>From:</strong> {{ ticket.source }} <strong>To:</strong> {{ ticket.destination }}</p>
-          <p class="ticket-description">{{ ticket.description }}</p>
-          <p class="ticket-date"><strong>Date of Journey:</strong> {{ ticket.date_of_journey }}</p>
+          <p class="ticket-route">{{ ticket.source }} <strong>---></strong> {{ ticket.destination }}</p>
+          <p class="ticket-date">{{ ticket.date_of_journey }}</p>
           <p class="ticket-uploaded"><em>Uploaded at: {{ ticket.uploaded_at }}</em></p>
-        </li>
+        </div>
+      </a>
+    </div>
       {% endfor %}
     </ul>
   {% else %}

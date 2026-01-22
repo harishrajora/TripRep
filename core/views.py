@@ -155,9 +155,12 @@ def save_ticket(request):
         date_of_journey = request.POST.get('date_of_journey')
         ticket_type = request.POST.get('ticket_type_dropdown')
         booked_through = request.POST.get('booked_through')
+        ticket_pdf = request.FILES.get('ticket_pdf')
+        print(ticket_pdf)
         ticket = Tickets(
             user=request.user,
             title=title,
+            ticket_file=ticket_pdf,
             source=source,
             destination=destination,
             description=description,
@@ -170,3 +173,15 @@ def save_ticket(request):
         return redirect('core:tickets')
     else:
         return redirect('core:add_ticket')
+
+
+def view_ticket(request, ticket_id):
+    if request.user.is_anonymous:
+        return redirect('core:login')
+    try:
+        ticket = Tickets.objects.get(id=ticket_id, user=request.user)
+        if ticket.user != request.user:
+            return redirect('core:tickets')
+    except Tickets.DoesNotExist:
+        return redirect('core:tickets')
+    return render(request, 'core/view_ticket.html', {'ticket': ticket})

@@ -8,7 +8,7 @@ SECRET_KEY = 'django-insecure-replace-me'
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["192.168.0.116", "localhost", "192.168.56.1"]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -73,3 +73,6 @@ LOGIN_REDIRECT_URL = '/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField' 
 load_dotenv(os.path.join(BASE_DIR, '.env'))
 GENAI_API_KEY = os.getenv('genai_api_key')
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
