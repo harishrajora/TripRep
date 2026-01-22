@@ -1,6 +1,8 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 app_name = 'core'
 
@@ -18,3 +20,6 @@ urlpatterns = [
     path('save_ticket/', views.save_ticket, name='save_ticket'),
     path('view_ticket/<int:ticket_id>/', views.view_ticket, name='view_ticket'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
