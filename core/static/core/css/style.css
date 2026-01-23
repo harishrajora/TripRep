@@ -3,6 +3,7 @@
   --blue:#007bff;
   --blue-hover:#0069e0;
   --accent:#a3001b; /* lighter orange */
+  --submitButton:#a71f2f; /* green for submit buttons */
   --accent-hover:#ac4806;
   --link-alt:#000000; /* alternate link color */
   --link-alt-hover:#1f4ecc;
@@ -204,6 +205,18 @@ body.login-page{
   font-size:clamp(1.25rem,2.5vw,2rem);
   color:#0b1220;
 } 
+
+.btn-save-ticket {
+  display:inline-block;
+  padding:0.95rem 1.8rem;
+  font-size:1.125rem;
+  font-weight:800;
+  border-radius:12px;
+  background:var(--submitButton);
+  color:#fff;
+  text-decoration:none;
+  transition:transform 160ms ease, box-shadow 160ms ease;
+}
 
 /* Dashboard - tickets card */
 .dashboard-grid{
