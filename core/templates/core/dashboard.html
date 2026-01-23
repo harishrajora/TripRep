@@ -26,8 +26,8 @@
 {% endblock %}
 
 {% block content %}
+<div class="greeting"><strong>Hi!! {{first_name}}</strong></div><br>
     <div class="dashboard-grid">
-      <div class="greeting"><strong>Hi!! {{first_name}}</strong></div><br>
       <a href="{% url 'core:tickets' %}" class="tickets-card" aria-label="Tickets" role="link">
         <div class="tickets-inner">
           <div class="tickets-title">TICKETS</div>

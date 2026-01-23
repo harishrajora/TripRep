@@ -223,11 +223,11 @@ body.login-page{
   display:flex;
   gap:1.25rem;
   align-items:flex-start;
-  flex-direction:column;
+  flex-direction:row;
   flex-wrap:nowrap;
   justify-content:flex-start;
   padding:1rem;
-  width:100%;
+  width:50%;
   height: auto;
 }
 .dashboard-grid .greeting{ font-size:1.2rem; color:#0b1220; font-weight:800; }
