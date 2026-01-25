@@ -10,6 +10,14 @@
       <p><strong>Destination:</strong> {{ ticket.destination }}</p>
       <p><strong>Date of Journey:</strong> {{ ticket.date_of_journey }}</p>
       <p><strong>Uploaded at:</strong> {{ ticket.uploaded_at }}</p>
+      {% if ticket.image_thumbnail and ticket.image_thumbnail.url %}
+      <div class="ticket-thumbnail">
+        <h2>Ticket Thumbnail:</h2>
+        <a href="{{ ticket.image_thumbnail.url }}" target="_blank">
+        <img src="{{ ticket.image_thumbnail.url }}" alt="Ticket Thumbnail" />
+        </a>
+      </div>
+      {% endif %}
       {% if ticket.ticket_file and ticket.ticket_file.url %}
       <div class="ticket-pdf">
         <h2><a href="{{ ticket.ticket_file.url }}" target="_blank" rel="noopener noreferrer">

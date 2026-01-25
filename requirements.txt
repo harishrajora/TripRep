@@ -1,2 +1,4 @@
 Django>=4.2
 google-genai
+PyMuPDF>=1.26.7
+Pillow>=12.0.0
