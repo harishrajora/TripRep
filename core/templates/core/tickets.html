@@ -6,9 +6,8 @@
       <a href="{% url 'core:add_ticket' %}" class="btn-signup">ADD A TICKET</a>
     </div>
     <!-- <ul class="tickets-list"> -->
-
+      <div class="dashboard-grid"></div>
       {% for ticket in tickets %}
-      <div class="dashboard-grid">
       <a href="{% url 'core:view_ticket' ticket.id %}" class="tickets-card" aria-label="Tickets" role="link">
         <div class="tickets-inner">
           <h2 class="ticket-title">{{ ticket.title }}</h2>
@@ -17,8 +16,8 @@
           <p class="ticket-uploaded"><em>Uploaded at: {{ ticket.uploaded_at }}</em></p>
         </div>
       </a>
-    </div>
       {% endfor %}
+      </div>
     </ul>
   {% else %}
   <section class="hero">

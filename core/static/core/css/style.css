@@ -5,6 +5,8 @@
   --accent:#a3001b; /* lighter orange */
   --submitButton:#a71f2f; /* green for submit buttons */
   --accent-hover:#ac4806;
+  --download_pdf:#2342cd;
+  --download_pdf-hover:#1f4ecc;
   --link-alt:#000000; /* alternate link color */
   --link-alt-hover:#1f4ecc;
   --bg:#ffffff;
@@ -224,22 +226,35 @@ body.login-page{
   gap:1.25rem;
   align-items:flex-start;
   flex-direction:row;
-  flex-wrap:nowrap;
+  flex-wrap:wrap;
   justify-content:flex-start;
   padding:1rem;
-  width:50%;
-  height: auto;
+  width:100%;
+  /* height: auto; */
+  align-items: stretch;
+  min-width: 0;
 }
 .dashboard-grid .greeting{ font-size:1.2rem; color:#0b1220; font-weight:800; }
 
+.tickets-inner {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
 /* Tickets card - deeper blue glass box with 3D depth */
 .tickets-card{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
+  min-height: 250px;
+  max-height: 300px;  /* maximum height */
+  overflow: hidden;
+  flex: 0 0 340px;
+  margin-right: 1.25rem;  /* Space on the right */
+  margin-bottom: 1.25rem;
+  display:flex;
+  align-items:flex-start;
+  justify-content:flex-start;
   position:relative;
   width:340px;
-  height:auto;
+  height:100%;
   padding:20px;
   border-radius:14px;
   text-decoration:none;
@@ -563,4 +578,23 @@ body.login-page{
   .form-group textarea {
     min-height: 100px;
   }
+}
+
+.download_pdf {
+  display:inline-block;
+  padding:0.95rem 1.8rem;
+  font-size:1.125rem;
+  font-weight:800;
+  border-radius:12px;
+  background:var(--download_pdf);
+  color:#fff;
+  text-decoration:none;
+  box-shadow:0 8px 28px rgb(75, 11, 11);
+  transition:transform 160ms ease, box-shadow 160ms ease;
+}
+
+.download_pdf:hover{
+  transform:translateY(-3px);
+  box-shadow:0 14px 40px rgba(35, 66, 205,0.12);
+  background:var(--download_pdf-hover)
 }

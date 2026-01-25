@@ -12,7 +12,9 @@
       <p><strong>Uploaded at:</strong> {{ ticket.uploaded_at }}</p>
       {% if ticket.ticket_file and ticket.ticket_file.url %}
       <div class="ticket-pdf">
-        <h2><a href="{{ ticket.ticket_file.url }}" target="_blank" rel="noopener noreferrer">Download Ticket PDF:</a></h2>
+        <h2><a href="{{ ticket.ticket_file.url }}" target="_blank" rel="noopener noreferrer">
+          <button class="download_pdf">Download Ticket</button>
+        </a></h2>
       </div>
       {% endif %}
     </div>
