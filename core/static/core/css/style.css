@@ -23,6 +23,41 @@ body{
   -moz-osx-font-smoothing:grayscale;
 }
 
+/* Logo styling */
+.logo {
+  position: absolute;
+  top: 1.2rem;
+  left: 2rem;
+  z-index: 30;
+  background: rgba(219, 38, 38, 0.08);
+  padding: 0.5rem 0.8rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.logo img {
+  height: 45px;
+  width: auto;
+  display: block;
+  transition: transform 160ms ease;
+}
+
+.logo img:hover {
+  transform: scale(1.05);
+}
+
+@media (max-width: 640px) {
+  .logo {
+    top: 1.2rem;
+    left: 1rem;
+    padding: 0.4rem 0.6rem;
+  }
+  
+  .logo img {
+    height: 35px; 
+  }
+}
+
 /* Grouped top-right links */
 .top-links{
   position:absolute; /* inside container for consistent margins */
