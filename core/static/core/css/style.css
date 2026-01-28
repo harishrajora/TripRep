@@ -598,3 +598,8 @@ body.login-page{
   box-shadow:0 14px 40px rgba(35, 66, 205,0.12);
   background:var(--download_pdf-hover)
 }
+
+.thumbnail-image {
+  width: 200px;
+  height: 200px;
+}

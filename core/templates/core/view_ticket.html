@@ -12,9 +12,9 @@
       <p><strong>Uploaded at:</strong> {{ ticket.uploaded_at }}</p>
       {% if ticket.image_thumbnail and ticket.image_thumbnail.url %}
       <div class="ticket-thumbnail">
-        <h2>Ticket Thumbnail:</h2>
+        <h4>Click to view:</h4>
         <a href="{{ ticket.image_thumbnail.url }}" target="_blank">
-        <img src="{{ ticket.image_thumbnail.url }}" alt="Ticket Thumbnail" />
+        <img src="{{ ticket.image_thumbnail.url }}" alt="Ticket Thumbnail"  class="thumbnail-image"/>
         </a>
       </div>
       {% endif %}
