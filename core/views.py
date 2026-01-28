@@ -185,3 +185,16 @@ def view_ticket(request, ticket_id):
     except Tickets.DoesNotExist:
         return redirect('core:tickets')
     return render(request, 'core/view_ticket.html', {'ticket': ticket})
+
+def delete_ticket(request, ticket_id):
+    if request.user.is_anonymous:
+        return redirect('core:login')
+    try:
+        ticket = Tickets.objects.get(id=ticket_id, user=request.user)
+        if ticket.user != request.user:
+            return redirect('core:tickets')
+        ticket.delete()
+        print(f"Ticket with ID {ticket_id} deleted for user {request.user.username}")
+    except Tickets.DoesNotExist:
+        print(f"Ticket with ID {ticket_id} does not exist or does not belong to user {request.user.username}")
+    return redirect('core:tickets')

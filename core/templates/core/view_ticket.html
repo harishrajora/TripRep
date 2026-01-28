@@ -22,7 +22,10 @@
       <div class="ticket-pdf">
         <p>{{ ticket.ticket_file.url }}</p>
         <h2><a href="{{ ticket.ticket_file.url }}" target="_blank" rel="noopener noreferrer"><button class="download_pdf">Download Ticket</button>
-        </a><button class="btn-delete">Delete</button></h2>
+        </a>
+        <a href="{% url 'core:delete_ticket' ticket.id %}">
+          <button class="btn-delete">Delete</button></h2>
+        </a>
       </div>
       {% endif %}
     </div>
