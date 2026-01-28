@@ -591,6 +591,8 @@ body.login-page{
   text-decoration:none;
   box-shadow:0 8px 28px rgb(75, 11, 11);
   transition:transform 160ms ease, box-shadow 160ms ease;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .download_pdf:hover{
@@ -602,4 +604,31 @@ body.login-page{
 .thumbnail-image {
   width: 200px;
   height: 200px;
+}
+
+.btn-delete {
+  display:inline-block;
+  margin-bottom: 10px;
+  padding:0.95rem 1.8rem;
+  font-size:1.125rem;
+  font-weight:800;
+  border-radius:12px;
+  background:var(--accent);
+  color:#fff;
+  text-decoration:none;
+  box-shadow:0 8px 28px rgb(75, 11, 11);
+  transition:transform 160ms ease, box-shadow 160ms ease;
+}
+.btn-delete:hover {
+  transform:translateY(-3px);
+  box-shadow:0 14px 40px rgba(255,155,107,0.12);
+  background:var(--accent-hover)
+}
+
+.ticket-pdf h2 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
 }

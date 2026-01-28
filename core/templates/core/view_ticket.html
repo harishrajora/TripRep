@@ -20,9 +20,9 @@
       {% endif %}
       {% if ticket.ticket_file and ticket.ticket_file.url %}
       <div class="ticket-pdf">
-        <h2><a href="{{ ticket.ticket_file.url }}" target="_blank" rel="noopener noreferrer">
-          <button class="download_pdf">Download Ticket</button>
-        </a></h2>
+        <p>{{ ticket.ticket_file.url }}</p>
+        <h2><a href="{{ ticket.ticket_file.url }}" target="_blank" rel="noopener noreferrer"><button class="download_pdf">Download Ticket</button>
+        </a><button class="btn-delete">Delete</button></h2>
       </div>
       {% endif %}
     </div>
