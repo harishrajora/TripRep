@@ -1,10 +1,12 @@
 {% extends 'core/base.html' %}
 
-{% block title %}Display Ticket{% endblock %}
+{% block title %}
+<title> {{ticket.title}} </title>
+{% endblock %}
 
 {% block content %}
-  <section class="hero">
-    <h1 class="hero-title"> {{ ticket.title }} </h1>
+  <section class="view_ticket-container">
+    <h1 class="view_ticket_title"> {{ ticket.title }} </h1>
     <div class="ticket-details">
       <p><strong>Source:</strong> {{ ticket.source }}</p>
       <p><strong>Destination:</strong> {{ ticket.destination }}</p>
@@ -20,8 +22,7 @@
       {% endif %}
       {% if ticket.ticket_file and ticket.ticket_file.url %}
       <div class="ticket-pdf">
-        <p>{{ ticket.ticket_file.url }}</p>
-        <h2><a href="{{ ticket.ticket_file.url }}" target="_blank" rel="noopener noreferrer"><button class="download_pdf">Download Ticket</button>
+        <h2><a href="{{ ticket.ticket_file.url }}" target="_blank" rel="noopener noreferrer"><button class="download_pdf">Download</button>
         </a>
         <a href="{% url 'core:delete_ticket' ticket.id %}">
           <button class="btn-delete">Delete</button></h2>

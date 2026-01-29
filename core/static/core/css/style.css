@@ -629,6 +629,17 @@ body.login-page{
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
-    align-items: center;
-    justify-content: center;
+}
+
+.view_ticket-container { 
+  margin-top: 100px;
+}
+
+.view_ticket_title{
+  margin:0 0 0.6rem 0;
+  font-weight:800;
+  font-size:clamp(2rem,6vw,4.5rem);
+  line-height:1.03;
+  color:#0b1220;
+  transition:transform 300ms ease;
 }
