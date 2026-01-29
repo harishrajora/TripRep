@@ -1,6 +1,8 @@
 {% extends 'core/base.html' %}
 {% load static %}
-{% block title %}Add Ticket{% endblock %}
+{% block title %}
+<title>Add Ticket</title>
+  {% endblock %}
 {% block addJS %}
 <script src="{% static 'add_ticket.js' %}"></script>
 {% endblock %}
@@ -44,7 +46,9 @@
         <label for="description">Description:</label>
         <textarea id="description" name="description" rows="4" required></textarea><br>
         <label for="date_of_journey">Date of Journey:</label>
-        <input type="date" id="date_of_journey" name="date_of_journey" required>
+        <input type="date" id="date_of_journey" name="date_of_journey" required><br>
+        <label for="amount_paid">Amount Paid:</label>
+        <input type="text" id="amount_paid" name="amount_paid" maxlength="8" placeholder="Amount Paid" required>
       </div>
         <br>
         <center>

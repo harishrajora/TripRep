@@ -32,6 +32,7 @@ document.getElementById('ticket_pdf').addEventListener('change', function(event)
             description = data.ticket_data['Description'];
             date_of_journey = data.ticket_data['Date of Journey'];
             booked_through = data.ticket_data['Booked Through'];
+            amount_paid = data.ticket_data['Amount'];
             document.querySelector('#title').value = title;
             document.querySelector('#source').value = source;
             document.querySelector('#destination').value = destination;
@@ -39,6 +40,7 @@ document.getElementById('ticket_pdf').addEventListener('change', function(event)
             document.querySelector('#description').value = description;
             document.querySelector('#date_of_journey').value = date_of_journey;
             document.querySelector('#booked_through').value = booked_through;
+            document.querySelector('#amount_paid').value = amount_paid;
         }
     })
     .catch(error => {
