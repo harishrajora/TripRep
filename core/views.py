@@ -158,6 +158,19 @@ def save_ticket(request):
         ticket_type = request.POST.get('ticket_type_dropdown')
         booked_through = request.POST.get('booked_through')
         ticket_pdf = request.FILES.get('ticket_pdf')
+        amount_paid = request.POST.get('amount_paid', '0.00')
+        # only keep digits and decimal point
+        amount_paid = ''.join(c for c in amount_paid if (c.isdigit() or c == '.'))
+
+        # remove any leading zeros
+        if amount_paid.startswith('0'):
+            amount_paid = amount_paid.lstrip('0')
+            if amount_paid == '' or amount_paid.startswith('.'):
+                amount_paid = '0' + amount_paid
+        
+        # limit to 8 characters
+        if len(amount_paid) > 8:
+            amount_paid = amount_paid[:8]
         print(ticket_pdf)
         ticket = Tickets(
             user=request.user,
@@ -169,6 +182,7 @@ def save_ticket(request):
             date_of_journey=date_of_journey,
             ticket_type=ticket_type,
             booked_through=booked_through,
+            amount_paid=amount_paid
         )
         ticket.save()
         print(f"Ticket '{title}' saved for user {request.user.username}")

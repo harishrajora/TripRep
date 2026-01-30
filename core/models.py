@@ -59,7 +59,7 @@ class Tickets(models.Model):
 
     def save(self, *args, **kwargs):
         is_new = self.pk is None
-        
+        print(f"Args = {args}, Kwargs = {kwargs}")
         if is_new:
             # Save first to get the file path
             super().save(*args, **kwargs)
