@@ -26,12 +26,30 @@
 {% endblock %}
 
 {% block content %}
-<div class="greeting"><strong>Hi!! {{first_name}}</strong></div><br>
-    <div class="dashboard-grid">
-      <a href="{% url 'core:tickets' %}" class="tickets-card" aria-label="Tickets" role="link">
-        <div class="tickets-inner">
-          <div class="tickets-title">TICKETS</div>
-        </div>
-      </a>
-    </div>
+  <div class="greeting"><strong>Hi!! {{first_name}}</strong></div>
+  
+  <div class="dashboard-grid">
+    <a href="{% url 'core:tickets' %}" class="tickets-card" aria-label="Tickets" role="link">
+      <div class="tickets-inner">
+        <div class="tickets-title">TICKETS</div>
+      </div>
+    </a>
+
+    <a href="{% url 'core:tickets' %}" class="tickets-card" aria-label="Tickets" role="link">
+      <div class="tickets-inner">
+        <div class="tickets-title">TICKETS</div>
+      </div>
+    </a>
+
+    <a href="{% url 'core:tickets' %}" class="tickets-card" aria-label="Tickets" role="link">
+      <div class="tickets-inner">
+        <div class="tickets-title">TICKETS</div>
+      </div>
+    </a>
+    <a href="{% url 'core:tickets' %}" class="tickets-card" aria-label="Tickets" role="link">
+      <div class="tickets-inner">
+        <div class="tickets-title">TICKETS</div>
+      </div>
+    </a>
+  </div>
 {% endblock %}
