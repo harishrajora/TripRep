@@ -71,7 +71,7 @@ def tickets(request):
     if request.user.is_anonymous:
         return redirect('core:login')
     tickets = Tickets.objects.filter(user=request.user)
-    print(tickets)
+    # print(tickets)
     return render(request, 'core/tickets.html', {'tickets': tickets})
 
 def add_ticket(request):
@@ -161,7 +161,8 @@ def save_ticket(request):
         amount_paid = request.POST.get('amount_paid', '0.00')
         # only keep digits and decimal point
         amount_paid = ''.join(c for c in amount_paid if (c.isdigit() or c == '.'))
-
+        if "." not in amount_paid:
+            amount_paid += ".00"
         # remove any leading zeros
         if amount_paid.startswith('0'):
             amount_paid = amount_paid.lstrip('0')

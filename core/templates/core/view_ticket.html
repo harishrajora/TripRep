@@ -11,7 +11,9 @@
       <p><strong>Source:</strong> {{ ticket.source }}</p>
       <p><strong>Destination:</strong> {{ ticket.destination }}</p>
       <p><strong>Date of Journey:</strong> {{ ticket.date_of_journey }}</p>
+      <p><strong>Cost:</strong> {{ ticket.amount_paid }}</p>
       <p><strong>Uploaded at:</strong> {{ ticket.uploaded_at }}</p>
+      <p><strong>Booked Through:</strong> {{ticket.booked_through}} </p>
       {% if ticket.image_thumbnail and ticket.image_thumbnail.url %}
       <div class="ticket-thumbnail">
         <h4>Click to view:</h4>
@@ -19,6 +21,7 @@
         <img src="{{ ticket.image_thumbnail.url }}" alt="Ticket Thumbnail"  class="thumbnail-image"/>
         </a>
       </div>
+      <p><strong>Description:</strong> {{ticket.description}}</p>
       {% endif %}
       {% if ticket.ticket_file and ticket.ticket_file.url %}
       <div class="ticket-pdf">

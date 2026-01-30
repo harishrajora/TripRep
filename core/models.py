@@ -19,7 +19,7 @@ class Tickets(models.Model):
     ticket_type = models.CharField(max_length=100, null=False, blank=False)
     booked_through = models.CharField(max_length=100, null=False, blank=False)
     image_thumbnail = models.ImageField(upload_to='thumbnails/', null=True, blank=True)
-    amount_paid = models.DecimalField(max_digits=8, decimal_places=2, null=False, blank=False, default=0.00)
+    amount_paid = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False, default=0.00)
 
     def generate_thumbnail(self):
         if not self.ticket_file:
