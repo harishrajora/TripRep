@@ -20,6 +20,7 @@ urlpatterns = [
     path('save_ticket/', views.save_ticket, name='save_ticket'),
     path('view_ticket/<int:ticket_id>/', views.view_ticket, name='view_ticket'),
     path('delete_ticket/<int:ticket_id>/', views.delete_ticket, name='delete_ticket'),
+    path('statistics/', views.statistics, name='statistics'),
 ]
 
 if settings.DEBUG:

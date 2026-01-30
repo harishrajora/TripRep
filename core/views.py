@@ -10,6 +10,7 @@ from google import genai
 from google.genai import types
 from django.conf import settings
 from django.utils import timezone
+from django.db.models import Sum, Count
 
 def index(request):
     return render(request, 'core/index.html')
@@ -215,3 +216,24 @@ def delete_ticket(request, ticket_id):
     except Tickets.DoesNotExist:
         print(f"Ticket with ID {ticket_id} does not exist or does not belong to user {request.user.username}")
     return redirect('core:tickets')
+
+def statistics(request):
+    if request.user.is_anonymous:
+        return redirect('core:login')
+    
+    tickets = Tickets.objects.filter(user=request.user)
+    
+    total_tickets = tickets.count()
+    total_amount_spent = tickets.aggregate(Sum('amount_paid'))['amount_paid__sum'] or 0.00
+    
+    # Tickets by type
+    ticket_types = tickets.values('ticket_type').annotate(count=Count('ticket_type'))
+    ticket_type_data = {item['ticket_type']: item['count'] for item in ticket_types}
+    
+    context = {
+        'total_tickets': total_tickets,
+        'total_amount_spent': total_amount_spent,
+        'ticket_type_data': ticket_type_data,
+    }
+    
+    return render(request, 'core/statistics.html', context)

@@ -1,0 +1,18 @@
+{% extends 'core/base.html' %}
+{% block title %} <title>Statistics </title>{% endblock %}
+
+{% block content %}
+  <section class="statistics-section">
+    <h1 class="statistics-title">Your Ticket Statistics</h1>
+    <div class="statistics-content">
+      <p>Total Tickets: {{ total_tickets }}</p>
+      <p>Total Amount Spent: ${{ total_amount_spent }}</p>
+      <h2>Tickets by Type:</h2>
+      <ul>
+        {% for ticket_type, count in tickets_by_type.items %}
+          <li>{{ ticket_type }}: {{ count }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    </section>
+{% endblock %}
