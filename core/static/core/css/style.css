@@ -248,14 +248,14 @@ body.login-page{
   min-height: 200px;
   max-height: 250px;  /* maximum height */
   overflow: hidden;
-  flex: 0 0 340px;
-  margin-right: 1.25rem;  /* Space on the right */
+  flex: 0 1 300px;
+  max-width: 400px; 
+  width: 100%;
   margin-bottom: 1.25rem;
   display:flex;
   align-items:center;
   justify-content:flex-start;
   position:relative;
-  width:340px;
   height:100%;
   padding:10px;
   border-radius:14px;
@@ -314,11 +314,22 @@ body.login-page{
 .tickets-card:active{ transform: translateY(-4px) rotateX(0deg) scale(0.998); transition: transform 120ms ease; }
 
 @media (max-width:640px){
-  .tickets-card{ width:calc(100% - 2rem); height:140px; padding:14px; display:flex; align-items:center; justify-content:center;}
-  .dashboard-grid{ flex-direction:column; align-items:flex-start; gap:0.75rem; padding:1rem 0; }
+  .tickets-card{ width:calc(100% - 2rem); height:140px; padding:14px; display:flex; align-items:center; justify-content:center; flex: 1 1 100%}
+  .dashboard-grid{ flex-direction:column; align-items:center; gap:0.75rem; padding:1rem 0; }
   .tickets-inner {height: 100%; display: flex; align-items: center; justify-content: center;}
 }
 
+@media (max-width: 1024px) {
+  .tickets-card {
+    flex: 0 1 45%; 
+    min-width: 320px; 
+    max-width: 500px;
+    margin: 0.5rem;
+  }
+  .dashboard-grid{
+    justify-content: center;
+  }
+}
 
 .ticket-pdf-upload {
   /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
