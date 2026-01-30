@@ -89,13 +89,11 @@ def process_file(file):
     prompt = "Check whether this is a ticket of any kind or not. If it is a ticket, your response should" \
     "start with 'Yes, this is a ticket. Then list down the following things in a JSON format: \n" \
     "1. Source \n 2. Destination \n 3. Ticket Type \n 4. Description \n 5. Date of Journey \n 6. Title \n " \
-    "7. Booked Through \n 8. Amount \n"
+    "7. Booked Through \n"
     "There are few things to remember while extracting the information. The 'Ticket Type' should have value strctly" \
     " as one of the following: Flight, Bus, Train, Ferry, Other. No other word should be used in addition to this. "
     "The 'Booked Through' field means the website"
-    "used for booking the ticket. For ex, Agoda or Booking.com. The 'Amount' field means the total amount paid"
-    "by the user for bookings. Do not include the currency in the result such as INR or JPY but just the numerical part."
-    "So if the amount is 1300 INR, just write 1300 as the value."
+    "used for booking the ticket. For ex, Agoda or Booking.com."
     " The Title field should be a short title for the " \
     "ticket. If any information is missing, use 'Not Found' as the value for that field. the description should" \
     "not exceed 100 words. If it is not a ticket, response should start with 'No, it's not a ticket'. In this" \
