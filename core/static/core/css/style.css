@@ -255,9 +255,10 @@ body.login-page{
   position:relative;
   width:340px;
   height:100%;
-  padding:20px;
+  padding:6rem;
   border-radius:14px;
   text-decoration:none;
+  text-align: center;
   color:#071423;
   font-weight:900;
   font-size:1.35rem;
@@ -312,7 +313,7 @@ body.login-page{
 .tickets-card:active{ transform: translateY(-4px) rotateX(0deg) scale(0.998); transition: transform 120ms ease; }
 
 @media (max-width:640px){
-  .tickets-card{ width:calc(100% - 2rem); height:140px; padding:14px; }
+  .tickets-card{ width:calc(100% - 2rem); height:140px; padding:14px; padding-top: 50%;}
   .dashboard-grid{ flex-direction:column; align-items:flex-start; gap:0.75rem; padding:1rem 0; }
 }
 
