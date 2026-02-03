@@ -23,6 +23,7 @@ urlpatterns = [
     path('statistics/', views.statistics, name='statistics'),
     path('profile/', views.profile, name='profile'),
     path('update_profile/', views.update_profile, name='update_profile'),
+    path('reservations/', views.reservations, name='reservations'),
 ]
 
 if settings.DEBUG:

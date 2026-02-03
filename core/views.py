@@ -261,3 +261,8 @@ def update_profile(request):
         return render(request, 'core/profile.html', {'message': 'Profile updated successfully'})
     
     return render(request, 'core/profile.html', {'message': 'Profile update failed'})
+
+def reservations(request):
+    if request.user.is_anonymous:
+        return redirect('core:login')
+    return render(request, 'core/reservations.html')
