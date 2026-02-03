@@ -15,6 +15,11 @@ from django.db.models import Sum, Count
 def index(request):
     return render(request, 'core/index.html')
 
+def profile(request):
+    if request.user.is_anonymous:
+        return redirect('core:login')
+    return render(request, 'core/profile.html', {'message': 'Update Profile'})
+
 def about_triprep(request):
     """Render a simple About page (Coming Soon)."""
     return render(request, 'core/about_triprep.html')
@@ -237,3 +242,22 @@ def statistics(request):
     }
     
     return render(request, 'core/statistics.html', context)
+
+
+def update_profile(request):
+    if request.user.is_anonymous:
+        return redirect('core:login')
+    
+    if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        
+        user = request.user
+        user.first_name = first_name
+        user.last_name = last_name
+        User.objects.filter(email=user.email).update(first_name=first_name, last_name=last_name)
+        print(f"Profile updated for user {user.username}")
+        return render(request, 'core/profile.html', {'message': 'Profile updated successfully'})
+    
+    return render(request, 'core/profile.html', {'message': 'Profile update failed'})

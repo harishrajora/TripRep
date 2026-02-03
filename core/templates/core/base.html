@@ -16,6 +16,7 @@
     <a href="{% url 'core:about_triprep' %}" class="top-link what-link">What Are We</a>
     {% if user.is_authenticated %}
     <a href="{% url 'core:dashboard' %}" class="top-link what-link">Dashboard</a>
+    <a href="{% url 'core:profile' %}" class="top-link what-link">Profile</a>
     <a href="{% url 'core:logout' %}" class="top-link what-link">Logout</a>
     {% else %}
     <a href="{% url 'core:login' %}?next=/" class="top-link login-link">Login</a>
