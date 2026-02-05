@@ -650,11 +650,59 @@ input[type="number"] {
   margin-top: 100px;
 }
 
-.view_ticket_title{
-  margin:0 0 0.6rem 0;
-  font-weight:800;
-  font-size:clamp(2rem,6vw,4.5rem);
-  line-height:1.03;
-  color:#0b1220;
-  transition:transform 300ms ease;
+.view-tickets-card {
+  display: block;
+  background-color: #5e80a6; /* Blue background */
+  padding: 15px 20px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: white;
+  transition: background-color 0.3s ease;
+  overflow: hidden; /* Prevents overflow */
+}
+
+.view-tickets-card:hover {
+  background-color: #304254; /* Darker blue on hover */
+}
+
+.view-tickets-inner {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap; /* Allows wrapping on smaller screens */
+}
+
+.view-ticket-title,
+.view-ticket-route,
+.view-ticket-date,
+.view-ticket-uploaded {
+  margin: 0;
+  color: white;
+  overflow: hidden; /* Prevents overflow */
+  text-overflow: ellipsis; /* Adds ... for overflow text */
+  white-space: nowrap; /* Keeps text in one line */
+  min-width: 0; /* Allows flex items to shrink below content size */
+}
+
+.view-ticket-title {
+  font-size: 18px;
+  font-weight: bold;
+  flex: 1 1 auto; /* Allows shrinking */
+  max-width: 200px; /* Optional: limits max width */
+}
+
+.view-ticket-route {
+  flex: 1 1 auto; /* Allows shrinking */
+  max-width: 180px; /* Optional: limits max width */
+}
+
+.view-ticket-date {
+  flex: 0 0 auto;
+}
+
+.view-ticket-uploaded {
+  flex: 1 1 auto; /* Allows shrinking */
+  font-size: 14px;
+  margin-left: auto;
 }

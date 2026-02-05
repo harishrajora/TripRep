@@ -76,7 +76,7 @@ def logout_view(request):
 def tickets(request):
     if request.user.is_anonymous:
         return redirect('core:login')
-    tickets = Tickets.objects.filter(user=request.user)
+    tickets = Tickets.objects.filter(user=request.user).order_by('-uploaded_at')
     # print(tickets)
     return render(request, 'core/tickets.html', {'tickets': tickets})
 

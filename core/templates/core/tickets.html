@@ -6,19 +6,19 @@
       <a href="{% url 'core:add_ticket' %}" class="btn-signup">ADD A TICKET</a>
     </div>
     <!-- <ul class="tickets-list"> -->
-      <div class="dashboard-grid"></div>
+      <br>
+      <div class="view-ticket-grid"></div>
       {% for ticket in tickets %}
-      <a href="{% url 'core:view_ticket' ticket.id %}" class="tickets-card" aria-label="Tickets" role="link">
-        <div class="tickets-inner">
-          <h2 class="ticket-title">{{ ticket.title }}</h2>
-          <p class="ticket-route">{{ ticket.source }} <strong>---></strong> {{ ticket.destination }}</p>
-          <p class="ticket-date">{{ ticket.date_of_journey }}</p>
-          <p class="ticket-uploaded"><em>Uploaded at: {{ ticket.uploaded_at }}</em></p>
+      <a href="{% url 'core:view_ticket' ticket.id %}" class="view-tickets-card" aria-label="Tickets" role="link">
+        <div class="view-tickets-inner">
+          <h2 class="view-ticket-title">{{ ticket.title }}</h2>
+          <p class="view-ticket-route">{{ ticket.source }} <strong>---></strong> {{ ticket.destination }}</p>
+          <p class="view-ticket-date">{{ ticket.date_of_journey }}</p>
+          <p class="view-ticket-uploaded"><em>Uploaded at: {{ ticket.uploaded_at }}</em></p>
         </div>
       </a>
       {% endfor %}
       </div>
-    </ul>
   {% else %}
   <section class="hero">
     <h1 class="hero-title">You have no tickets!!</h1>
