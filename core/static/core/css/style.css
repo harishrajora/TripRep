@@ -706,3 +706,18 @@ input[type="number"] {
   font-size: 14px;
   margin-left: auto;
 }
+
+.ticket-details {
+  width: 100%;
+  max-width: 100%; /* Ensure it doesn't exceed container */
+  overflow-wrap: break-word; /* Break long words */
+  word-wrap: break-word; /* Legacy support */
+}
+
+.ticket-details p {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word; /* More aggressive breaking if needed */
+  white-space: normal; /* Ensure text wraps */
+  margin: 0.5rem 0; /* Add some spacing */
+}
