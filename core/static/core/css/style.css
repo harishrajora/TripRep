@@ -348,6 +348,56 @@ body.login-page{
   z-index: 1;
 }
 
+.ticket-processing-loader {
+  max-width: 600px;
+  margin: 8px auto 0;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  min-height: 44px;
+  box-sizing: border-box;
+}
+
+.ticket-processing-spinner {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #ffffff;
+  animation: ticket-spinner-spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes ticket-spinner-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ticket-upload-error {
+  max-width: 600px;
+  margin: 10px auto 0;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 110, 110, 0.5);
+  background: rgba(173, 27, 27, 0.22);
+  color: #ffecec;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  box-sizing: border-box;
+}
+
 .ticket-pdf-upload label {
   display: block;
   color: #ffffff;
@@ -426,6 +476,18 @@ body.login-page{
     font-size: 16px;
     margin-bottom: 12px;
   }
+
+  .ticket-processing-loader,
+  .ticket-upload-error {
+    margin-top: 8px;
+    padding: 9px 12px;
+    font-size: 14px;
+  }
+
+  .ticket-processing-spinner {
+    width: 18px;
+    height: 18px;
+  }
   
   .ticket-pdf-upload input[type="file"] {
     padding: 12px 15px;
@@ -448,6 +510,17 @@ body.login-page{
   .ticket-pdf-upload label {
     font-size: 15px;
     margin-bottom: 10px;
+  }
+
+  .ticket-processing-loader,
+  .ticket-upload-error {
+    font-size: 13px;
+  }
+
+  .ticket-processing-spinner {
+    width: 16px;
+    height: 16px;
+    border-width: 2px;
   }
   
   .ticket-pdf-upload input[type="file"] {
