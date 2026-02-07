@@ -266,3 +266,8 @@ def reservations(request):
     if request.user.is_anonymous:
         return redirect('core:login')
     return render(request, 'core/reservations.html')
+
+def add_reservation(request):
+    if request.user.is_anonymous:
+        return redirect('core:login')
+    return render(request, 'core/add_reservation.html')

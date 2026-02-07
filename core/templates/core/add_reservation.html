@@ -1,0 +1,49 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}
+<title>Add Reservation</title>
+  {% endblock %}
+<!-- {% block addJS %}
+<script src="{% static 'add_ticket.js' %}"></script>
+{% endblock %} -->
+{% block content %}
+  <section class="add-ticket-section">
+    <center>
+    <h1 class="add-ticket-title">Add A New Reservation</h1>
+    </center>
+    <!-- <form method="post" action="{% url 'core:create_ticket' %}" class="add-ticket-form"> -->
+    <form method="post" action="{% url 'core:save_reservation' %}" class="add-ticket-form" enctype="multipart/form-data">
+      {% csrf_token %}
+      <section class="ticket-pdf-upload">
+        <div class="form-group">
+          <label for="ticket_pdf_label">Upload Reservation PDF:</label>
+          <input type="file" id="ticket_pdf" name="ticket_pdf" accept="application/pdf" required>
+          <br>
+        </div>
+        <!-- <center>
+        <a href="{% url 'core:process_ticket_pdf' %}">
+          <button type="submit" id="process_pdf_btn" class="btn-process-pdf">Confirm Ticket</button>
+        </a>
+        </center> -->
+       </section>
+      <div class="form-group" id = "ticket_upload_options" style="visibility: visible;">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required><br>
+        <label for="ticket_type">Reservation Type:</label>
+        <input type="text" id="reservation_type" name="reservation_type" required><br>
+        <label for="booked_through">Booked Through:</label>
+        <input type="text" id="booked_through" name="booked_through" required><br>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4" required></textarea><br>
+        <label for="date_of_journey">Date of Reservation:</label>
+        <input type="date" id="date_of_journey" name="date_of_journey" required><br>
+        <label for="amount_paid">Amount Paid:</label>
+        <input type="number" value="0.00" id="amount_paid" name="amount_paid" max="10000000" placeholder="Amount Paid" required>
+      </div>
+        <br>
+        <center>
+        <button type="submit" id="save_ticket_btn" class="btn-save-ticket">Save Ticket</button>
+        </center>
+    
+
+{% endblock %}

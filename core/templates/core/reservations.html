@@ -1,7 +1,31 @@
 {% extends 'core/base.html' %}
-
+{% block title %}<title>Your Reservations</title>{% endblock %}
 {% block content %}
-  <section class="coming-soon">
-    <div> <strong>Coming Soon</strong> </div>
-  </section>
+  {% if tickets %}
+    <div class="hero-actions">
+      <a href="{% url 'core:add_ticket' %}" class="btn-signup">ADD A RESERVATION</a>
+    </div>
+    <!-- <ul class="tickets-list"> -->
+      <br>
+      <div class="view-ticket-grid"></div>
+      {% for reservation in reservations %}
+      <a href="{% url 'core:view_reservation' reservation.id %}" class="view-tickets-card" aria-label="Tickets" role="link">
+        <div class="view-tickets-inner">
+          <h2 class="view-ticket-title">{{ reservation.name }}</h2>
+          <p class="view-ticket-route">{{ reservation.reservation_type }}</p>
+          <p class="view-ticket-date">{{ reservation.date_of_reservation }}</p>
+          <p class="view-ticket-uploaded"><em>Uploaded at: {{ reservation.uploaded_at }}</em></p>
+        </div>
+      </a>
+      {% endfor %}
+      </div>
+  {% else %}
+  <section class="hero">
+    <h1 class="hero-title">You have no reservations!!</h1>
+    <p class="hero-sub">Add one now using the below button</p>
+    <div class="hero-actions">
+      <a href="{% url 'core:add_ticket' %}" class="btn-signup">ADD A RESERVATION</a>
+    </div>
+   </section>
+  {% endif %}
 {% endblock %}
