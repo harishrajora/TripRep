@@ -1,9 +1,9 @@
 {% extends 'core/base.html' %}
 {% block title %}<title>Your Reservations</title>{% endblock %}
 {% block content %}
-  {% if tickets %}
+  {% if reservations %}
     <div class="hero-actions">
-      <a href="{% url 'core:add_ticket' %}" class="btn-signup">ADD A RESERVATION</a>
+      <a href="{% url 'core:add_reservation' %}" class="btn-signup">ADD A RESERVATION</a>
     </div>
     <!-- <ul class="tickets-list"> -->
       <br>
@@ -24,7 +24,7 @@
     <h1 class="hero-title">You have no reservations!!</h1>
     <p class="hero-sub">Add one now using the below button</p>
     <div class="hero-actions">
-      <a href="{% url 'core:add_ticket' %}" class="btn-signup">ADD A RESERVATION</a>
+      <a href="{% url 'core:add_reservation' %}" class="btn-signup">ADD A RESERVATION</a>
     </div>
    </section>
   {% endif %}

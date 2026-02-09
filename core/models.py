@@ -84,4 +84,4 @@ class Reservations(models.Model):
     amount_paid = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False, default=0.00)
 
     def __str__(self):
-        return self.reservation_id
+        return self.reservation_name

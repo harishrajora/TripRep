@@ -24,6 +24,9 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('update_profile/', views.update_profile, name='update_profile'),
     path('reservations/', views.reservations, name='reservations'),
+    path('add_reservation/', views.add_reservation, name='add_reservation'),
+    path('save_reservation/', views.save_reservation, name='save_reservation'),
+    path('view_reservation/<int:reservation_id>/', views.view_reservation, name='view_reservation'),
 ]
 
 if settings.DEBUG:

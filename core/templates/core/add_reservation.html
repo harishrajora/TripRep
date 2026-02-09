@@ -17,7 +17,7 @@
       <section class="ticket-pdf-upload">
         <div class="form-group">
           <label for="ticket_pdf_label">Upload Reservation PDF:</label>
-          <input type="file" id="ticket_pdf" name="ticket_pdf" accept="application/pdf" required>
+          <input type="file" id="reservation_pdf" name="reservation_pdf" accept="application/pdf" required>
           <br>
         </div>
         <!-- <center>
@@ -29,14 +29,14 @@
       <div class="form-group" id = "ticket_upload_options" style="visibility: visible;">
         <label for="title">Title:</label>
         <input type="text" id="title" name="title" required><br>
-        <label for="ticket_type">Reservation Type:</label>
+        <label for="reservation_type">Reservation Type:</label>
         <input type="text" id="reservation_type" name="reservation_type" required><br>
         <label for="booked_through">Booked Through:</label>
         <input type="text" id="booked_through" name="booked_through" required><br>
         <label for="description">Description:</label>
         <textarea id="description" name="description" rows="4" required></textarea><br>
-        <label for="date_of_journey">Date of Reservation:</label>
-        <input type="date" id="date_of_journey" name="date_of_journey" required><br>
+        <label for="date_of_reservation">Date of Reservation:</label>
+        <input type="date" id="date_of_reservation" name="date_of_reservation" required><br>
         <label for="amount_paid">Amount Paid:</label>
         <input type="number" value="0.00" id="amount_paid" name="amount_paid" max="10000000" placeholder="Amount Paid" required>
       </div>

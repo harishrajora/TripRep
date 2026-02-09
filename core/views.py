@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import SignupForm
-from .models import Tickets
+from .models import Tickets, Reservations
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from google import genai
@@ -197,6 +197,26 @@ def save_ticket(request):
     else:
         return redirect('core:add_ticket')
 
+def save_reservation(request):
+    if request.method == 'POST':
+        if request.user.is_anonymous:
+            return redirect('core:login')
+        # Process reservation data here
+        print("Reservation data received:", request.POST)
+        reservation = Reservations(
+            user=request.user,
+            reservation_name=request.POST.get('title'),
+            reservation_file=request.FILES.get('reservation_pdf'),
+            description=request.POST.get('description'),
+            date_of_reservation=request.POST.get('date_of_reservation'),
+            reservation_type=request.POST.get('reservation_type'),
+            booked_through=request.POST.get('booked_through'),
+            amount_paid=request.POST.get('amount_paid', '0.00')
+        )
+        reservation.save()
+        return redirect('core:reservations')
+    else:
+        return redirect('core:add_reservation')
 
 def view_ticket(request, ticket_id):
     if request.user.is_anonymous:
@@ -265,9 +285,22 @@ def update_profile(request):
 def reservations(request):
     if request.user.is_anonymous:
         return redirect('core:login')
-    return render(request, 'core/reservations.html')
+    reservations = Reservations.objects.filter(user=request.user).order_by('-uploaded_at')
+    print("Reservations fetched = ", reservations)
+    return render(request, 'core/reservations.html', {'reservations': reservations})
 
 def add_reservation(request):
     if request.user.is_anonymous:
         return redirect('core:login')
     return render(request, 'core/add_reservation.html')
+
+def view_reservation(request, reservation_id):
+    if request.user.is_anonymous:
+        return redirect('core:login')
+    try:
+        reservation = Reservations.objects.get(id=reservation_id, user=request.user)
+        if reservation.user != request.user:
+            return redirect('core:reservations')
+    except Reservations.DoesNotExist:
+        return redirect('core:reservations')
+    return render(request, 'core/view_reservation.html', {'reservation': reservation})
