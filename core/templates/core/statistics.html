@@ -1,18 +1,177 @@
 {% extends 'core/base.html' %}
-{% block title %} <title>Statistics </title>{% endblock %}
+{% block title %} <title>Statistics</title>{% endblock %}
 
 {% block content %}
   <section class="statistics-section">
-    <h1 class="statistics-title">Your Ticket Statistics</h1>
-    <div class="statistics-content">
-      <p>Total Tickets: {{ total_tickets }}</p>
-      <p>Total Amount Spent: ${{ total_amount_spent }}</p>
-      <h2>Tickets by Type:</h2>
-      <ul>
-        {% for ticket_type, count in tickets_by_type.items %}
-          <li>{{ ticket_type }}: {{ count }}</li>
+    <h1 class="statistics-title">Amount Spent: <span id="amountValue">0.00</span></h1>
+
+    <div class="stats-controls">
+      <label for="yearSelect" class="stats-label">Year</label>
+      <select id="yearSelect" class="stats-select">
+        <option value="all">All</option>
+        {% for y in years %}
+          <option value="{{ y }}" {% if y == default_year %}selected{% endif %}>{{ y }}</option>
         {% endfor %}
-      </ul>
+      </select>
+
+      <button id="platformBtn" class="stats-button">Platforms</button>
     </div>
-    </section>
+
+    <div class="stats-chart-container">
+      <canvas id="statsChart" class="stats-chart"></canvas>
+      <div id="emptyMessage" class="hero" style="display:none; text-align:center;">
+        <h1 class="hero-title">You haven't made any bookings!</h1>
+      </div>
+    </div>
+
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+  <script>
+    const dataUrl = "{% url 'core:statistics_data' %}";
+    const yearSelect = document.getElementById('yearSelect');
+    const platformBtn = document.getElementById('platformBtn');
+    const ctx = document.getElementById('statsChart').getContext('2d');
+    let currentMode = 'category';
+    let statsChart = null;
+
+    // plugin to draw center text (total) inside doughnut
+    const centerTextPlugin = {
+      id: 'centerText',
+      beforeDraw(chart){
+        const opts = chart.options.plugins.centerText;
+        if(!opts) return;
+        const ctx = chart.ctx;
+        const width = chart.width;
+        const height = chart.height;
+        ctx.save();
+        const fontSize = opts.fontSize || 20;
+        ctx.font = `600 ${fontSize}px Inter, Arial`;
+        ctx.fillStyle = opts.color || '#0b1220';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        const text = opts.text || '';
+        ctx.fillText(text, width/2, height/2);
+        ctx.restore();
+      }
+    };
+
+    Chart.register(centerTextPlugin);
+    Chart.register(ChartDataLabels);
+
+    function renderChart(labels, data){
+      // build palette and simple gradients
+      const basePalette = ['#4e79a7','#f28e2b','#e15759','#76b7b2','#59a14f','#edc949','#af7aa1','#ff9da7','#9c755f','#bab0ab'];
+      const bg = labels.map((l,i)=> basePalette[i % basePalette.length]);
+
+      const cfg = {
+        type: 'doughnut',
+        data: {
+          labels: labels,
+          datasets: [{
+            data: data,
+            backgroundColor: bg,
+            borderColor: '#fff',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '58%',
+          animation: {animateRotate:true, duration:700},
+          plugins: {
+            legend: {position: 'bottom', labels: {usePointStyle:true, padding:12}},
+            tooltip: {
+              callbacks: {
+                label: function(context){
+                  const val = context.raw || 0;
+                  const sum = context.dataset.data.reduce((a,b)=>a+(parseFloat(b)||0),0);
+                  const pct = sum ? (val/sum*100).toFixed(1) : '0.0';
+                  return `${context.label}: $${formatCurrency(val)} (${pct}%)`;
+                }
+              }
+            },
+            datalabels: {
+              color: '#fff',
+              formatter: (value, ctx) => {
+                const sum = ctx.dataset.data.reduce((a,b)=>a+(parseFloat(b)||0),0);
+                const pct = sum ? (value/sum*100).toFixed(0) : '0';
+                return `${pct}%`;
+              },
+              font: {weight:600, size:12}
+            },
+            centerText: {text: document.getElementById('amountValue').textContent, color:'#0b1220', fontSize:20}
+          }
+        }
+      };
+      if(statsChart) statsChart.destroy();
+      statsChart = new Chart(ctx, cfg);
+    }
+
+    async function fetchAndUpdate(){
+      const year = yearSelect.value || '{{ default_year }}' || 'all';
+      const mode = currentMode;
+      const url = `${dataUrl}?year=${encodeURIComponent(year)}&mode=${encodeURIComponent(mode)}`;
+      try{
+        const res = await fetch(url);
+        if(!res.ok) throw new Error('Network error');
+        const json = await res.json();
+        const labels = json.labels || [];
+        const data = json.data || [];
+        const total = data.reduce((a,b)=>a+(parseFloat(b)||0),0);
+        const amountEl = document.getElementById('amountValue');
+        amountEl.textContent = total.toFixed(2);
+
+        const emptyMessage = document.getElementById('emptyMessage');
+        const canvas = document.getElementById('statsChart');
+        if(total <= 0){
+          // show empty message
+          emptyMessage.style.display = 'block';
+          canvas.style.display = 'none';
+        } else {
+          emptyMessage.style.display = 'none';
+          canvas.style.display = '';
+        }
+
+        renderChart(labels, data);
+        // update center text plugin value if chart exists
+        if(statsChart && statsChart.options && statsChart.options.plugins && statsChart.options.plugins.centerText){
+          statsChart.options.plugins.centerText.text = formatCurrency(total.toFixed(2));
+          statsChart.update();
+        }
+      }catch(e){
+        console.error(e);
+        document.getElementById('amountValue').textContent = '0.00';
+        document.getElementById('emptyMessage').style.display = 'block';
+        document.getElementById('statsChart').style.display = 'none';
+      }
+    }
+
+    // toggle platforms button (uses .active class for styling)
+    platformBtn.addEventListener('click', ()=>{
+      if(platformBtn.classList.contains('active')){
+        platformBtn.classList.remove('active');
+        currentMode = 'category';
+      } else {
+        platformBtn.classList.add('active');
+        currentMode = 'platforms';
+      }
+      fetchAndUpdate();
+    });
+
+    yearSelect.addEventListener('change', ()=>fetchAndUpdate());
+
+    document.addEventListener('DOMContentLoaded', ()=>{
+      // initial load
+      fetchAndUpdate();
+    });
+
+    function formatCurrency(n){
+      // ensure number and add commas
+      const num = parseFloat(n) || 0;
+      return num.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2});
+    }
+  </script>
 {% endblock %}

@@ -11,6 +11,8 @@ from google.genai import types
 from django.conf import settings
 from django.utils import timezone
 from django.db.models import Sum, Count
+from decimal import Decimal
+import json
 
 def index(request):
     return render(request, 'core/index.html')
@@ -245,23 +247,78 @@ def delete_ticket(request, ticket_id):
 def statistics(request):
     if request.user.is_anonymous:
         return redirect('core:login')
-    
-    tickets = Tickets.objects.filter(user=request.user)
-    
-    total_tickets = tickets.count()
-    total_amount_spent = tickets.aggregate(Sum('amount_paid'))['amount_paid__sum'] or 0.00
-    
-    # Tickets by type
-    ticket_types = tickets.values('ticket_type').annotate(count=Count('ticket_type'))
-    ticket_type_data = {item['ticket_type']: item['count'] for item in ticket_types}
-    
+
+    # gather available years from tickets and reservations
+    ticket_years = list(Tickets.objects.filter(user=request.user).values_list('date_of_journey__year', flat=True).distinct())
+    reservation_years = list(Reservations.objects.filter(user=request.user).values_list('date_of_reservation__year', flat=True).distinct())
+    # ensure current year is present as default selection even if no transactions
+    current_year = timezone.now().year
+    years_set = {y for y in (ticket_years + reservation_years) if y}
+    years_set.add(current_year)
+    years = sorted(list(years_set), reverse=True)
+
+    # initial category totals (no year filter -> overall)
+    tickets_sum = Tickets.objects.filter(user=request.user).aggregate(Sum('amount_paid'))['amount_paid__sum'] or Decimal('0.00')
+    reservations_sum = Reservations.objects.filter(user=request.user).aggregate(Sum('amount_paid'))['amount_paid__sum'] or Decimal('0.00')
+
     context = {
-        'total_tickets': total_tickets,
-        'total_amount_spent': total_amount_spent,
-        'ticket_type_data': ticket_type_data,
+        'years': years,
+        'default_year': current_year,
+        'initial_category': {
+            'Tickets': float(tickets_sum),
+            'Hotels': float(reservations_sum),
+        }
     }
-    
+
     return render(request, 'core/statistics.html', context)
+
+
+@require_http_methods(["GET"])
+def statistics_data(request):
+    """Return JSON data for the statistics chart.
+
+    Query params:
+    - year: integer year or 'all' (optional)
+    - mode: 'category' (default) or 'platforms'
+    """
+    if request.user.is_anonymous:
+        return JsonResponse({'error': 'unauthenticated'}, status=403)
+
+    year = request.GET.get('year')
+    mode = request.GET.get('mode', 'category')
+
+    tickets_qs = Tickets.objects.filter(user=request.user)
+    reservations_qs = Reservations.objects.filter(user=request.user)
+
+    if year and year != 'all':
+        try:
+            y = int(year)
+            tickets_qs = tickets_qs.filter(date_of_journey__year=y)
+            reservations_qs = reservations_qs.filter(date_of_reservation__year=y)
+        except ValueError:
+            pass
+
+    if mode == 'platforms':
+        # aggregate by booked_through across tickets and reservations
+        platform_sums = {}
+        for item in tickets_qs.values('booked_through').annotate(amount=Sum('amount_paid')):
+            key = item['booked_through'] or 'Unknown'
+            platform_sums[key] = platform_sums.get(key, Decimal('0.00')) + (item['amount'] or Decimal('0.00'))
+        for item in reservations_qs.values('booked_through').annotate(amount=Sum('amount_paid')):
+            key = item['booked_through'] or 'Unknown'
+            platform_sums[key] = platform_sums.get(key, Decimal('0.00')) + (item['amount'] or Decimal('0.00'))
+
+        labels = list(platform_sums.keys())
+        data = [float(platform_sums[l]) for l in labels]
+
+    else:
+        # default: category (Tickets vs Hotels)
+        tickets_sum = tickets_qs.aggregate(Sum('amount_paid'))['amount_paid__sum'] or Decimal('0.00')
+        reservations_sum = reservations_qs.aggregate(Sum('amount_paid'))['amount_paid__sum'] or Decimal('0.00')
+        labels = ['Tickets', 'Hotels']
+        data = [float(tickets_sum), float(reservations_sum)]
+
+    return JsonResponse({'labels': labels, 'data': data})
 
 
 def update_profile(request):
@@ -304,3 +361,4 @@ def view_reservation(request, reservation_id):
     except Reservations.DoesNotExist:
         return redirect('core:reservations')
     return render(request, 'core/view_reservation.html', {'reservation': reservation})
+
