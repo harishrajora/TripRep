@@ -1,0 +1,35 @@
+{% extends 'core/base.html' %}
+
+{% block title %}
+<title> {{reservation.reservation_name}} </title>
+{% endblock %}
+
+{% block content %}
+  <section class="view_ticket-container">
+    <h1 class="view_ticket_title"> {{ reservation.reservation_name }} </h1>
+    <div class="ticket-details">
+      <p><strong>Date of Reservation:</strong> {{ reservation.date_of_reservation }}</p>
+      <p><strong>Reservation Amount:</strong> {{ reservation.amount_paid }}</p>
+      <p><strong>Uploaded at:</strong> {{ reservation.uploaded_at }}</p>
+      <p><strong>Reserved Through:</strong> {{ reservation.booked_through }} </p>
+      {% if reservation.image_thumbnail and reservation.image_thumbnail.url %}
+      <div class="ticket-thumbnail">
+        <h4>Click to view:</h4>
+        <a href="{{ reservation.image_thumbnail.url }}" target="_blank">
+        <img src="{{ reservation.image_thumbnail.url }}" alt="Reservation Thumbnail for {{ reservation.name }}"  class="thumbnail-image"/>
+        </a>
+      </div>
+      <p><strong>Description:</strong> {{reservation.description}}</p>
+      {% endif %}
+      {% if reservation.reservation_file and reservation.reservation_file.url %}
+      <div class="ticket-pdf">
+        <h2><a href="{{ reservation.reservation_file.url }}" target="_blank" rel="noopener noreferrer"><button class="download_pdf">Download</button>
+        </a>
+        <a href="{% url 'core:delete_ticket' reservation.id %}">
+          <button class="btn-delete">Delete</button></h2>
+        </a>
+      </div>
+      {% endif %}
+    </div>
+  </section>  
+{% endblock %}
