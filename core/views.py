@@ -12,6 +12,7 @@ from django.conf import settings
 from django.utils import timezone
 from django.db.models import Sum, Count
 from decimal import Decimal
+from django.core.paginator import Paginator
 import json
 
 def index(request):
@@ -78,8 +79,10 @@ def logout_view(request):
 def tickets(request):
     if request.user.is_anonymous:
         return redirect('core:login')
-    tickets = Tickets.objects.filter(user=request.user).order_by('-uploaded_at')
-    # print(tickets)
+    tickets_list = Tickets.objects.filter(user=request.user).order_by('-uploaded_at')
+    paginator = Paginator(tickets_list, 10)  # 10 tickets per page
+    page_number = request.GET.get('page', 1)
+    tickets = paginator.get_page(page_number)
     return render(request, 'core/tickets.html', {'tickets': tickets})
 
 def add_ticket(request):

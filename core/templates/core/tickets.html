@@ -19,6 +19,24 @@
       </a>
       {% endfor %}
       </div>
+
+      <!-- Pagination Controls -->
+      {% if tickets.has_other_pages %}
+      <div class="pagination" style="margin-top: 30px; text-align: center;">
+        {% if tickets.has_previous %}
+          <a href="?page=1" style="margin: 0 5px;">First</a>
+          <a href="?page={{ tickets.previous_page_number }}" style="margin: 0 5px;">Previous</a>
+        {% endif %}
+        <span style="margin: 0 10px;">
+          Page {{ tickets.number }} of {{ tickets.paginator.num_pages }}
+        </span>
+
+        {% if tickets.has_next %}
+          <a href="?page={{ tickets.next_page_number }}" style="margin: 0 5px;">Next</a>
+          <a href="?page={{ tickets.paginator.num_pages }}" style="margin: 0 5px;">Last</a>
+        {% endif %}
+      </div>
+      {% endif %}
   {% else %}
   <section class="hero">
     <h1 class="hero-title">You have no tickets!!</h1>

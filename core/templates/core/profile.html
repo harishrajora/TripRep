@@ -8,10 +8,12 @@
     <div class="form-group" id = "ticket_upload_options" style="visibility: visible;">
     {% csrf_token %}
     <label for="username">First Name</label>
-    <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" required>
+    <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}">
     <label for="username">Last Name</label>
-    <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" required>
-    </div>  
+    <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}">
+    <label for="change_currency">Change Currency</label>
+    <input type="text" id="change_currency" name="change_currency">
+    </div>
     <br>
     <center>
     <button type="submit" class="download_pdf">Update Profile</button>
