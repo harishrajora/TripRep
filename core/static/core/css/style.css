@@ -348,6 +348,13 @@ body.login-page{
   z-index: 1;
 }
 
+#ticket_processing_loader[hidden],
+#ticket_upload_error[hidden],
+#ticket_upload_options[hidden],
+#save_ticket_btn[hidden] {
+  display: none !important;
+}
+
 .ticket-processing-loader {
   max-width: 600px;
   margin: 8px auto 0;
