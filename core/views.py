@@ -200,9 +200,11 @@ def save_ticket(request):
         )
         ticket.save()
         print(f"Ticket '{title}' saved for user {request.user.username}")
-        return redirect('core:tickets')
+        return booking_saved(request, bookingType='ticket', result='Successful')
+        # return redirect('core:tickets')
     else:
-        return redirect('core:add_ticket')
+        return booking_saved(request, bookingType='ticket', result='Failure')
+        # return redirect('core:add_ticket')
 
 def save_reservation(request):
     if request.method == 'POST':
@@ -221,9 +223,11 @@ def save_reservation(request):
             amount_paid=request.POST.get('amount_paid', '0.00')
         )
         reservation.save()
-        return redirect('core:reservations')
+        return booking_saved(request, bookingType='reservation', result='Successful')
+        # return redirect('core:reservations')
     else:
-        return redirect('core:add_reservation')
+        return booking_saved(request, bookingType='reservation', result='failure')
+        # return redirect('core:add_reservation')
 
 def view_ticket(request, ticket_id):
     if request.user.is_anonymous:
