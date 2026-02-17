@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import SignupForm
-from .models import Tickets, Reservations
+from .models import Tickets, Reservations, UserProfile
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from google import genai
@@ -21,7 +21,9 @@ def index(request):
 def profile(request):
     if request.user.is_anonymous:
         return redirect('core:login')
-    return render(request, 'core/profile.html', {'message': 'Update Profile'})
+    # Get or create user profile
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+    return render(request, 'core/profile.html', {'message': 'Update Profile', 'user_profile': user_profile})
 
 def about_triprep(request):
     """Render a simple About page (Coming Soon)."""
@@ -251,6 +253,10 @@ def statistics(request):
     if request.user.is_anonymous:
         return redirect('core:login')
 
+    # Get user's currency preference
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+    currency = user_profile.currency
+
     # gather available years from tickets and reservations
     ticket_years = list(Tickets.objects.filter(user=request.user).values_list('date_of_journey__year', flat=True).distinct())
     reservation_years = list(Reservations.objects.filter(user=request.user).values_list('date_of_reservation__year', flat=True).distinct())
@@ -267,6 +273,7 @@ def statistics(request):
     context = {
         'years': years,
         'default_year': current_year,
+        'currency': currency,
         'initial_category': {
             'Tickets': float(tickets_sum),
             'Hotels': float(reservations_sum),
@@ -331,14 +338,20 @@ def update_profile(request):
     if request.method == 'POST':
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
-        email = request.POST.get('email')
+        currency = request.POST.get('change_currency', 'INR')
         
         user = request.user
         user.first_name = first_name
         user.last_name = last_name
         User.objects.filter(email=user.email).update(first_name=first_name, last_name=last_name)
-        print(f"Profile updated for user {user.username}")
-        return render(request, 'core/profile.html', {'message': 'Profile updated successfully'})
+        
+        # Get or create user profile and save currency
+        user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+        user_profile.currency = currency
+        user_profile.save()
+        
+        print(f"Profile updated for user {user.username} with currency {currency}")
+        return render(request, 'core/profile.html', {'message': 'Profile updated successfully', 'user_profile': user_profile})
     
     return render(request, 'core/profile.html', {'message': 'Profile update failed'})
 

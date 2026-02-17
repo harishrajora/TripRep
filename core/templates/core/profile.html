@@ -12,7 +12,100 @@
     <label for="username">Last Name</label>
     <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}">
     <label for="change_currency">Change Currency</label>
-    <input type="text" id="change_currency" name="change_currency">
+    <select id="change_currency" name="change_currency">
+        <option value="">-- Select Currency --</option>
+        <option value="USD" {% if user_profile.currency == 'USD' %}selected{% endif %}>USD - United States Dollar</option>
+        <option value="EUR" {% if user_profile.currency == 'EUR' %}selected{% endif %}>EUR - Euro</option>
+        <option value="GBP" {% if user_profile.currency == 'GBP' %}selected{% endif %}>GBP - Pound Sterling</option>
+        <option value="INR" {% if user_profile.currency == 'INR' %}selected{% endif %}>INR - Indian Rupee</option>
+        <option value="AUD" {% if user_profile.currency == 'AUD' %}selected{% endif %}>AUD - Australian Dollar</option>
+        <option value="CAD" {% if user_profile.currency == 'CAD' %}selected{% endif %}>CAD - Canadian Dollar</option>
+        <option value="JPY" {% if user_profile.currency == 'JPY' %}selected{% endif %}>JPY - Japanese Yen</option>
+        <option value="CNY" {% if user_profile.currency == 'CNY' %}selected{% endif %}>CNY - Chinese Yuan</option>
+        <option value="SGD" {% if user_profile.currency == 'SGD' %}selected{% endif %}>SGD - Singapore Dollar</option>
+        <option value="CHF" {% if user_profile.currency == 'CHF' %}selected{% endif %}>CHF - Swiss Franc</option>
+        <option value="NZD" {% if user_profile.currency == 'NZD' %}selected{% endif %}>NZD - New Zealand Dollar</option>
+        <option value="ZAR" {% if user_profile.currency == 'ZAR' %}selected{% endif %}>ZAR - South African Rand</option>
+        <option value="SEK" {% if user_profile.currency == 'SEK' %}selected{% endif %}>SEK - Swedish Krona</option>
+        <option value="NOK" {% if user_profile.currency == 'NOK' %}selected{% endif %}>NOK - Norwegian Krone</option>
+        <option value="DKK" {% if user_profile.currency == 'DKK' %}selected{% endif %}>DKK - Danish Krone</option>
+        <option value="BRL" {% if user_profile.currency == 'BRL' %}selected{% endif %}>BRL - Brazilian Real</option>
+        <option value="MXN" {% if user_profile.currency == 'MXN' %}selected{% endif %}>MXN - Mexican Peso</option>
+        <option value="RUB" {% if user_profile.currency == 'RUB' %}selected{% endif %}>RUB - Russian Ruble</option>
+        <option value="HKD" {% if user_profile.currency == 'HKD' %}selected{% endif %}>HKD - Hong Kong Dollar</option>
+        <option value="KRW" {% if user_profile.currency == 'KRW' %}selected{% endif %}>KRW - South Korean Won</option>
+        <option value="AED" {% if user_profile.currency == 'AED' %}selected{% endif %}>AED - United Arab Emirates Dirham</option>
+        <option value="ARS" {% if user_profile.currency == 'ARS' %}selected{% endif %}>ARS - Argentine Peso</option>
+        <option value="BDT" {% if user_profile.currency == 'BDT' %}selected{% endif %}>BDT - Bangladeshi Taka</option>
+        <option value="BGN" {% if user_profile.currency == 'BGN' %}selected{% endif %}>BGN - Bulgarian Lev</option>
+        <option value="BHD" {% if user_profile.currency == 'BHD' %}selected{% endif %}>BHD - Bahraini Dinar</option>
+        <option value="BND" {% if user_profile.currency == 'BND' %}selected{% endif %}>BND - Brunei Dollar</option>
+        <option value="BOB" {% if user_profile.currency == 'BOB' %}selected{% endif %}>BOB - Bolivian Boliviano</option>
+        <option value="BWP" {% if user_profile.currency == 'BWP' %}selected{% endif %}>BWP - Botswana Pula</option>
+        <option value="BYN" {% if user_profile.currency == 'BYN' %}selected{% endif %}>BYN - Belarusian Ruble</option>
+        <option value="CLP" {% if user_profile.currency == 'CLP' %}selected{% endif %}>CLP - Chilean Peso</option>
+        <option value="COP" {% if user_profile.currency == 'COP' %}selected{% endif %}>COP - Colombian Peso</option>
+        <option value="CRC" {% if user_profile.currency == 'CRC' %}selected{% endif %}>CRC - Costa Rican Colón</option>
+        <option value="CZK" {% if user_profile.currency == 'CZK' %}selected{% endif %}>CZK - Czech Koruna</option>
+        <option value="DOP" {% if user_profile.currency == 'DOP' %}selected{% endif %}>DOP - Dominican Peso</option>
+        <option value="EGP" {% if user_profile.currency == 'EGP' %}selected{% endif %}>EGP - Egyptian Pound</option>
+        <option value="ETB" {% if user_profile.currency == 'ETB' %}selected{% endif %}>ETB - Ethiopian Birr</option>
+        <option value="GHS" {% if user_profile.currency == 'GHS' %}selected{% endif %}>GHS - Ghanaian Cedi</option>
+        <option value="GTQ" {% if user_profile.currency == 'GTQ' %}selected{% endif %}>GTQ - Guatemalan Quetzal</option>
+        <option value="HUF" {% if user_profile.currency == 'HUF' %}selected{% endif %}>HUF - Hungarian Forint</option>
+        <option value="IDR" {% if user_profile.currency == 'IDR' %}selected{% endif %}>IDR - Indonesian Rupiah</option>
+        <option value="ILS" {% if user_profile.currency == 'ILS' %}selected{% endif %}>ILS - Israeli New Shekel</option>
+        <option value="IQD" {% if user_profile.currency == 'IQD' %}selected{% endif %}>IQD - Iraqi Dinar</option>
+        <option value="IRR" {% if user_profile.currency == 'IRR' %}selected{% endif %}>IRR - Iranian Rial</option>
+        <option value="JOD" {% if user_profile.currency == 'JOD' %}selected{% endif %}>JOD - Jordanian Dinar</option>
+        <option value="KES" {% if user_profile.currency == 'KES' %}selected{% endif %}>KES - Kenyan Shilling</option>
+        <option value="KWD" {% if user_profile.currency == 'KWD' %}selected{% endif %}>KWD - Kuwaiti Dinar</option>
+        <option value="KZT" {% if user_profile.currency == 'KZT' %}selected{% endif %}>KZT - Kazakhstani Tenge</option>
+        <option value="LAK" {% if user_profile.currency == 'LAK' %}selected{% endif %}>LAK - Lao Kip</option>
+        <option value="LKR" {% if user_profile.currency == 'LKR' %}selected{% endif %}>LKR - Sri Lankan Rupee</option>
+        <option value="MAD" {% if user_profile.currency == 'MAD' %}selected{% endif %}>MAD - Moroccan Dirham</option>
+        <option value="MDL" {% if user_profile.currency == 'MDL' %}selected{% endif %}>MDL - Moldovan Leu</option>
+        <option value="MXV" {% if user_profile.currency == 'MXV' %}selected{% endif %}>MXV - Mexican Unidad de Inversion (UDI)</option>
+        <option value="MNT" {% if user_profile.currency == 'MNT' %}selected{% endif %}>MNT - Mongolian Tögrög</option>
+        <option value="MUR" {% if user_profile.currency == 'MUR' %}selected{% endif %}>MUR - Mauritian Rupee</option>
+        <option value="MVR" {% if user_profile.currency == 'MVR' %}selected{% endif %}>MVR - Maldivian Rufiyaa</option>
+        <option value="MWK" {% if user_profile.currency == 'MWK' %}selected{% endif %}>MWK - Malawian Kwacha</option>
+        <option value="MYR" {% if user_profile.currency == 'MYR' %}selected{% endif %}>MYR - Malaysian Ringgit</option>
+        <option value="NGN" {% if user_profile.currency == 'NGN' %}selected{% endif %}>NGN - Nigerian Naira</option>
+        <option value="NPR" {% if user_profile.currency == 'NPR' %}selected{% endif %}>NPR - Nepalese Rupee</option>
+        <option value="OMR" {% if user_profile.currency == 'OMR' %}selected{% endif %}>OMR - Omani Rial</option>
+        <option value="PAB" {% if user_profile.currency == 'PAB' %}selected{% endif %}>PAB - Panamanian Balboa</option>
+        <option value="PEN" {% if user_profile.currency == 'PEN' %}selected{% endif %}>PEN - Peruvian Sol</option>
+        <option value="PHP" {% if user_profile.currency == 'PHP' %}selected{% endif %}>PHP - Philippine Peso</option>
+        <option value="PKR" {% if user_profile.currency == 'PKR' %}selected{% endif %}>PKR - Pakistani Rupee</option>
+        <option value="PLN" {% if user_profile.currency == 'PLN' %}selected{% endif %}>PLN - Polish Złoty</option>
+        <option value="PYG" {% if user_profile.currency == 'PYG' %}selected{% endif %}>PYG - Paraguayan Guaraní</option>
+        <option value="QAR" {% if user_profile.currency == 'QAR' %}selected{% endif %}>QAR - Qatari Riyal</option>
+        <option value="RON" {% if user_profile.currency == 'RON' %}selected{% endif %}>RON - Romanian Leu</option>
+        <option value="RSD" {% if user_profile.currency == 'RSD' %}selected{% endif %}>RSD - Serbian Dinar</option>
+        <option value="SHP" {% if user_profile.currency == 'SHP' %}selected{% endif %}>SHP - Saint Helena Pound</option>
+        <option value="SOS" {% if user_profile.currency == 'SOS' %}selected{% endif %}>SOS - Somali Shilling</option>
+        <option value="SRD" {% if user_profile.currency == 'SRD' %}selected{% endif %}>SRD - Surinamese Dollar</option>
+        <option value="SYP" {% if user_profile.currency == 'SYP' %}selected{% endif %}>SYP - Syrian Pound</option>
+        <option value="THB" {% if user_profile.currency == 'THB' %}selected{% endif %}>THB - Thai Baht</option>
+        <option value="TND" {% if user_profile.currency == 'TND' %}selected{% endif %}>TND - Tunisian Dinar</option>
+        <option value="TRY" {% if user_profile.currency == 'TRY' %}selected{% endif %}>TRY - Turkish Lira</option>
+        <option value="TTD" {% if user_profile.currency == 'TTD' %}selected{% endif %}>TTD - Trinidad and Tobago Dollar</option>
+        <option value="TWD" {% if user_profile.currency == 'TWD' %}selected{% endif %}>TWD - New Taiwan Dollar</option>
+        <option value="UAH" {% if user_profile.currency == 'UAH' %}selected{% endif %}>UAH - Ukrainian Hryvnia</option>
+        <option value="UGX" {% if user_profile.currency == 'UGX' %}selected{% endif %}>UGX - Ugandan Shilling</option>
+        <option value="UYU" {% if user_profile.currency == 'UYU' %}selected{% endif %}>UYU - Uruguayan Peso</option>
+        <option value="UZS" {% if user_profile.currency == 'UZS' %}selected{% endif %}>UZS - Uzbekistani Som</option>
+        <option value="VND" {% if user_profile.currency == 'VND' %}selected{% endif %}>VND - Vietnamese Dong</option>
+        <option value="VUV" {% if user_profile.currency == 'VUV' %}selected{% endif %}>VUV - Vanuatu Vatu</option>
+        <option value="XAF" {% if user_profile.currency == 'XAF' %}selected{% endif %}>XAF - Central African CFA Franc</option>
+        <option value="XCD" {% if user_profile.currency == 'XCD' %}selected{% endif %}>XCD - East Caribbean Dollar</option>
+        <option value="XOF" {% if user_profile.currency == 'XOF' %}selected{% endif %}>XOF - West African CFA Franc</option>
+        <option value="XPF" {% if user_profile.currency == 'XPF' %}selected{% endif %}>XPF - CFP Franc</option>
+        <option value="YER" {% if user_profile.currency == 'YER' %}selected{% endif %}>YER - Yemeni Rial</option>
+        <option value="ZMW" {% if user_profile.currency == 'ZMW' %}selected{% endif %}>ZMW - Zambian Kwacha</option>
+        <option value="ZWL" {% if user_profile.currency == 'ZWL' %}selected{% endif %}>ZWL - Zimbabwean Dollar</option>
+    </select>
     </div>
     <br>
     <center>
