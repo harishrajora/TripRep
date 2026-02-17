@@ -1,0 +1,24 @@
+{% extends 'core/base.html' %}
+{% block title %} <title>Redirect - Add Booking</title>{% endblock %}
+
+{% block content %}
+  <section class="hero">
+    {% if result == 'Successful' %}
+      <h1 class="hero-title">Your {{ bookingType }} booking was successful!</h1>
+      <p class="hero-sub">You can view your {{ bookingType }} details from the dashboard.</p>
+    {% else %}
+      <h1 class="hero-title">Your {{ bookingType }} booking failed!</h1>
+      <p class="hero-sub"><a href="{% url 'core:report_failure' %}">Report this failure </a> or try again.</p>
+    {% endif %}
+
+    {% if bookingType == 'Ticket' %}
+    <div class="hero-actions">
+      <a href="{% url 'core:tickets' %}" class="btn-signup">VIEW TICKETS</a>
+    </div>
+    {% else %}
+    <div class="hero-actions">
+      <a href="{% url 'core:reservations' %}" class="btn-signup">VIEW RESERVATIONS</a>
+    </div>
+  </section>
+    {% endif %}
+{% endblock %}

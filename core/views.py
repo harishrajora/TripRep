@@ -378,3 +378,10 @@ def view_reservation(request, reservation_id):
         return redirect('core:reservations')
     return render(request, 'core/view_reservation.html', {'reservation': reservation})
 
+def booking_saved(request, bookingType, result):
+    if request.user.is_anonymous:
+        return redirect('core:login')
+    if request.method != 'POST':
+        return redirect('core:dashboard')
+    return render(request, 'core/booking_saved.html', {'bookingType': bookingType,
+                                                       'result' : result,})
