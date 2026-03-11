@@ -1,55 +1,134 @@
-document.getElementById('ticket_pdf').addEventListener('change', function(event) {
-  console.log("Event triggered");
-  if (event.target.files.length > 0) {
-    const file = event.target.files[0];
-    // File has been selected
-    console.log("File selected");
-    // document.getElementById('status').textContent = 'Uploading...';
-    const formData = new FormData();
-    formData.append('file', file);
-    // Get CSRF token
-    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-    // Upload the file
-    console.log("Reached this point")
-    fetch("/create_ticket/", {
-        method: 'POST',
-        headers: {
-            'X-CSRFToken': csrftoken,
-        },
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'success') {
-            console.log("File uploaded successfully");
-            // console.log(response);
-            console.log("Data::::");
-            console.log(data);
-            title = data.ticket_data['Title'];
-            source = data.ticket_data['Source'];
-            destination = data.ticket_data['Destination'];
-            // ticket_type = data.ticket_data['Ticket Type'];
-            description = data.ticket_data['Description'];
-            date_of_journey = data.ticket_data['Date of Journey'];
-            booked_through = data.ticket_data['Booked Through'];
-            document.querySelector('#title').value = title;
-            document.querySelector('#source').value = source;
-            document.querySelector('#destination').value = destination;
-            // document.querySelector('#ticket_type').value = ticket_type;
-            document.querySelector('#description').value = description;
-            document.querySelector('#date_of_journey').value = date_of_journey;
-            document.querySelector('#booked_through').value = booked_through;
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        // document.getElementById('status').textContent = 'Upload failed';
-    });
-    document.querySelector('#ticket_upload_options').style.visibility = 'visible';
-  } else {
-    // No file selected
-    console.log("No file selected");
-    document.querySelector('#ticket_upload_options').style.visibility = 'hidden';
+(function () {
+  const fileInput = document.getElementById("ticket_pdf");
+  const ticketUploadOptions = document.getElementById("ticket_upload_options");
+  const saveTicketButton = document.getElementById("save_ticket_btn");
+  const ticketProcessingLoader = document.getElementById("ticket_processing_loader");
+  const ticketUploadError = document.getElementById("ticket_upload_error");
+
+  if (
+    !fileInput ||
+    !ticketUploadOptions ||
+    !saveTicketButton ||
+    !ticketProcessingLoader ||
+    !ticketUploadError
+  ) {
     return;
   }
-});
+
+  const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+
+  function setLoading(isLoading) {
+    ticketProcessingLoader.hidden = !isLoading;
+    fileInput.disabled = isLoading;
+  }
+
+  function setFormVisible(isVisible) {
+    ticketUploadOptions.hidden = !isVisible;
+    saveTicketButton.hidden = !isVisible;
+  }
+
+  function setError(message) {
+    if (!message) {
+      ticketUploadError.hidden = true;
+      ticketUploadError.textContent = "";
+      return;
+    }
+    ticketUploadError.hidden = false;
+    ticketUploadError.textContent = message;
+  }
+
+  function setInputValue(id, value) {
+    const inputElement = document.getElementById(id);
+    if (!inputElement) {
+      return;
+    }
+    inputElement.value = value || "";
+  }
+
+  function setDateValue(id, value) {
+    const inputElement = document.getElementById(id);
+    if (!inputElement) {
+      return;
+    }
+    const dateValue = typeof value === "string" ? value.trim() : "";
+    inputElement.value = datePattern.test(dateValue) ? dateValue : "";
+  }
+
+  async function uploadAndProcessTicket(file) {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const csrfTokenInput = document.querySelector("[name=csrfmiddlewaretoken]");
+    if (!csrfTokenInput) {
+      throw new Error("Missing CSRF token");
+    }
+
+    const response = await fetch("/create_ticket/", {
+      method: "POST",
+      headers: {
+        "X-CSRFToken": csrfTokenInput.value,
+      },
+      body: formData,
+    });
+
+    let responseData;
+    try {
+      responseData = await response.json();
+    } catch (error) {
+      throw new Error("Invalid JSON response");
+    }
+
+    if (response.ok && responseData.status === "success") {
+      return { ok: true, data: responseData };
+    }
+
+    return { ok: false, data: responseData };
+  }
+
+  fileInput.addEventListener("change", async function (event) {
+    const file = event.target.files && event.target.files[0];
+    if (!file) {
+      setLoading(false);
+      setFormVisible(false);
+      setError(null);
+      return;
+    }
+
+    setFormVisible(false);
+    setLoading(true);
+    setError(null);
+
+    try {
+      const result = await uploadAndProcessTicket(file);
+      if (result.ok) {
+        const ticketData = result.data.ticket_data || {};
+        setInputValue("title", ticketData["Title"]);
+        setInputValue("source", ticketData["Source"]);
+        setInputValue("destination", ticketData["Destination"]);
+        setInputValue("description", ticketData["Description"]);
+        setDateValue("date_of_journey", ticketData["Date of Journey"]);
+        setInputValue("booked_through", ticketData["Booked Through"]);
+        setFormVisible(true);
+        return;
+      }
+
+      setError(
+        result.data && result.data.message
+          ? result.data.message
+          : "Ticket extraction failed. Please fill in the details manually."
+      );
+      setFormVisible(true);
+    } catch (error) {
+      console.error("Error while uploading ticket:", error);
+      setError("Unable to process the ticket right now. Please fill in the details manually.");
+      setFormVisible(true);
+    } finally {
+      setLoading(false);
+      fileInput.disabled = false;
+    }
+  });
+
+  setLoading(false);
+  setFormVisible(false);
+  setError(null);
+})();

@@ -20,13 +20,18 @@
           <input type="file" id="ticket_pdf" name="ticket_pdf" accept="application/pdf" required>
           <br>
         </div>
+        <div id="ticket_processing_loader" class="ticket-processing-loader" role="status" aria-live="polite" hidden>
+          <span class="ticket-processing-spinner" aria-hidden="true"></span>
+          <span class="ticket-processing-text">Processing ticket...</span>
+        </div>
+        <p id="ticket_upload_error" class="ticket-upload-error" hidden></p>
         <!-- <center>
         <a href="{% url 'core:process_ticket_pdf' %}">
           <button type="submit" id="process_pdf_btn" class="btn-process-pdf">Confirm Ticket</button>
         </a>
         </center> -->
        </section>
-      <div class="form-group" id = "ticket_upload_options" style="visibility: visible;">
+      <div class="form-group" id="ticket_upload_options" hidden>
         <label for="title">Title:</label>
         <input type="text" id="title" name="title" required><br>
         <label for="source">Source:</label>
@@ -52,7 +57,7 @@
       </div>
         <br>
         <center>
-        <button type="submit" id="save_ticket_btn" class="btn-save-ticket">Save Ticket</button>
+        <button type="submit" id="save_ticket_btn" class="btn-save-ticket" hidden>Save Ticket</button>
         </center>
     
 
