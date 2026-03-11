@@ -28,6 +28,13 @@
 {% block content %}
 <div class="greeting"><strong>Hi!! {{first_name}}</strong></div><br>
     <div class="dashboard-grid">
+      
+      <a href="{% url 'core:ai-world' %}" class="tickets-card" aria-label="Tickets" role="link">
+        <div class="tickets-inner">
+          <div class="tickets-title">AI WORLD</div>
+        </div>
+      </a>
+
       <a href="{% url 'core:tickets' %}" class="tickets-card" aria-label="Tickets" role="link">
         <div class="tickets-inner">
           <div class="tickets-title">TICKETS</div>

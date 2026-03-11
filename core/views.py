@@ -389,3 +389,8 @@ def booking_saved(request, bookingType, result):
         return redirect('core:dashboard')
     return render(request, 'core/booking_saved.html', {'bookingType': bookingType,
                                                        'result' : result,})
+
+def ai_world(request):
+    if request.user.is_anonymous:
+        return redirect('core:login')
+    return render(request, 'core/ai_world.html')
