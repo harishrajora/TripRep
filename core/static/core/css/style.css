@@ -317,6 +317,46 @@ body.login-page{
   .dashboard-grid{ flex-direction:column; align-items:flex-start; gap:0.75rem; padding:1rem 0; }
 }
 
+/* Custom styling for AI World card */
+.ai-card {
+  /* matte black base */
+  background: linear-gradient(180deg, #1a1a1a 0%, #000 100%);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.15);
+  position: relative;
+  overflow: hidden;
+}
+.ai-card .tickets-title {
+  color: #fff;
+  /* darker, but subtle text shadow for contrast */
+  text-shadow: 0 1px 0 rgba(0,0,0,0.5), 0 6px 20px rgba(0,0,0,0.7);
+}
+/* subtle starfield overlay using pseudo-element for better visibility */
+.ai-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* larger radial gradients for more and bigger stars */
+  background-image:
+    radial-gradient(circle 8px at 10% 20%, rgba(255,255,255,0.95) 0, transparent 60%),
+    radial-gradient(circle 7px at 40% 30%, rgba(255,255,255,0.9) 0, transparent 60%),
+    radial-gradient(circle 6px at 70% 15%, rgba(255,255,255,0.85) 0, transparent 60%),
+    radial-gradient(circle 5px at 20% 60%, rgba(255,255,255,0.8) 0, transparent 60%),
+    radial-gradient(circle 4px at 50% 80%, rgba(255,255,255,0.75) 0, transparent 60%),
+    radial-gradient(circle 8px at 85% 50%, rgba(255,255,255,0.97) 0, transparent 60%),
+    radial-gradient(circle 6px at 30% 40%, rgba(255,255,255,0.88) 0, transparent 60%),
+    radial-gradient(circle 5px at 60% 70%, rgba(255,255,255,0.82) 0, transparent 60%);
+  background-size: 300px 300px;
+  opacity: 0.75;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+/* adjust existing shimmer and shine */
+.ai-card::after {
+  /* reduce intensity of diagonal sheen for matte look */
+  background: linear-gradient(120deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.2) 30%, rgba(255,255,255,0.04) 60%, rgba(255,255,255,0) 100%);
+}
+
 
 .ticket-pdf-upload {
   /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
