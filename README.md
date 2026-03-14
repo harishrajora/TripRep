@@ -1,7 +1,8 @@
 # TripRep
 
-TripRep is a Django web app for travelers who want one place to store and review trip tickets.  
-You can upload ticket PDFs, store trip details, view a clean list of past tickets, and track simple spending statistics.
+TripRep is a Django web app for travelers who want one place to store and review trip tickets and do much more.  
+You can upload ticket PDFs, store trip details, view a clean list of past tickets, and track simple spending statistics. In addition, TripRep comes
+with AI agents that can help you book flight tickets, create itineraries, and help answer travel questions.
 
 The app also includes an AI-assisted flow that reads a ticket PDF and auto-fills ticket fields using Google Gemini.
 
@@ -29,8 +30,8 @@ TripRep currently focuses on ticket management:
 - AI extraction endpoint to read uploaded PDF tickets and prefill fields
 - Ticket list view and individual ticket detail pages
 - Basic statistics page (ticket count and spending)
+- AI agents to book tickets and create itineraries (in progress)
 
-There is a Reservations section in the UI, but it is still partial/in-progress.
 
 ## Tech Stack
 
