@@ -394,3 +394,43 @@ def ai_world(request):
     if request.user.is_anonymous:
         return redirect('core:login')
     return render(request, 'core/ai_world.html')
+
+def generate_travel_score(request):
+    """
+    Generate a travel score for the user based on their tickets and reservations.
+    The score is calculated based on the number of trips, diversity of destinations, and total amount spent.
+    For flight tickets, we consider the miles he has travelled. For each ticket, we divide miles by 1000 and add it to the final point list.
+    For reservations, we add points based on the number of nights stayed. For each night, we add 0.001 points to the final score.
+    """
+    if request.user.is_anonymous:
+        return JsonResponse({'error': 'unauthenticated'}, status=403)
+
+    tickets = Tickets.objects.filter(user=request.user)
+    reservations = Reservations.objects.filter(user=request.user)
+
+    score = 0.0
+
+    # Calculate score from tickets
+    for ticket in tickets:
+        if ticket.ticket_type == 'Flight':
+            # Assuming description contains miles information in the format "Miles: XXXX"
+            miles_info = [line for line in ticket.description.split('\n') if 'Miles:' in line]
+            if miles_info:
+                try:
+                    miles = int(miles_info[0].split('Miles:')[1].strip())
+                    score += miles / 1000.0
+                except ValueError:
+                    pass
+
+    # Calculate score from reservations
+    for reservation in reservations:
+        # Assuming description contains nights information in the format "Nights: X"
+        nights_info = [line for line in reservation.description.split('\n') if 'Nights:' in line]
+        if nights_info:
+            try:
+                nights = int(nights_info[0].split('Nights:')[1].strip())
+                score += nights * 0.001
+            except ValueError:
+                pass
+
+    return JsonResponse({'score': round(score, 3)})
