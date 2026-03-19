@@ -160,6 +160,9 @@ def process_ticket_pdf(request):
     return
 
 def save_ticket(request):
+    """
+    Save ticket information to the database. This view expects a POST request with the following fields
+    """
     if request.method == 'POST':
         if request.user.is_anonymous:
             return redirect('core:login')
@@ -199,12 +202,28 @@ def save_ticket(request):
             amount_paid=amount_paid
         )
         ticket.save()
+        distance = get_distance(source, destination)
         print(f"Ticket '{title}' saved for user {request.user.username}")
         return booking_saved(request, bookingType='ticket', result='Successful')
         # return redirect('core:tickets')
     else:
         return booking_saved(request, bookingType='ticket', result='Failure')
         # return redirect('core:add_ticket')
+
+def get_distance(source, destination):
+    """
+    Calculate distance between source and destination using AI.
+    """
+    print("Inside get distance function with source:", source, "and destination:", destination)
+    genai_api_key = settings.GENAI_API_KEY
+    client = genai.Client(api_key=genai_api_key)
+    prompt = f"Calculate the distance in kilometers between {source} and {destination}. Just return the distance as a number without any units or explanation."
+    response = client.models.generate_content(
+    model="gemini-2.5-flash",
+    contents=[prompt])
+    print(f"Response from GenAI received for calculating distance: {response.text}")
+    return response.text
+
 
 def save_reservation(request):
     if request.method == 'POST':
