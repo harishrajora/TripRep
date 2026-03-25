@@ -233,7 +233,6 @@ class UserProfile(models.Model):
     currency = models.CharField(max_length=10, choices=CURRENCY_CHOICES, default='INR')
     triprep_score = models.DecimalField(max_digits=5, decimal_places=4, null=True, blank=True, default=0.0000)
     miles_traveled = models.IntegerField(null=True, blank=True, default=0)
-    nights_stayed = models.IntegerField(null=True, blank=True, default=0)
     
     def __str__(self):
         return f"{self.user.username}'s Profile"

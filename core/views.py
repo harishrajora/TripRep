@@ -60,7 +60,9 @@ def dashboard(request):
         return redirect('core:login')
     # Get first_name from session (set during signup) or fall back to the user's first_name
     first_name = request.session.pop('first_name', None) or request.user.first_name
-    return render(request, 'core/dashboard.html', {'first_name': first_name})
+    triprep_score = UserProfile.objects.filter(user=request.user).values_list('triprep_score', flat=True).first() or Decimal('0.0000')
+    print(f"Triprep score for user {request.user.username} is {triprep_score}")
+    return render(request, 'core/dashboard.html', {'first_name': first_name, 'triprep_score': triprep_score})
 
 def login_view(request):
     if request.method == 'POST':
@@ -203,9 +205,11 @@ def save_ticket(request):
             amount_paid=amount_paid
         )
         ticket.save()
-        distance = get_distance(source, destination)
+        miles = get_distance(source, destination)
         print(f"Ticket '{title}' saved for user {request.user.username}")
-        UserProfile.objects.filter(user=request.user).update(miles_traveled=F('miles_traveled') + int(float(distance)*1.60934))
+        # miles = int(float(distance)*1.60934)
+        UserProfile.objects.filter(user=request.user).update(miles_traveled=F('miles_traveled') + miles)
+        generate_travel_score(request, miles)
         return booking_saved(request, bookingType='ticket', result='Successful')
         # return redirect('core:tickets')
     else:
@@ -219,7 +223,7 @@ def get_distance(source, destination):
     print("Inside get distance function with source:", source, "and destination:", destination)
     genai_api_key = settings.GENAI_API_KEY
     client = genai.Client(api_key=genai_api_key)
-    prompt = f"Calculate the distance in kilometers between {source} and {destination}. Just return the distance as a number without any units or explanation."
+    prompt = f"Calculate the distance in miles between {source} and {destination}. Just return the distance as a number without any units or explanation."
     response = client.models.generate_content(
     model="gemini-2.5-flash",
     contents=[prompt])
@@ -244,6 +248,7 @@ def save_reservation(request):
             amount_paid=request.POST.get('amount_paid', '0.00')
         )
         reservation.save()
+        nights = get_nights(request.POST.get('description'))
         return booking_saved(request, bookingType='reservation', result='Successful')
         # return redirect('core:reservations')
     else:
@@ -416,7 +421,7 @@ def ai_world(request):
         return redirect('core:login')
     return render(request, 'core/ai_world.html')
 
-def generate_travel_score(request):
+def generate_travel_score(request, miles_traveled):
     """
     Generate a travel score for the user based on their tickets and reservations.
     The score is calculated based on the number of trips, diversity of destinations, and total amount spent.
@@ -426,32 +431,7 @@ def generate_travel_score(request):
     if request.user.is_anonymous:
         return JsonResponse({'error': 'unauthenticated'}, status=403)
 
-    tickets = Tickets.objects.filter(user=request.user)
-    reservations = Reservations.objects.filter(user=request.user)
-
-    score = 0.0
-
-    # Calculate score from tickets
-    for ticket in tickets:
-        if ticket.ticket_type == 'Flight':
-            # Assuming description contains miles information in the format "Miles: XXXX"
-            miles_info = [line for line in ticket.description.split('\n') if 'Miles:' in line]
-            if miles_info:
-                try:
-                    miles = int(miles_info[0].split('Miles:')[1].strip())
-                    score += miles / 1000.0
-                except ValueError:
-                    pass
-
-    # Calculate score from reservations
-    for reservation in reservations:
-        # Assuming description contains nights information in the format "Nights: X"
-        nights_info = [line for line in reservation.description.split('\n') if 'Nights:' in line]
-        if nights_info:
-            try:
-                nights = int(nights_info[0].split('Nights:')[1].strip())
-                score += nights * 0.001
-            except ValueError:
-                pass
-
-    return JsonResponse({'score': round(score, 3)})
+    current_score = UserProfile.objects.filter(user=request.user).values_list('triprep_score', flat=True).first() or Decimal('0.0000')
+    new_score = (Decimal(miles_traveled) / Decimal(1000)) + current_score
+    UserProfile.objects.filter(user=request.user).update(triprep_score=new_score)
+    return
