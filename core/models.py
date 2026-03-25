@@ -20,9 +20,6 @@ class Tickets(models.Model):
     booked_through = models.CharField(max_length=100, null=False, blank=False)
     image_thumbnail = models.ImageField(upload_to='thumbnails/', null=True, blank=True)
     amount_paid = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False, default=0.00)
-    triprep_score = models.DecimalField(max_digits=5, decimal_places=4, null=True, blank=True, default=0.0000)
-    miles_traveled = models.IntegerField(null=True, blank=True, default=0)
-    nights_stayed = models.IntegerField(null=True, blank=True, default=0)
 
     def generate_thumbnail(self):
         if not self.ticket_file:
@@ -80,6 +77,7 @@ class Reservations(models.Model):
     reservation_file = models.FileField(upload_to='reservations/')
     description = models.TextField()
     date_of_reservation = models.DateField()
+    nights = models.IntegerField(null=True, blank=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
     reservation_type = models.CharField(max_length=100, null=False, blank=False)
     booked_through = models.CharField(max_length=100, null=False, blank=False)
@@ -233,6 +231,9 @@ class UserProfile(models.Model):
     
     user = models.OneToOneField('auth.User', on_delete=models.CASCADE, related_name='profile')
     currency = models.CharField(max_length=10, choices=CURRENCY_CHOICES, default='INR')
+    triprep_score = models.DecimalField(max_digits=5, decimal_places=4, null=True, blank=True, default=0.0000)
+    miles_traveled = models.IntegerField(null=True, blank=True, default=0)
+    nights_stayed = models.IntegerField(null=True, blank=True, default=0)
     
     def __str__(self):
         return f"{self.user.username}'s Profile"

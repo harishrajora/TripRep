@@ -14,6 +14,7 @@ from django.db.models import Sum, Count
 from decimal import Decimal
 from django.core.paginator import Paginator
 import json
+from django.db.models import F
 
 def index(request):
     return render(request, 'core/index.html')
@@ -204,6 +205,7 @@ def save_ticket(request):
         ticket.save()
         distance = get_distance(source, destination)
         print(f"Ticket '{title}' saved for user {request.user.username}")
+        UserProfile.objects.filter(user=request.user).update(miles_traveled=F('miles_traveled') + int(float(distance)*1.60934))
         return booking_saved(request, bookingType='ticket', result='Successful')
         # return redirect('core:tickets')
     else:
