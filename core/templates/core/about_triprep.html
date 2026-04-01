@@ -1,7 +1,138 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-  <section class="coming-soon">
-    <div> <strong>Coming Soon</strong> </div>
+<div class="about-page">
+  <!-- Hero Section -->
+  <section class="about-hero">
+    <div class="about-hero-content">
+      <h1 class="about-title">TripRep</h1>
+      <p class="about-subtitle">All Your Travel. One Place.</p>
+      <div class="hero-features">
+        <span class="hero-feature-tag">📱 Tickets</span>
+        <span class="hero-feature-tag">🏨 Reservations</span>
+        <span class="hero-feature-tag">💰 Spending</span>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="visual-box box-1">📋</div>
+      <div class="visual-box box-2">✈️</div>
+      <div class="visual-box box-3">💳</div>
+    </div>
   </section>
+
+  <!-- Problem Section -->
+  <section class="about-section problem-section">
+    <div class="section-header">
+      <h2 class="section-title">The Problem</h2>
+    </div>
+    <div class="problems-grid">
+      <div class="problem-card">
+        <div class="problem-number">1</div>
+        <h3>Lost Tickets</h3>
+        <p>Scattered across 10 platforms</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-number">2</div>
+        <h3>Memory Fade</h3>
+        <p>Where did I book that again?</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-number">3</div>
+        <h3>Money Mystery</h3>
+        <p>How much did I spend?</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solution Section -->
+  <section class="about-section solution-section">
+    <div class="section-header">
+      <h2 class="section-title">The Solution</h2>
+      <p class="section-subtitle">Everything you need</p>
+    </div>
+    
+    <div class="solution-highlight">
+      <div class="highlight-card">
+        <div class="highlight-icon">🎯</div>
+        <h3>One Dashboard</h3>
+        <p>All tickets & reservations in one place</p>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">📊</div>
+        <h3>Track Spending</h3>
+        <p>See exactly where your money goes</p>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">⚡</div>
+        <h3>Instant Access</h3>
+        <p>Find anything in seconds</p>
+      </div>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🎫</div>
+        <h3>Centralized Hub</h3>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💳</div>
+        <h3>Spending Analysis</h3>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Travel Stats</h3>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <h3>AI Insights</h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why TripRep Section -->
+  <section class="about-section why-section">
+    <div class="section-header">
+      <h2 class="section-title">Why TripRep?</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">🛡️</div>
+        <div class="why-content">
+          <h3>Peace of Mind</h3>
+          <p>Everything safe in one place</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">⏱️</div>
+        <div class="why-content">
+          <h3>Time Saver</h3>
+          <p>No more endless searching</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">💡</div>
+        <div class="why-content">
+          <h3>Smart Insights</h3>
+          <p>Understand your travel habits</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">✨</div>
+        <div class="why-content">
+          <h3>Always Available</h3>
+          <p>Access from any device</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="about-cta">
+    <div class="cta-content">
+      <h2>Start Organizing Your Travel Today</h2>
+      <p>Keep your tickets, reservations, and spending all in one place</p>
+      <a href="{% url 'core:dashboard' %}" class="cta-button">Go to Dashboard</a>
+    </div>
+  </section>
+</div>
 {% endblock %}
