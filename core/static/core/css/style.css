@@ -236,6 +236,23 @@ body.login-page{
 }
 .dashboard-grid .greeting{ font-size:1.2rem; color:#0b1220; font-weight:800; }
 
+.score-badge {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  margin-left: 0.4rem;
+  background: #0056cc;
+  color: #ffffff;
+  font-weight: 900;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 86, 204, 0.35);
+  font-size: 1.15rem;
+  transition: transform 140ms ease, box-shadow 140ms ease;
+}
+.score-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(0, 86, 204, 0.45);
+}
+
 .tickets-inner {
   width: 100%;
   display: flex;
