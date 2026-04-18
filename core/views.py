@@ -385,6 +385,36 @@ def update_profile(request):
     
     return render(request, 'core/profile.html', {'message': 'Profile update failed'})
 
+def update_password(request):
+    if request.user.is_anonymous:
+        return redirect('core:login')
+    
+    if request.method == 'POST':
+        current_password = request.POST.get('current_password')
+        new_password = request.POST.get('new_password')
+        
+        user = request.user
+        
+        # Check if current password is correct
+        if not user.check_password(current_password):
+            return render(request, 'core/updatepassword.html', {'error': 'Current password is incorrect.'})
+        
+        # Check if new password is not empty
+        if not new_password:
+            return render(request, 'core/updatepassword.html', {'error': 'New password cannot be empty.'})
+        
+        # Set new password
+        user.set_password(new_password)
+        user.save()
+        
+        # Log the user back in since password changed
+        from django.contrib.auth import login
+        login(request, user)
+        
+        return render(request, 'core/updatepassword.html', {'message': 'Password updated successfully.'})
+    
+    return render(request, 'core/updatepassword.html')
+
 def reservations(request):
     if request.user.is_anonymous:
         return redirect('core:login')

@@ -596,6 +596,7 @@ input[type="number"] {
 .form-group input[type="text"],
 .form-group input[type="date"],
 .form-group input[type="number"],
+.form-group input[type="password"],
 .form-group select,
 .form-group textarea {
   width: 100%;
@@ -613,6 +614,7 @@ input[type="number"] {
 .form-group input[type="text"]:focus,
 .form-group input[type="date"]:focus,
 .form-group input[type="number"]:focus,
+.form-group input[type="password"]:focus,
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;

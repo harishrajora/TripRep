@@ -24,6 +24,7 @@ urlpatterns = [
     path('statistics/data/', views.statistics_data, name='statistics_data'),
     path('profile/', views.profile, name='profile'),
     path('update_profile/', views.update_profile, name='update_profile'),
+    path('updatepassword/', views.update_password, name='updatepassword'),
     path('reservations/', views.reservations, name='reservations'),
     path('add_reservation/', views.add_reservation, name='add_reservation'),
     path('save_reservation/', views.save_reservation, name='save_reservation'),
