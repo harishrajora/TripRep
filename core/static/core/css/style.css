@@ -144,7 +144,7 @@ body{
 .nav-toggle:checked + .hamburger + .mobile-nav{opacity:1;transform:translateY(0) scale(1);max-height:360px;pointer-events:auto}
 .nav-toggle:checked + .hamburger + .mobile-nav .mobile-link{opacity:1;transform:translateY(0)}
 
-@media (max-width:640px){
+@media (max-width:960px){
   .container{padding:2.5rem}
   .login-btn{top:1rem;right:1rem;padding:0.7rem 0.9rem;font-size:0.95rem;min-width:72px}
   .top-links{top:1rem;right:1rem;gap:.6rem}

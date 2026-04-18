@@ -8,7 +8,7 @@
     <form method="post" class="login-form">
       {% csrf_token %}
       {{ form.non_field_errors }}
-      <label for="id_username">Username</label>
+      <label for="id_username">Username or Email</label>
       {{ form.username }}
       {{ form.username.errors }}
       <label for="id_password">Password</label>
