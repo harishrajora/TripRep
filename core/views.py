@@ -279,6 +279,19 @@ def delete_ticket(request, ticket_id):
         print(f"Ticket with ID {ticket_id} does not exist or does not belong to user {request.user.username}")
     return redirect('core:tickets')
 
+def delete_reservation(request, reservation_id):
+    if request.user.is_anonymous:
+        return redirect('core:login')
+    try:
+        reservation = Reservations.objects.get(id=reservation_id, user=request.user)
+        if reservation.user != request.user:
+            return redirect('core:reservations')
+        reservation.delete()
+        print(f"Reservation with ID {reservation_id} deleted for user {request.user.username}")
+    except Reservations.DoesNotExist:
+        print(f"Reservation with ID {reservation_id} does not exist or does not belong to user {request.user.username}")
+    return redirect('core:reservations')
+
 def statistics(request):
     if request.user.is_anonymous:
         return redirect('core:login')
