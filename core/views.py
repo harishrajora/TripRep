@@ -228,7 +228,7 @@ def get_distance(source, destination):
     model="gemini-2.5-flash",
     contents=[prompt])
     print(f"Response from GenAI received for calculating distance: {response.text}")
-    return response.text
+    return float(response.text)
 
 
 def save_reservation(request):
