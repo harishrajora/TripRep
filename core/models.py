@@ -231,7 +231,7 @@ class UserProfile(models.Model):
     
     user = models.OneToOneField('auth.User', on_delete=models.CASCADE, related_name='profile')
     currency = models.CharField(max_length=10, choices=CURRENCY_CHOICES, default='INR')
-    triprep_score = models.DecimalField(max_digits=5, decimal_places=4, null=True, blank=True, default=0.0000)
+    triprep_score = models.DecimalField(max_digits=15, decimal_places=4, null=True, blank=True, default=0.0000)
     miles_traveled = models.IntegerField(null=True, blank=True, default=0)
     
     def __str__(self):
