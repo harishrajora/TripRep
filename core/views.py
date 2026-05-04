@@ -205,7 +205,11 @@ def save_ticket(request):
             amount_paid=amount_paid
         )
         ticket.save()
-        miles = get_distance(source, destination)
+        try:
+            miles = get_distance(source, destination)
+        except Exception as e:
+            print(f"Error occurred while calculating distance: {e}")
+            miles = 0
         print(f"Ticket '{title}' saved for user {request.user.username}")
         # miles = int(float(distance)*1.60934)
         UserProfile.objects.filter(user=request.user).update(miles_traveled=F('miles_traveled') + miles)
