@@ -252,7 +252,7 @@ def save_reservation(request):
             amount_paid=request.POST.get('amount_paid', '0.00')
         )
         reservation.save()
-        nights = get_nights(request.POST.get('description'))
+        # nights = get_nights(request.POST.get('description'))
         return booking_saved(request, bookingType='reservation', result='Successful')
         # return redirect('core:reservations')
     else:
