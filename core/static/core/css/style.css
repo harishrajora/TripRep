@@ -692,6 +692,33 @@ input[type="number"] {
   }
 }
 
+/* Amount and Currency Row Responsiveness */
+.amount-currency-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.amount-currency-row input {
+  flex: 1;
+  width: auto !important;
+}
+
+.amount-currency-row select {
+  width: 100px !important;
+}
+
+@media (max-width: 600px) {
+  .amount-currency-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .amount-currency-row select {
+    width: 100% !important;
+  }
+}
+
 .download_pdf {
   display:inline-block;
   padding:0.95rem 1.8rem;
