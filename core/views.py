@@ -19,12 +19,7 @@ import os
 from pathlib import Path
 
 def index(request):
-    BASE_DIR = Path(__file__).resolve().parent
-    print(BASE_DIR)
-    file_path = os.path.join(BASE_DIR, 'static', 'core', 'exchange_rates.json')
-    with open(file_path) as f:
-        data = json.load(f)
-    print(data)
+    print(get_converted_INR('EUR', 11020))
     return render(request, 'core/index.html')
 
 def profile(request):
@@ -242,6 +237,24 @@ def get_distance(source, destination):
     print(f"Response from GenAI received for calculating distance: {response.text}")
     return float(response.text)
 
+def get_converted_INR(currency, amount):
+    '''
+    Convert the given amount from the specified currency to INR using the exchange rates from the JSON file.
+    '''
+    BASE_DIR = Path(__file__).resolve().parent
+    file_path = os.path.join(BASE_DIR, 'static', 'core', 'exchange_rates.json')
+    with open(file_path) as f:
+        data = json.load(f)
+    # print(data)
+    rates = data.get('conversion_rates', {})
+    if currency in rates:
+        conversion_rate = rates[currency]
+        amount_in_usd = amount / conversion_rate
+        amount_in_inr = round(amount_in_usd * rates['INR'], 2)
+        return amount_in_inr
+    else:
+        print(f"Currency {currency} not found in exchange rates. Returning original amount.")
+        return Decimal(amount)
 
 def save_reservation(request):
     if request.method == 'POST':
@@ -259,11 +272,11 @@ def save_reservation(request):
             booked_through=request.POST.get('booked_through'),
             amount_paid=request.POST.get('amount_paid', '0.00'),
             currency_chosen=request.POST.get('currency', 'INR')
-            # if currency_chosen != 'INR':
-            #     # convert to INR using currency conversion API
-            #     print(exchange_rates['conversion_rates'])
-
         )
+        if reservation.currency_chosen != 'INR':
+            # convert to INR using currency conversion API
+            amount_paid = get_converted_INR(reservation.currency_chosen,reservation.amount_paid)
+
         reservation.save()
         # nights = get_nights(request.POST.get('description'))
         return booking_saved(request, bookingType='reservation', result='Successful')
