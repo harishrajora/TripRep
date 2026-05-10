@@ -15,8 +15,16 @@ from decimal import Decimal
 from django.core.paginator import Paginator
 import json
 from django.db.models import F
+import os
+from pathlib import Path
 
 def index(request):
+    BASE_DIR = Path(__file__).resolve().parent
+    print(BASE_DIR)
+    file_path = os.path.join(BASE_DIR, 'static', 'core', 'exchange_rates.json')
+    with open(file_path) as f:
+        data = json.load(f)
+    print(data)
     return render(request, 'core/index.html')
 
 def profile(request):
@@ -249,7 +257,12 @@ def save_reservation(request):
             date_of_reservation=request.POST.get('date_of_reservation'),
             reservation_type=request.POST.get('reservation_type'),
             booked_through=request.POST.get('booked_through'),
-            amount_paid=request.POST.get('amount_paid', '0.00')
+            amount_paid=request.POST.get('amount_paid', '0.00'),
+            currency_chosen=request.POST.get('currency', 'INR')
+            # if currency_chosen != 'INR':
+            #     # convert to INR using currency conversion API
+            #     print(exchange_rates['conversion_rates'])
+
         )
         reservation.save()
         # nights = get_nights(request.POST.get('description'))
