@@ -17,8 +17,10 @@ import json
 from django.db.models import F
 import os
 from pathlib import Path
+import http.client
 
 def index(request):
+    update_exchange_rates_file()
     return render(request, 'core/index.html')
 
 def profile(request):
@@ -247,6 +249,29 @@ def check_file_staleness(file_timestamp):
     age = now - file_time
     return age.total_seconds() > 24 * 3600
 
+def update_exchange_rates_file():
+    """
+    Update the exchange rates file by fetching new rates from an API.
+    """
+    print("Updating exchange rates file with new data.")
+    try:
+        conn = http.client.HTTPSConnection("api.fxratesapi.com")
+        conn.request("GET", "/latest?base=INR&resolution=1m&amount=1&places=6&format=json")
+        res = conn.getresponse()
+        data = res.read()
+        json_data = json.loads(data.decode("utf-8"))
+        pretty_json = json.dumps(json_data, indent=4)
+        print(pretty_json)
+        BASE_DIR = Path(__file__).resolve().parent
+        file_path = os.path.join(BASE_DIR, 'static', 'core', 'exchange_rates.json')
+        with open(file_path, 'w') as f:
+            f.write(pretty_json)
+        return True
+    except Exception as e:
+        print(f"Error occurred while updating exchange rates file: {e}")
+        return False
+
+
 def get_converted_INR(currency, amount):
     '''
     Convert the given amount from the specified currency to INR using the exchange rates from the JSON file.
@@ -260,7 +285,7 @@ def get_converted_INR(currency, amount):
     if file_stale:
         print("Exchange rates file is stale. Updating the exchange rates.")
         try:
-            update_exchange_rates_file(file_path)
+            update_exchange_rates_file()
             with open(file_path) as f:
                 data = json.load(f)
         except Exception as e:
