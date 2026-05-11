@@ -18,10 +18,6 @@ from django.db.models import F
 import os
 from pathlib import Path
 
-def index(request):
-    print(get_converted_INR('EUR', 11020))
-    return render(request, 'core/index.html')
-
 def profile(request):
     if request.user.is_anonymous:
         return redirect('core:login')
@@ -246,13 +242,14 @@ def get_converted_INR(currency, amount):
     with open(file_path) as f:
         data = json.load(f)
     # print(data)
+    file_stale = check_file_staleness(data.get('timestamp'))
     rates = data.get('rates', {})
     if currency in rates:
         amount_in_inr = Decimal(amount) / Decimal(rates[currency])
         return amount_in_inr.quantize(Decimal('0.01'))  # round to 2 decimal places
     else:
         print(f"Currency {currency} not found in exchange rates. Returning original amount.")
-        return Decimal(amount)
+        return Decimal('0.00')
 
 def save_reservation(request):
     if request.method == 'POST':
