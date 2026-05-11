@@ -246,12 +246,10 @@ def get_converted_INR(currency, amount):
     with open(file_path) as f:
         data = json.load(f)
     # print(data)
-    rates = data.get('conversion_rates', {})
+    rates = data.get('rates', {})
     if currency in rates:
-        conversion_rate = rates[currency]
-        amount_in_usd = amount / conversion_rate
-        amount_in_inr = round(amount_in_usd * rates['INR'], 2)
-        return amount_in_inr
+        amount_in_inr = Decimal(amount) / Decimal(rates[currency])
+        return amount_in_inr.quantize(Decimal('0.01'))  # round to 2 decimal places
     else:
         print(f"Currency {currency} not found in exchange rates. Returning original amount.")
         return Decimal(amount)
