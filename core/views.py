@@ -18,6 +18,9 @@ from django.db.models import F
 import os
 from pathlib import Path
 
+def index(request):
+    return render(request, 'core/index.html')
+
 def profile(request):
     if request.user.is_anonymous:
         return redirect('core:login')
@@ -233,6 +236,17 @@ def get_distance(source, destination):
     print(f"Response from GenAI received for calculating distance: {response.text}")
     return float(response.text)
 
+def check_file_staleness(file_timestamp):
+    """
+    Check if the exchange rates file is stale (older than 24 hours).
+    """
+    if not file_timestamp:
+        return True
+    file_time = timezone.datetime.fromtimestamp(file_timestamp, tz=timezone.utc)
+    now = timezone.now()
+    age = now - file_time
+    return age.total_seconds() > 24 * 3600
+
 def get_converted_INR(currency, amount):
     '''
     Convert the given amount from the specified currency to INR using the exchange rates from the JSON file.
@@ -243,6 +257,14 @@ def get_converted_INR(currency, amount):
         data = json.load(f)
     # print(data)
     file_stale = check_file_staleness(data.get('timestamp'))
+    if file_stale:
+        print("Exchange rates file is stale. Updating the exchange rates.")
+        try:
+            update_exchange_rates_file(file_path)
+            with open(file_path) as f:
+                data = json.load(f)
+        except Exception as e:
+            print(f"Error occurred while updating exchange rates file: {e}. Proceeding with stale data.")
     rates = data.get('rates', {})
     if currency in rates:
         amount_in_inr = Decimal(amount) / Decimal(rates[currency])
