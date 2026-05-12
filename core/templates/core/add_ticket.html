@@ -144,5 +144,14 @@
         <button type="submit" id="save_ticket_btn" class="btn-save-ticket">Save Ticket</button>
         </center>
     
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var preferredCurrency = "{{ preferred_currency|default:'INR'|escapejs }}";
+        var currencySelect = document.getElementById('currency');
+        if (currencySelect) {
+          currencySelect.value = preferredCurrency;
+        }
+      });
+    </script>
 
 {% endblock %}

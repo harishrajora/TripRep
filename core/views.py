@@ -98,7 +98,8 @@ def add_ticket(request):
     print(f"Request Method = {request.method}")
     if request.user.is_anonymous:
         return redirect('core:login')
-    return render(request, 'core/add_ticket.html')
+    user_profile, _ = UserProfile.objects.get_or_create(user=request.user)
+    return render(request, 'core/add_ticket.html', {'preferred_currency': user_profile.currency})
 
 def process_file(file):
     file_pdf = file.read()
@@ -182,6 +183,7 @@ def save_ticket(request):
         booked_through = request.POST.get('booked_through')
         ticket_pdf = request.FILES.get('ticket_pdf')
         amount_paid = request.POST.get('amount_paid', '0.00')
+        currency_chosen = request.POST.get('currency', 'INR')
         # only keep digits and decimal point
         amount_paid = ''.join(c for c in amount_paid if (c.isdigit() or c == '.'))
         if "." not in amount_paid:
@@ -195,6 +197,10 @@ def save_ticket(request):
         # limit to 8 characters
         if len(amount_paid) > 8:
             amount_paid = amount_paid[:8]
+
+        if currency_chosen != 'INR':
+            amount_paid = get_converted_INR(currency_chosen, amount_paid)
+
         print(ticket_pdf)
         ticket = Tickets(
             user=request.user,
@@ -318,7 +324,7 @@ def save_reservation(request):
         if reservation.currency_chosen != 'INR':
             # convert to INR using currency conversion API
             amount_paid = get_converted_INR(reservation.currency_chosen,reservation.amount_paid)
-
+            reservation.amount_paid = amount_paid
         reservation.save()
         # nights = get_nights(request.POST.get('description'))
         return booking_saved(request, bookingType='reservation', result='Successful')
@@ -510,7 +516,8 @@ def reservations(request):
 def add_reservation(request):
     if request.user.is_anonymous:
         return redirect('core:login')
-    return render(request, 'core/add_reservation.html')
+    user_profile, _ = UserProfile.objects.get_or_create(user=request.user)
+    return render(request, 'core/add_reservation.html', {'preferred_currency': user_profile.currency})
 
 def view_reservation(request, reservation_id):
     if request.user.is_anonymous:
