@@ -4,10 +4,10 @@
 {% block content %}
   <section class="hero">
     {% if result == 'Successful' %}
-      <h1 class="hero-title">Your {{ bookingType }} booking was successful!</h1>
+      <h1 class="hero-title">Your {{ bookingType }} booking is saved successfully!</h1>
       <p class="hero-sub">You can view your {{ bookingType }} details from the dashboard.</p>
     {% else %}
-      <h1 class="hero-title">Your {{ bookingType }} booking failed!</h1>
+      <h1 class="hero-title">Your {{ bookingType }} saving failed!</h1>
       <p class="hero-sub">Report this failure or try again.</p>
     {% endif %}
 
