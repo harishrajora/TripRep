@@ -1,0 +1,16 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+  <section class="hero">
+    <h1 class="hero-title">Coming Soon</h1>
+    <p class="hero-sub">We are as excited as you to reveal this feature. Stay tuned for updates!</p>
+    <div class="hero-actions">
+      {% if user.is_authenticated %}
+        <a href="{% url 'core:dashboard' %}" class="btn-signup">Dashboard</a>
+      {% else %}
+        <a href="/signup/" class="btn-signup">SIGN UP</a>
+      {% endif %}
+      <a href="{% url 'core:index' %}" class="btn-signup">Back to Home</a>
+    </div>
+  </section>
+{% endblock %}

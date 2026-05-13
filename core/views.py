@@ -588,7 +588,8 @@ def booking_saved(request, bookingType, result):
 def ai_world(request):
     if request.user.is_anonymous:
         return redirect('core:login')
-    return render(request, 'core/ai_world.html')
+    return render(request, 'core/comingsoon.html')
+    # return render(request, 'core/ai_world.html')
 
 def generate_travel_score(request, miles_traveled):
     """
