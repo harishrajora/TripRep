@@ -342,6 +342,19 @@ def view_ticket(request, ticket_id):
             return redirect('core:tickets')
     except Tickets.DoesNotExist:
         return redirect('core:tickets')
+    selected_currency = ticket.user.profile.currency
+    if selected_currency != 'INR':
+        with open(os.path.join(Path(__file__).resolve().parent, 'static', 'core', 'exchange_rates.json')) as f:
+            data = json.load(f)
+        rates = data.get('rates', {})
+        rate = rates.get(selected_currency)
+        if rate is not None:
+            try:
+                ticket.amount_paid = (ticket.amount_paid * Decimal(str(rate))).quantize(Decimal('0.01'))
+            except Exception as e:
+                print(f"Error occurred while converting ticket amount: {e}")
+        else:
+            print(f"Currency {selected_currency} not found in exchange rates.")
     return render(request, 'core/view_ticket.html', {'ticket': ticket})
 
 def delete_ticket(request, ticket_id):
@@ -528,6 +541,19 @@ def view_reservation(request, reservation_id):
             return redirect('core:reservations')
     except Reservations.DoesNotExist:
         return redirect('core:reservations')
+    selected_currency = reservation.user.profile.currency
+    if selected_currency != 'INR':
+        with open(os.path.join(Path(__file__).resolve().parent, 'static', 'core', 'exchange_rates.json')) as f:
+            data = json.load(f)
+        rates = data.get('rates', {})
+        rate = rates.get(selected_currency)
+        if rate is not None:
+            try:
+                reservation.amount_paid = (reservation.amount_paid * Decimal(str(rate))).quantize(Decimal('0.01'))
+            except Exception as e:
+                print(f"Error occurred while converting reservation amount: {e}")
+        else:
+            print(f"Currency {selected_currency} not found in exchange rates.")
     return render(request, 'core/view_reservation.html', {'reservation': reservation})
 
 def booking_saved(request, bookingType, result):
