@@ -14,6 +14,7 @@ from django.db.models import Sum, Count
 from decimal import Decimal
 from django.core.paginator import Paginator
 import json
+import datetime
 from django.db.models import F
 import os
 from pathlib import Path
@@ -250,7 +251,7 @@ def check_file_staleness(file_timestamp):
     """
     if not file_timestamp:
         return True
-    file_time = timezone.datetime.fromtimestamp(file_timestamp, tz=timezone.utc)
+    file_time = datetime.datetime.fromtimestamp(file_timestamp, tz=datetime.timezone.utc)
     now = timezone.now()
     age = now - file_time
     return age.total_seconds() > 24 * 3600
@@ -304,6 +305,34 @@ def get_converted_INR(currency, amount):
         print(f"Currency {currency} not found in exchange rates. Returning original amount.")
         return Decimal('0.00')
 
+
+def convert_INR_to_currency(currency, amount_in_inr):
+    '''
+    Convert the given amount from INR into the specified currency using the exchange rates from the JSON file.
+    '''
+    BASE_DIR = Path(__file__).resolve().parent
+    file_path = os.path.join(BASE_DIR, 'static', 'core', 'exchange_rates.json')
+    with open(file_path) as f:
+        data = json.load(f)
+    file_stale = check_file_staleness(data.get('timestamp'))
+    if file_stale:
+        print("Exchange rates file is stale. Updating the exchange rates.")
+        try:
+            update_exchange_rates_file()
+            with open(file_path) as f:
+                data = json.load(f)
+        except Exception as e:
+            print(f"Error occurred while updating exchange rates file: {e}. Proceeding with stale data.")
+    rates = data.get('rates', {})
+    if currency == 'INR':
+        return Decimal(amount_in_inr).quantize(Decimal('0.01'))
+    rate = rates.get(currency)
+    if rate is not None:
+        return (Decimal(amount_in_inr) * Decimal(str(rate))).quantize(Decimal('0.01'))
+    print(f"Currency {currency} not found in exchange rates. Returning original INR amount.")
+    return Decimal(amount_in_inr).quantize(Decimal('0.01'))
+
+
 def save_reservation(request):
     if request.method == 'POST':
         if request.user.is_anonymous:
@@ -344,17 +373,7 @@ def view_ticket(request, ticket_id):
         return redirect('core:tickets')
     selected_currency = ticket.user.profile.currency
     if selected_currency != 'INR':
-        with open(os.path.join(Path(__file__).resolve().parent, 'static', 'core', 'exchange_rates.json')) as f:
-            data = json.load(f)
-        rates = data.get('rates', {})
-        rate = rates.get(selected_currency)
-        if rate is not None:
-            try:
-                ticket.amount_paid = (ticket.amount_paid * Decimal(str(rate))).quantize(Decimal('0.01'))
-            except Exception as e:
-                print(f"Error occurred while converting ticket amount: {e}")
-        else:
-            print(f"Currency {selected_currency} not found in exchange rates.")
+        ticket.amount_paid = convert_INR_to_currency(selected_currency, ticket.amount_paid)
     return render(request, 'core/view_ticket.html', {'ticket': ticket})
 
 def delete_ticket(request, ticket_id):
@@ -403,6 +422,9 @@ def statistics(request):
     # initial category totals (no year filter -> overall)
     tickets_sum = Tickets.objects.filter(user=request.user).aggregate(Sum('amount_paid'))['amount_paid__sum'] or Decimal('0.00')
     reservations_sum = Reservations.objects.filter(user=request.user).aggregate(Sum('amount_paid'))['amount_paid__sum'] or Decimal('0.00')
+    if currency != 'INR':
+        tickets_sum = convert_INR_to_currency(currency, tickets_sum)
+        reservations_sum = convert_INR_to_currency(currency, reservations_sum)
 
     context = {
         'years': years,
@@ -442,6 +464,8 @@ def statistics_data(request):
         except ValueError:
             pass
 
+    currency = UserProfile.objects.get(user=request.user).currency
+
     if mode == 'platforms':
         # aggregate by booked_through across tickets and reservations
         platform_sums = {}
@@ -452,6 +476,10 @@ def statistics_data(request):
             key = item['booked_through'] or 'Unknown'
             platform_sums[key] = platform_sums.get(key, Decimal('0.00')) + (item['amount'] or Decimal('0.00'))
 
+        if currency != 'INR':
+            for key in platform_sums:
+                platform_sums[key] = convert_INR_to_currency(currency, platform_sums[key])
+
         labels = list(platform_sums.keys())
         data = [float(platform_sums[l]) for l in labels]
 
@@ -459,6 +487,9 @@ def statistics_data(request):
         # default: category (Tickets vs Hotels)
         tickets_sum = tickets_qs.aggregate(Sum('amount_paid'))['amount_paid__sum'] or Decimal('0.00')
         reservations_sum = reservations_qs.aggregate(Sum('amount_paid'))['amount_paid__sum'] or Decimal('0.00')
+        if currency != 'INR':
+            tickets_sum = convert_INR_to_currency(currency, tickets_sum)
+            reservations_sum = convert_INR_to_currency(currency, reservations_sum)
         labels = ['Tickets', 'Hotels']
         data = [float(tickets_sum), float(reservations_sum)]
 
@@ -543,17 +574,7 @@ def view_reservation(request, reservation_id):
         return redirect('core:reservations')
     selected_currency = reservation.user.profile.currency
     if selected_currency != 'INR':
-        with open(os.path.join(Path(__file__).resolve().parent, 'static', 'core', 'exchange_rates.json')) as f:
-            data = json.load(f)
-        rates = data.get('rates', {})
-        rate = rates.get(selected_currency)
-        if rate is not None:
-            try:
-                reservation.amount_paid = (reservation.amount_paid * Decimal(str(rate))).quantize(Decimal('0.01'))
-            except Exception as e:
-                print(f"Error occurred while converting reservation amount: {e}")
-        else:
-            print(f"Currency {selected_currency} not found in exchange rates.")
+        reservation.amount_paid = convert_INR_to_currency(selected_currency, reservation.amount_paid)
     return render(request, 'core/view_reservation.html', {'reservation': reservation})
 
 def booking_saved(request, bookingType, result):
