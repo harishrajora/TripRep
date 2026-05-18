@@ -348,11 +348,12 @@ def save_reservation(request):
             reservation_type=request.POST.get('reservation_type'),
             booked_through=request.POST.get('booked_through'),
             amount_paid=request.POST.get('amount_paid', '0.00'),
-            currency_chosen=request.POST.get('currency', 'INR')
         )
-        if reservation.currency_chosen != 'INR':
+        currency_chosen=request.POST.get('currency', 'INR')
+        if currency_chosen != 'INR':
             # convert to INR using currency conversion API
-            amount_paid = get_converted_INR(reservation.currency_chosen,reservation.amount_paid)
+            print(f"Currency chosen for reservation is {currency_chosen}")
+            amount_paid = get_converted_INR(currency_chosen, reservation.amount_paid)
             reservation.amount_paid = amount_paid
         reservation.save()
         # nights = get_nights(request.POST.get('description'))
