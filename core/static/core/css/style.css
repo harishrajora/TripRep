@@ -101,16 +101,21 @@ body{
   display:inline-grid;
   place-items:center;
   min-height:1.35em;
-  min-width:min(100%, 28ch);
+  width:100%;
+  max-width:100%;
+  min-width:0;
   overflow:hidden;
   vertical-align:top;
 }
 .rotating-title span{
   grid-area:1 / 1;
   display:block;
+  width:100%;
   padding:0.12em 0.18em 0.2em;
   border-radius:12px;
   opacity:0;
+  overflow-wrap:break-word;
+  text-align:center;
   transform:translateY(120%) scale(0.96);
   animation:rotateHeroTitle 12s cubic-bezier(.2,.9,.3,1) infinite;
 }
@@ -130,6 +135,17 @@ body{
 @media (prefers-reduced-motion: reduce){
   .rotating-title span{animation:none}
   .rotating-title span:first-child{opacity:1;transform:none}
+}
+@media (max-width:640px){
+  .rotating-title{
+    max-width:12ch;
+    min-height:3.9em;
+    margin-inline:auto;
+  }
+  .rotating-title span{
+    white-space:normal;
+    line-height:1.15;
+  }
 }
 .hero-sub{
   margin:0;
