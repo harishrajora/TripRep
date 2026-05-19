@@ -2,7 +2,14 @@
 
 {% block content %}
   <section class="hero">
-    <h1 class="hero-title">Everything about your travels</h1>
+    <h1 class="hero-title">
+      <span class="rotating-title" aria-label="Everything about your travels. Save Tickets. Save Reservations. Analyze Spendings.">
+        <span>Everything about your travels</span>
+        <span>Save Tickets</span>
+        <span>Save Reservations</span>
+        <span>Analyze Spendings</span>
+      </span>
+    </h1>
     <p class="hero-sub">Save Tickets and Reservations in a single place. Get a Glance at Your Spendings</p>
     <div class="hero-actions">
       {% if user.is_authenticated %}

@@ -96,6 +96,41 @@ body{
   color:#0b1220;
   transition:transform 300ms ease;
 }
+.rotating-title{
+  position:relative;
+  display:inline-grid;
+  place-items:center;
+  min-height:1.35em;
+  min-width:min(100%, 28ch);
+  overflow:hidden;
+  vertical-align:top;
+}
+.rotating-title span{
+  grid-area:1 / 1;
+  display:block;
+  padding:0.12em 0.18em 0.2em;
+  border-radius:12px;
+  opacity:0;
+  transform:translateY(120%) scale(0.96);
+  animation:rotateHeroTitle 12s cubic-bezier(.2,.9,.3,1) infinite;
+}
+.rotating-title span:nth-child(1){animation-delay:0s}
+.rotating-title span:nth-child(2){animation-delay:3s}
+.rotating-title span:nth-child(3){animation-delay:6s}
+.rotating-title span:nth-child(4){animation-delay:9s}
+
+@keyframes rotateHeroTitle{
+  0%{opacity:0;transform:translateY(120%) scale(0.96)}
+  8%{opacity:1;transform:translateY(0) scale(1)}
+  27%{opacity:1;transform:translateY(0) scale(1)}
+  36%{opacity:0;transform:translateY(-120%) scale(0.96)}
+  100%{opacity:0;transform:translateY(-120%) scale(0.96)}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .rotating-title span{animation:none}
+  .rotating-title span:first-child{opacity:1;transform:none}
+}
 .hero-sub{
   margin:0;
   color:var(--muted);
