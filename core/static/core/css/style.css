@@ -78,6 +78,8 @@ body{
   border-radius:14px;
   background:linear-gradient(180deg, rgba(222, 46, 46, 0.952), rgba(0,0,0,0.02));
   box-shadow:0 10px 30px rgba(2,6,23,0.04);
+  position: relative;
+  z-index: 100;
 } 
 
 .hero{ 
@@ -129,12 +131,15 @@ body{
 .create-account a:hover{color:var(--link-alt-hover);text-decoration:underline}
 
 /* Hamburger and mobile nav (CSS-only) */
-.hamburger{display:none;position:absolute;top:1.7rem;right:1.9rem;width:36px;height:30px;cursor:pointer;z-index:40}
+.hamburger{display:none;position:fixed;top:2.95rem;right:3.9rem;width:36px;height:30px;cursor:pointer;z-index:10001}
 .hamburger span{display:block;height:3px;background:#0b1220;margin:6px 0;border-radius:2px;transition:transform 180ms cubic-bezier(.2,.9,.3,1), opacity 160ms ease}
 
 .nav-toggle{display:none}
-
-.mobile-nav{position:absolute;top:3.6rem;right:1rem;background:#ffffff;padding:0.5rem;border-radius:8px;box-shadow:0 10px 30px rgba(2,6,23,0.06);min-width:160px;max-height:0;overflow:hidden;opacity:0;transform:translateY(-6px) scale(.98);pointer-events:none;transition:opacity .22s ease, transform .22s cubic-bezier(.2,.9,.3,1), max-height .26s ease}
+nav, header {               /* use whichever wraps your navbar */
+  position: relative;
+  z-index: 1000;
+}
+.mobile-nav{position:fixed;z-index:10000;top:5.4rem;right:3rem;background:#ffffff;padding:0.5rem;border-radius:8px;box-shadow:0 10px 30px rgba(2,6,23,0.06);min-width:160px;max-height:0;overflow:hidden;opacity:0;transform:translateY(-6px) scale(.98);pointer-events:none;transition:opacity .22s ease, transform .22s cubic-bezier(.2,.9,.3,1), max-height .26s ease}
 .mobile-nav .mobile-link{display:block;padding:0.75rem 1rem;color:var(--link-alt);text-decoration:none;border-radius:6px;opacity:0;transform:translateY(-6px);transition:opacity .18s ease, transform .22s cubic-bezier(.2,.9,.3,1)}
 .mobile-nav .mobile-link:hover{background:rgba(37,99,235,0.06);color:var(--link-alt-hover)}
 
@@ -152,7 +157,8 @@ body{
   .top-links{display:none}
   .hamburger{display:block}
   .top-links{display:none}
-  .mobile-nav{right:1rem;left:1rem;top:3.6rem}
+  .hamburger{top:2.95rem;right:3.9rem}
+  .mobile-nav{right:3rem;left:3rem;top:5.4rem}
   .top-link{display:none}
 }
 
