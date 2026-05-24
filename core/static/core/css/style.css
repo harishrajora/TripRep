@@ -212,7 +212,7 @@ body{
 .create-account a:hover{color:var(--link-alt-hover);text-decoration:underline}
 
 /* Hamburger and mobile nav (CSS-only) */
-.hamburger{display:none;position:fixed;top:2.95rem;right:3.9rem;width:36px;height:30px;cursor:pointer;z-index:10001}
+.hamburger{display:none;position:absolute;top:2.95rem;right:3.9rem;width:36px;height:30px;cursor:pointer;z-index:10001}
 .hamburger span{display:block;height:3px;background:#0b1220;margin:6px 0;border-radius:2px;transition:transform 180ms cubic-bezier(.2,.9,.3,1), opacity 160ms ease}
 
 .nav-toggle{display:none}
@@ -220,7 +220,7 @@ nav, header {               /* use whichever wraps your navbar */
   position: relative;
   z-index: 1000;
 }
-.mobile-nav{position:fixed;z-index:10000;top:5.4rem;right:3rem;background:rgba(255,255,255,0.94);padding:0.6rem;border-radius:12px;box-shadow:0 18px 42px rgba(2,6,23,0.16);border:1px solid rgba(163,0,27,0.12);min-width:180px;max-height:0;overflow:hidden;opacity:0;transform:translateY(-6px) scale(.98);pointer-events:none;transition:opacity .22s ease, transform .22s cubic-bezier(.2,.9,.3,1), max-height .26s ease}
+.mobile-nav{position:absolute;z-index:10000;top:5.4rem;right:3rem;background:rgba(255,255,255,0.94);padding:0.6rem;border-radius:12px;box-shadow:0 18px 42px rgba(2,6,23,0.16);border:1px solid rgba(163,0,27,0.12);min-width:180px;max-height:0;overflow:hidden;opacity:0;transform:translateY(-6px) scale(.98);pointer-events:none;transition:opacity .22s ease, transform .22s cubic-bezier(.2,.9,.3,1), max-height .26s ease}
 .mobile-nav .mobile-link{display:block;padding:0.85rem 1rem;color:#0b1220;text-decoration:none;border-radius:9px;opacity:0;transform:translateY(-6px);font-weight:800;transition:opacity .18s ease, transform .22s cubic-bezier(.2,.9,.3,1), background 160ms ease, color 160ms ease}
 .mobile-nav .mobile-link:hover,
 .mobile-nav .mobile-link:focus-visible{background:var(--accent);color:#ffffff;outline:none;text-decoration:none}
@@ -239,8 +239,8 @@ nav, header {               /* use whichever wraps your navbar */
   .top-links{display:none}
   .hamburger{display:block}
   .top-links{display:none}
-  .hamburger{top:2.95rem;right:3.9rem}
-  .mobile-nav{right:3rem;left:3rem;top:5.4rem}
+  .hamburger{top:0.85rem;right:1rem}
+  .mobile-nav{right:1rem;left:1rem;top:3.35rem}
   .top-link{display:none}
 }
 
@@ -600,85 +600,111 @@ body.login-page{
 
 
 .ticket-pdf-upload {
-  /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
-  padding: 40px;
-  border-radius: 20px;
-  /* box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4); */
+  max-width: 600px;
+  margin: 0 auto 1.1rem;
+  padding: 0.95rem 1rem;
+  border-radius: 14px;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.94) 0%, rgba(255,233,228,0.82) 48%, rgba(190,220,255,0.62) 100%),
+    linear-gradient(315deg, rgba(167,31,47,0.18), rgba(255,255,255,0) 56%);
+  border: 1px solid rgba(255,255,255,0.72);
+  box-shadow: 0 14px 30px rgba(75,11,18,0.12), 0 10px 24px rgba(255,255,255,0.62) inset, 0 -10px 20px rgba(0,86,204,0.07) inset;
   position: relative;
   overflow: hidden;
+  transform-style: preserve-3d;
 }
 
 .ticket-pdf-upload::before {
   content: '';
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-  animation: shimmer 3s infinite;
+  inset: 1px;
+  border-radius: 13px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.82), rgba(255,255,255,0) 46%),
+    linear-gradient(105deg, rgba(255,255,255,0) 18%, rgba(255,255,255,0.42) 34%, rgba(255,255,255,0) 50%);
+  pointer-events: none;
 }
 
-@keyframes shimmer {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(10%, 10%); }
+.ticket-pdf-upload::after {
+  content: '';
+  position: absolute;
+  inset: auto 1rem 0.7rem 1rem;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(167,31,47,0), rgba(167,31,47,0.62), rgba(0,86,204,0.42), rgba(167,31,47,0));
+  box-shadow: 0 0 18px rgba(167,31,47,0.18), 0 0 14px rgba(0,86,204,0.12);
+  pointer-events: none;
 }
 
 .ticket-pdf-upload .form-group {
   position: relative;
   z-index: 1;
+  margin: 0;
 }
 
 .ticket-pdf-upload label {
-  display: block;
-  color: #ffffff;
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 15px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  color: #5b1420;
+  font-size: 0.82rem;
+  font-weight: 900;
+  margin-bottom: 0.55rem;
+  padding: 0.24rem 0.62rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.62);
+  border: 1px solid rgba(255,255,255,0.74);
+  text-transform: uppercase;
+  letter-spacing: 0.055em;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.72);
+  box-shadow: 0 6px 14px rgba(75,11,18,0.08);
 }
 
-.ticket-pdf-upload input[type="file"] #process_pdf_btn {
+.ticket-pdf-upload input[type="file"] {
   width: 100%;
-  padding: 15px 20px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  min-height: 46px;
+  padding: 0.5rem;
+  background: rgba(255,255,255,0.76);
+  border: 1px solid rgba(91,20,32,0.16);
   border-radius: 12px;
-  color: #333;
-  font-size: 16px;
+  color: #071423;
+  font-size: 0.9rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, background 160ms ease;
+  box-shadow: 0 8px 18px rgba(2,6,23,0.07), 0 1px 0 rgba(255,255,255,0.74) inset;
 }
 
 .ticket-pdf-upload input[type="file"]:hover {
-  /* background: rgba(255, 255, 255, 1); */
-  border-color: rgba(255, 255, 255, 0.6);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  background: rgba(255,255,255,0.9);
+  border-color: rgba(167,31,47,0.32);
+  box-shadow: 0 14px 30px rgba(75,11,18,0.12);
   transform: translateY(-2px);
 }
 
 .ticket-pdf-upload input[type="file"]:focus {
   outline: none;
-  border-color: #ffffff;
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3);
+  border-color: rgba(0,86,204,0.52);
+  box-shadow: 0 0 0 4px rgba(0,86,204,0.12), 0 14px 30px rgba(75,11,18,0.12);
 }
 
 .ticket-pdf-upload input[type="file"]::file-selector-button {
-  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+  background: linear-gradient(135deg, #7b1f2d 0%, #b53645 48%, #e46f58 100%);
   color: white;
-  padding: 10px 24px;
+  padding: 0.58rem 0.82rem;
   border: none;
   border-radius: 8px;
-  margin-right: 15px;
+  margin-right: 0.68rem;
   cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(90, 103, 216, 0.3);
+  font-weight: 900;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+  box-shadow: 0 6px 14px rgba(75,11,18,0.22);
 }
 
-.ticket-pdf-upload #process_pdf_btn {
-  background: linear-gradient(135deg, #e68192 0%, #7d3a72 100%);
+.ticket-pdf-upload input[type="file"]::file-selector-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 11px 22px rgba(75,11,18,0.3);
 }
 
 /* Statistics page controls and chart */
@@ -743,17 +769,17 @@ body.login-page{
 
 @media (max-width: 480px) {
   .ticket-pdf-upload {
-    padding: 20px 15px;
+    padding: 0.85rem;
     border-radius: 12px;
   }
   
   .ticket-pdf-upload label {
-    font-size: 15px;
-    margin-bottom: 10px;
+    font-size: 0.74rem;
+    margin-bottom: 0.5rem;
   }
   
   .ticket-pdf-upload input[type="file"] {
-    padding: 10px 12px;
+    padding: 0.5rem;
     font-size: 13px;
   }
   
