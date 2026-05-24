@@ -26,7 +26,19 @@
 {% endblock %}
 
 {% block content %}
-<div class="greeting">Hi!! {{first_name}}, Your TripRep Score is <span class="score-badge">{{ triprep_score }}</span> <span class="question-mark" title="This score depends on your travel history">?</span></div><br>
+<section class="dashboard-score-panel" aria-label="TripRep score summary">
+  <div class="score-copy">
+    <span class="score-kicker">
+      <span class="score-hi">Hi</span>
+      <span class="score-name">{{ first_name }}</span>
+    </span>
+    <h1>Your TripRep Score is</h1>
+  </div>
+  <div class="score-actions">
+    <span class="score-badge">{{ triprep_score }}</span>
+    <span class="question-mark" title="This score depends on your travel history" aria-label="This score depends on your travel history">?</span>
+  </div>
+</section>
     <div class="dashboard-grid">
       
       <a href="{% url 'core:ai-world' %}" class="tickets-card ai-card" aria-label="AI World" role="link">
