@@ -343,14 +343,29 @@ body.login-page{
 
 .btn-save-ticket {
   display:inline-block;
-  padding:0.95rem 1.8rem;
-  font-size:1.125rem;
-  font-weight:800;
-  border-radius:12px;
-  background:var(--submitButton);
+  padding:0.72rem 1.35rem;
+  font-size:0.98rem;
+  font-weight:900;
+  border:0;
+  border-radius:8px;
+  background: linear-gradient(135deg, #7b1f2d 0%, #b53645 48%, #e46f58 100%);
   color:#fff;
   text-decoration:none;
-  transition:transform 160ms ease, box-shadow 160ms ease;
+  cursor:pointer;
+  box-shadow: 0 8px 18px rgba(75,11,18,0.24);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.btn-save-ticket:hover,
+.btn-save-ticket:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 11px 22px rgba(75,11,18,0.3);
+  outline:none;
+}
+
+.btn-save-ticket:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 14px rgba(75,11,18,0.22);
 }
 
 /* Dashboard - tickets card */
