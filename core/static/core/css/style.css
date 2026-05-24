@@ -311,12 +311,12 @@ body.login-page{
 /* Dashboard - tickets card */
 .dashboard-grid{
   display:flex;
-  gap:1.25rem;
+  gap:1rem;
   align-items:flex-start;
   flex-direction:row;
   flex-wrap:wrap;
   justify-content:flex-start;
-  padding:1rem;
+  padding:0.85rem 0;
   width:100%;
   /* height: auto; */
   align-items: stretch;
@@ -442,30 +442,31 @@ body.login-page{
 }
 /* Tickets card - deeper blue glass box with 3D depth */
 .tickets-card{
-  min-height: 250px;
-  max-height: 300px;  /* maximum height */
+  min-height: 155px;
+  max-height: 190px;  /* maximum height */
   overflow: hidden;
-  flex: 0 0 340px;
-  margin-right: 1.25rem;  /* Space on the right */
-  margin-bottom: 1.25rem;
+  flex: 1 1 220px;
+  max-width: 280px;
   display:flex;
-  align-items:flex-start;
-  justify-content:flex-start;
+  align-items:center;
+  justify-content:center;
   position:relative;
-  width:340px;
+  width:100%;
   height:100%;
-  padding:6rem;
-  border-radius:14px;
+  padding:1.25rem;
+  border-radius:18px;
   text-decoration:none;
   text-align: center;
   color:#071423;
   font-weight:900;
-  font-size:1.35rem;
+  font-size:1.05rem;
   /* stronger blue gradient */
-  background: linear-gradient(180deg, rgba(37,99,235,0.18) 0%, rgba(59,130,246,0.14) 45%, rgba(14,165,233,0.06) 100%);
-  border:1px solid rgba(37,99,235,0.44);
+  background:
+    linear-gradient(135deg, rgba(244,249,255,0.96) 0%, rgba(190,220,255,0.78) 50%, rgba(119,179,245,0.54) 100%),
+    linear-gradient(315deg, rgba(167,31,47,0.18), rgba(255,255,255,0) 56%);
+  border:1px solid rgba(255,255,255,0.76);
   /* layered shadows for 3D look */
-  box-shadow: 0 22px 50px rgba(3,54,106,0.28), 0 6px 18px rgba(14,165,233,0.06) inset;
+  box-shadow: 0 20px 44px rgba(3,54,106,0.22), 0 14px 34px rgba(255,255,255,0.72) inset, 0 -16px 30px rgba(0,86,204,0.18) inset;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   /* overflow:auto; */
@@ -478,10 +479,12 @@ body.login-page{
 .tickets-card::before{
   content:"";
   position:absolute;
-  inset:0;
-  background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0) 35%);
-  mix-blend-mode: overlay;
-  opacity:0.9;
+  inset:1px;
+  border-radius:17px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0) 42%),
+    linear-gradient(105deg, rgba(255,255,255,0) 18%, rgba(255,255,255,0.54) 34%, rgba(255,255,255,0) 50%);
+  opacity:0.86;
   pointer-events:none;
   z-index:0;
 }
@@ -489,30 +492,28 @@ body.login-page{
 .tickets-card::after{
   content:"";
   position:absolute;
-  top:-50%;
-  left:-70%;
-  width:38%;
-  height:240%;
-  background: linear-gradient(120deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.34) 30%, rgba(255,255,255,0.06) 60%, rgba(255,255,255,0) 100%);
-  transform: translateX(0) rotate(22deg);
-  filter: blur(6px);
-  opacity:0.0;
-  transition: transform 720ms cubic-bezier(.2,.9,.3,1), opacity 420ms ease;
+  inset:auto 16px 14px 16px;
+  height:4px;
+  border-radius:999px;
+  background:linear-gradient(90deg, rgba(0,86,204,0), rgba(0,86,204,0.78), rgba(167,31,47,0.72), rgba(0,86,204,0));
+  box-shadow:0 0 18px rgba(0,86,204,0.34), 0 0 14px rgba(167,31,47,0.2);
+  opacity:0.88;
+  transition: transform 420ms cubic-bezier(.2,.9,.3,1), opacity 260ms ease;
   pointer-events:none;
-  z-index:2;
+  z-index:1;
 }
-.tickets-title{ font-weight:900; font-size:1.65rem; color:#071423; text-transform:none; z-index:3; text-shadow: 0 1px 0 rgba(255,255,255,0.06), 0 8px 30px rgba(3,8,15,0.08); }
+.tickets-title{ font-weight:900; font-size:1.18rem; color:#071423; text-transform:none; z-index:3; text-shadow: 0 1px 0 rgba(255,255,255,0.72), 0 10px 24px rgba(3,8,15,0.14); }
 
 /* 3D hover tilt and stronger shadow */
 .tickets-card:hover{
-  transform: translateY(-12px) rotateX(6deg) scale(1.02);
-  box-shadow: 0 36px 80px rgba(3,54,106,0.32), 0 10px 24px rgba(14,165,233,0.08) inset;
+  transform: translateY(-8px) rotateX(5deg) scale(1.015);
+  box-shadow: 0 30px 66px rgba(3,54,106,0.3), 0 16px 38px rgba(255,255,255,0.8) inset, 0 -16px 34px rgba(0,86,204,0.22) inset;
 }
-.tickets-card:hover::after{ transform: translateX(250%) rotate(22deg); opacity:0.95; }
+.tickets-card:hover::after{ transform: translateY(-3px) scaleX(1.04); opacity:0.95; }
 .tickets-card:active{ transform: translateY(-4px) rotateX(0deg) scale(0.998); transition: transform 120ms ease; }
 
 @media (max-width:640px){
-  .tickets-card{ width:calc(100% - 2rem); height:140px; padding:14px; padding-top: 50%;}
+  .tickets-card{ width:100%; max-width:none; min-height:112px; height:auto; padding:1rem;}
   .dashboard-score-panel{ align-items:flex-start; flex-direction:column; margin-top:4.25rem; padding:0.9rem; }
   .score-actions{ width:100%; justify-content:space-between; }
   .score-badge{ min-width:0; flex:1 1 auto; }
@@ -522,7 +523,8 @@ body.login-page{
 /* Custom styling for AI World card */
 .ai-card {
   /* matte black base */
-  background: linear-gradient(180deg, #1a1a1a 0%, #000 100%);
+  background:
+    linear-gradient(145deg, #252525 0%, #090909 54%, #000 100%);
   color: #fff;
   border: 1px solid rgba(255,255,255,0.15);
   position: relative;
@@ -538,25 +540,17 @@ body.login-page{
   content: "";
   position: absolute;
   inset: 0;
-  /* larger radial gradients for more and bigger stars */
-  background-image:
-    radial-gradient(circle 8px at 10% 20%, rgba(255,255,255,0.95) 0, transparent 60%),
-    radial-gradient(circle 7px at 40% 30%, rgba(255,255,255,0.9) 0, transparent 60%),
-    radial-gradient(circle 6px at 70% 15%, rgba(255,255,255,0.85) 0, transparent 60%),
-    radial-gradient(circle 5px at 20% 60%, rgba(255,255,255,0.8) 0, transparent 60%),
-    radial-gradient(circle 4px at 50% 80%, rgba(255,255,255,0.75) 0, transparent 60%),
-    radial-gradient(circle 8px at 85% 50%, rgba(255,255,255,0.97) 0, transparent 60%),
-    radial-gradient(circle 6px at 30% 40%, rgba(255,255,255,0.88) 0, transparent 60%),
-    radial-gradient(circle 5px at 60% 70%, rgba(255,255,255,0.82) 0, transparent 60%);
-  background-size: 300px 300px;
-  opacity: 0.75;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.24), rgba(255,255,255,0) 48%),
+    linear-gradient(105deg, rgba(255,255,255,0) 18%, rgba(255,255,255,0.18) 34%, rgba(255,255,255,0) 50%);
+  opacity: 0.95;
   pointer-events: none;
-  mix-blend-mode: screen;
 }
 /* adjust existing shimmer and shine */
 .ai-card::after {
   /* reduce intensity of diagonal sheen for matte look */
-  background: linear-gradient(120deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.2) 30%, rgba(255,255,255,0.04) 60%, rgba(255,255,255,0) 100%);
+  background:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.48), rgba(37,99,235,0.78), rgba(255,255,255,0));
 }
 
 
