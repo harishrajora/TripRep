@@ -1,16 +1,24 @@
 {% extends 'core/base.html' %}
 
+{% block title %}<title>TripRep | Travel Tickets, Reservations and Spending Tracker</title>{% endblock %}
+{% block meta_description %}
+  <meta name="description" content="TripRep helps travelers save tickets, manage reservations, track spending, and keep every trip detail organized in one secure dashboard.">
+{% endblock %}
+{% block canonical_url %}
+  <link rel="canonical" href="https://www.triprep.in/">
+{% endblock %}
+
 {% block content %}
   <section class="hero">
     <h1 class="hero-title">
       <span class="rotating-title" aria-label="Everything about your travels. Save Tickets. Save Reservations. Analyze Spendings.">
-        <span>Everything about your travels</span>
+        <span>Your travel records in one place</span>
         <span>Save Tickets</span>
         <span>Save Reservations</span>
-        <span>Analyze Spendings</span>
+        <span>Track Spending</span>
       </span>
     </h1>
-    <p class="hero-sub">Save Tickets and Reservations in a single place. Get a Glance at Your Spendings</p>
+    <p class="hero-sub">Store tickets, manage reservations, and track travel spending from one private dashboard.</p>
     <div class="hero-actions">
       {% if user.is_authenticated %}
         <a href="{% url 'core:dashboard' %}" class="btn-signup">Dashboard</a>
