@@ -7,6 +7,7 @@ from django.conf.urls.static import static
 app_name = 'core'
 
 urlpatterns = [
+    path('robots.txt', views.robots_txt, name='robots_txt'),
     path('', views.index, name='index'),
     path('about_triprep/', views.about_triprep, name='about_triprep'),
     path('login/', views.login_view, name='login'),

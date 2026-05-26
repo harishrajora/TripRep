@@ -4,7 +4,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import SignupForm
 from .models import Tickets, Reservations, UserProfile
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_http_methods
 from google import genai
 from google.genai import types
@@ -23,6 +23,13 @@ import http.client
 def index(request):
     update_exchange_rates_file()
     return render(request, 'core/index.html')
+
+def robots_txt(request):
+    lines = [
+        "User-agent: *",
+        "Allow: /",
+    ]
+    return HttpResponse("\n".join(lines), content_type="text/plain")
 
 def profile(request):
     if request.user.is_anonymous:
