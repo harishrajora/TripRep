@@ -723,7 +723,7 @@ body.login-page{
 }
 
 /* Statistics page controls and chart */
-.statistics-section{padding:2rem 1rem}
+.statistics-section{padding:5rem 1rem 2rem}
 .stats-controls{display:flex;gap:12px;align-items:center;justify-content:center;margin-bottom:18px}
 .stats-label{font-weight:600;color:#0f172a;margin-right:6px}
 .stats-select{appearance:none;padding:8px 12px;border-radius:10px;border:1px solid rgba(15,23,42,0.08);background:#fff;box-shadow:0 6px 18px rgba(2,6,23,0.04);font-weight:600}
@@ -775,12 +775,60 @@ body.login-page{
   height:100%;
   filter:drop-shadow(0 20px 20px rgba(15,23,42,0.16));
 }
-.statistics-section .statistics-title{font-size:1.25rem;margin-bottom:12px;color:#071423}
+.statistics-section .statistics-title{
+  margin:0 0 18px;
+  color:#3f1118;
+  font-size:1.18rem;
+  font-weight:800;
+  letter-spacing:0;
+  text-align:center;
+  text-shadow:0 1px 0 rgba(255,255,255,0.22);
+}
+.statistics-section .statistics-title #amountValue{
+  display:inline-block;
+  margin-left:8px;
+  padding:0.34rem 0.72rem;
+  border-radius:12px;
+  background:linear-gradient(145deg, rgba(255,255,255,0.28), rgba(255,255,255,0.1));
+  border:1px solid rgba(255,255,255,0.26);
+  color:#6f1824;
+  font-size:1.62rem;
+  font-weight:900;
+  line-height:1;
+  box-shadow:
+    0 12px 24px rgba(75,11,18,0.18),
+    0 1px 0 rgba(255,255,255,0.38) inset,
+    0 -1px 0 rgba(75,11,18,0.08) inset;
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.28),
+    0 8px 18px rgba(75,11,18,0.16);
+}
 
 @media (max-width:640px){
+  .statistics-section{padding:4.5rem .25rem 1.5rem}
+  .statistics-section .statistics-title{
+    font-size:1rem;
+    line-height:1.35;
+  }
+  .statistics-section .statistics-title #amountValue{
+    display:block;
+    width:max-content;
+    max-width:100%;
+    margin:8px auto 0;
+    font-size:1.45rem;
+  }
   .stats-controls{flex-direction:column;gap:10px}
   .stats-select{width:140px}
-  .stats-chart{max-width:360px}
+  .stats-chart-container{
+    width:100%;
+    max-width:360px;
+    height:360px;
+    padding:12px;
+    border-radius:14px;
+  }
+  .stats-chart-container::before{bottom:18px}
+  .stats-chart-container::after{inset:8px;border-radius:12px}
+  .stats-chart{max-width:100%}
 }
   color: white;
   padding: 10px 24px;

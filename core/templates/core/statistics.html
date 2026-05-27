@@ -62,12 +62,17 @@
         const centerX = (chartArea.left + chartArea.right) / 2;
         const centerY = (chartArea.top + chartArea.bottom) / 2;
         ctx.save();
-        const fontSize = opts.fontSize || 20;
+        const text = opts.text || '';
+        const holeWidth = Math.min(chartArea.right - chartArea.left, chartArea.bottom - chartArea.top) * 0.44;
+        let fontSize = opts.fontSize || 20;
         ctx.font = `800 ${fontSize}px Inter, Arial`;
+        while(ctx.measureText(text).width > holeWidth && fontSize > 11){
+          fontSize -= 1;
+          ctx.font = `800 ${fontSize}px Inter, Arial`;
+        }
         ctx.fillStyle = opts.color || '#0b1220';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        const text = opts.text || '';
         ctx.fillText(text, centerX, centerY);
         ctx.restore();
       }
