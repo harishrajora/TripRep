@@ -77,12 +77,15 @@ def dashboard(request):
     return render(request, 'core/dashboard.html', {'first_name': first_name, 'triprep_score': triprep_score})
 
 def login_view(request):
-    if request.method == 'POST':
+    if request.method == 'POST' and not request.user.is_authenticated:
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
             print("User logged in:", form.get_user())
             return redirect('core:dashboard')
+    elif request.user.is_authenticated:
+        print("User is already authenticated, redirecting to dashboard:", request.user)
+        return redirect('core:dashboard')
     else:
         form = AuthenticationForm()
     return render(request, 'core/login.html', {'form': form})
