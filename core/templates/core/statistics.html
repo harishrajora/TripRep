@@ -36,6 +36,21 @@
     let currentMode = 'category';
     let statsChart = null;
 
+    const doughnutDepthPlugin = {
+      id: 'doughnutDepth',
+      beforeDatasetDraw(chart){
+        const ctx = chart.ctx;
+        ctx.save();
+        ctx.shadowColor = 'rgba(15, 23, 42, 0.26)';
+        ctx.shadowBlur = 18;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 12;
+      },
+      afterDatasetDraw(chart){
+        chart.ctx.restore();
+      }
+    };
+
     // plugin to draw center text (total) inside doughnut
     const centerTextPlugin = {
       id: 'centerText',
@@ -43,27 +58,44 @@
         const opts = chart.options.plugins.centerText;
         if(!opts) return;
         const ctx = chart.ctx;
-        const width = chart.width;
-        const height = chart.height;
+        const chartArea = chart.chartArea;
+        const centerX = (chartArea.left + chartArea.right) / 2;
+        const centerY = (chartArea.top + chartArea.bottom) / 2;
         ctx.save();
         const fontSize = opts.fontSize || 20;
-        ctx.font = `600 ${fontSize}px Inter, Arial`;
+        ctx.font = `800 ${fontSize}px Inter, Arial`;
         ctx.fillStyle = opts.color || '#0b1220';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         const text = opts.text || '';
-        ctx.fillText(text, width/2, height/2);
+        ctx.fillText(text, centerX, centerY);
         ctx.restore();
       }
     };
 
+    Chart.register(doughnutDepthPlugin);
     Chart.register(centerTextPlugin);
     Chart.register(ChartDataLabels);
 
     function renderChart(labels, data){
-      // build palette and simple gradients
-      const basePalette = ['#4e79a7','#f28e2b','#e15759','#76b7b2','#59a14f','#edc949','#af7aa1','#ff9da7','#9c755f','#bab0ab'];
-      const bg = labels.map((l,i)=> basePalette[i % basePalette.length]);
+      const palettes = [
+        ['#2563eb', '#60a5fa', '#1e3a8a'],
+        ['#f97316', '#fdba74', '#9a3412'],
+        ['#dc2626', '#f87171', '#7f1d1d'],
+        ['#0891b2', '#67e8f9', '#164e63'],
+        ['#16a34a', '#86efac', '#14532d'],
+        ['#ca8a04', '#fde68a', '#713f12'],
+        ['#9333ea', '#d8b4fe', '#581c87'],
+        ['#db2777', '#f9a8d4', '#831843']
+      ];
+      const bg = labels.map((label, i) => {
+        const colors = palettes[i % palettes.length];
+        const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, ctx.canvas.height);
+        gradient.addColorStop(0, colors[1]);
+        gradient.addColorStop(0.48, colors[0]);
+        gradient.addColorStop(1, colors[2]);
+        return gradient;
+      });
 
       const cfg = {
         type: 'doughnut',
@@ -72,18 +104,40 @@
           datasets: [{
             data: data,
             backgroundColor: bg,
-            borderColor: '#fff',
-            borderWidth: 2
+            borderColor: 'rgba(255,255,255,0.96)',
+            borderWidth: 4,
+            borderRadius: 8,
+            hoverBorderWidth: 5,
+            hoverOffset: 14,
+            spacing: 3
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          cutout: '58%',
-          animation: {animateRotate:true, duration:700},
+          cutout: '56%',
+          rotation: -80,
+          animation: {animateRotate:true, animateScale:true, duration:850, easing:'easeOutQuart'},
+          layout: {padding: 18},
           plugins: {
-            legend: {position: 'bottom', labels: {usePointStyle:true, padding:12}},
+            legend: {
+              position: 'bottom',
+              labels: {
+                usePointStyle:true,
+                padding:16,
+                boxWidth:10,
+                boxHeight:10,
+                color:'#334155',
+                font:{weight:700, size:12}
+              }
+            },
             tooltip: {
+              backgroundColor: 'rgba(15,23,42,0.92)',
+              borderColor: 'rgba(255,255,255,0.2)',
+              borderWidth: 1,
+              padding: 12,
+              cornerRadius: 10,
+              displayColors: true,
               callbacks: {
                 label: function(context){
                   const val = context.raw || 0;
@@ -95,14 +149,16 @@
             },
             datalabels: {
               color: '#fff',
+              textStrokeColor: 'rgba(15,23,42,0.22)',
+              textStrokeWidth: 2,
               formatter: (value, ctx) => {
                 const sum = ctx.dataset.data.reduce((a,b)=>a+(parseFloat(b)||0),0);
                 const pct = sum ? (value/sum*100).toFixed(0) : '0';
                 return `${pct}%`;
               },
-              font: {weight:600, size:12}
+              font: {weight:800, size:12}
             },
-            centerText: {text: document.getElementById('amountValue').textContent, color:'#0b1220', fontSize:20}
+            centerText: {text: document.getElementById('amountValue').textContent, color:'#0f172a', fontSize:20}
           }
         }
       };
