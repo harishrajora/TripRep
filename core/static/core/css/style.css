@@ -1076,6 +1076,100 @@ input[type="number"] {
   background:var(--download_pdf-hover)
 }
 
+.profile-actions{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:1rem;
+  flex-wrap:wrap;
+  margin-top:0.75rem;
+}
+.profile-action-button{
+  position:relative;
+  overflow:hidden;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:220px;
+  min-height:54px;
+  margin:0;
+  padding:0.95rem 1.2rem;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.56);
+  color:#ffffff;
+  font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  font-size:0.98rem;
+  font-weight:900;
+  letter-spacing:0.04em;
+  line-height:1;
+  text-align:center;
+  text-decoration:none;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
+}
+.profile-update-button{
+  background:linear-gradient(135deg, #162f91 0%, var(--download_pdf) 48%, #5f7dff 100%);
+  box-shadow:0 14px 30px rgba(35,66,205,0.28), 0 1px 0 rgba(255,255,255,0.34) inset;
+}
+.profile-password-button{
+  background:linear-gradient(135deg, #7b1f2d 0%, var(--accent) 48%, #e46f58 100%);
+  box-shadow:0 14px 30px rgba(75,11,18,0.28), 0 1px 0 rgba(255,255,255,0.34) inset;
+}
+.profile-action-button::before{
+  content:"";
+  position:absolute;
+  inset:1px;
+  border-radius:11px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.28), rgba(255,255,255,0) 52%);
+  pointer-events:none;
+}
+.profile-action-button::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-40%;
+  width:32%;
+  height:100%;
+  background:linear-gradient(105deg, rgba(255,255,255,0), rgba(255,255,255,0.54), rgba(255,255,255,0));
+  transform:skewX(-18deg);
+  opacity:0;
+  pointer-events:none;
+  transition:transform 620ms cubic-bezier(.2,.9,.3,1), opacity 220ms ease;
+}
+.profile-action-button:hover,
+.profile-action-button:focus-visible{
+  transform:translateY(-2px);
+  filter:saturate(1.08);
+  outline:none;
+  color:#ffffff;
+  text-decoration:none;
+}
+.profile-update-button:hover,
+.profile-update-button:focus-visible{
+  box-shadow:0 18px 38px rgba(35,66,205,0.36), 0 1px 0 rgba(255,255,255,0.42) inset;
+}
+.profile-password-button:hover,
+.profile-password-button:focus-visible{
+  box-shadow:0 18px 38px rgba(75,11,18,0.36), 0 1px 0 rgba(255,255,255,0.42) inset;
+}
+.profile-action-button:hover::after,
+.profile-action-button:focus-visible::after{
+  transform:translateX(440%) skewX(-18deg);
+  opacity:0.9;
+}
+.profile-action-button:active{
+  transform:translateY(0);
+}
+@media (max-width:520px){
+  .profile-actions{
+    gap:0.75rem;
+  }
+  .profile-action-button{
+    width:min(100%, 260px);
+  }
+}
+
 .thumbnail-image {
   width: 200px;
   height: 200px;

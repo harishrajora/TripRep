@@ -108,9 +108,9 @@
     </select>
     </div>
     <br>
-    <center>
-    <button type="submit" class="download_pdf">Update Profile</button>
-    <a href="{% url 'core:updatepassword' %}" class="btn-signup" style="margin-left: 1rem;">Change Password</a>
-    </center>
+    <div class="profile-actions">
+        <button type="submit" class="download_pdf profile-action-button profile-update-button">Update Profile</button>
+        <a href="{% url 'core:updatepassword' %}" class="btn-signup profile-action-button profile-password-button">Change Password</a>
+    </div>
 </form> 
 {% endblock %}
