@@ -1,4 +1,4 @@
-# [TripRep] (https://www.triprep.in)
+# [TripRep](https://www.triprep.in)
 
 TripRep is a Django web app for travelers who want one place to store and review trip tickets and do much more.  
 You can upload ticket PDFs, store trip details, view a clean list of past tickets, and track simple spending statistics. In addition, TripRep comes
