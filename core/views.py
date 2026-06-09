@@ -602,6 +602,11 @@ def ai_world(request):
     return render(request, 'core/comingsoon.html')
     # return render(request, 'core/ai_world.html')
 
+def trips(request):
+    if request.user.is_anonymous:
+        return redirect('core:login')
+    return render(request, 'core/comingsoon.html')
+
 def generate_travel_score(request, miles_traveled):
     """
     Generate a travel score for the user based on their tickets and reservations.
