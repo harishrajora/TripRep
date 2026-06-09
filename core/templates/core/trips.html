@@ -1,0 +1,30 @@
+{% extends 'core/base.html' %}
+{% block title %}<title>Your Trips</title>{% endblock %}
+{% block content %}
+  {% if trips %}
+    <div class="hero-actions">
+      <a href="#" class="btn-signup">CREATE TRIP</a>
+    </div>
+    <!-- <ul class="tickets-list"> -->
+      <br>
+      <div class="view-ticket-grid"></div>
+      {% for trip in trips %}
+      <a href="#" class="view-tickets-card" aria-label="Trips" role="link">
+        <div class="view-tickets-inner">
+          <h2 class="view-ticket-title">{{ trip.trip_name }}</h2>
+          <p class="view-ticket-route">{{ trip.trip_type }}</p>
+          <p class="view-ticket-date">{{ trip.start_date_of_trip }} <strong>---></strong> {{ trip.end_date_of_trip }}</p>
+          <p class="view-ticket-uploaded"><em>Created at: {{ trip.trip_created_at }}</em></p>
+        </div>
+      </a>
+      {% endfor %}
+      </div>
+  {% else %}
+  <section class="hero">
+    <h1 class="hero-title">You Have Not Created Any Trips Yet</h1>
+    <div class="hero-actions">
+      <a href="#" class="btn-signup">CREATE A TRIP</a>
+    </div>
+   </section>
+  {% endif %}
+{% endblock %}

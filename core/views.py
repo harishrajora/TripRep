@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import SignupForm
-from .models import Tickets, Reservations, UserProfile
+from .models import Tickets, Reservations, UserProfile, Trips
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_http_methods
 from google import genai
@@ -605,7 +605,8 @@ def ai_world(request):
 def trips(request):
     if request.user.is_anonymous:
         return redirect('core:login')
-    return render(request, 'core/comingsoon.html')
+    trips = Trips.objects.filter(user=request.user).order_by('-trip_created_at')
+    return render(request, 'core/trips.html', {'trips': trips})
 
 def generate_travel_score(request, miles_traveled):
     """
