@@ -1,8 +1,8 @@
 # [TripRep](https://www.triprep.in)
 
-TripRep is a Django web app for travelers who want one place to store and review trip tickets and do much more.  
-You can upload ticket PDFs, store trip details, view a clean list of past tickets, and track simple spending statistics. In addition, TripRep comes
-with AI agents that can help you book flight tickets, create itineraries, and help answer travel questions.
+TripRep is a Django web app for travelers who want one place to store and review trip tickets, reservations, and do much more.  
+You can upload ticket PDFs, create and store trip details, view a clean list of past tickets and reservations, and track simple spending statistics. In addition, TripRep comes
+with AI agents that can help you book flight tickets, create itineraries, and help answer travel questions (Currently In Progress).
 
 The app also includes an AI-assisted flow that reads a ticket PDF and auto-fills ticket fields using Google Gemini.
 
@@ -22,15 +22,18 @@ The app also includes an AI-assisted flow that reads a ticket PDF and auto-fills
 
 ## What TripRep Does
 
-TripRep currently focuses on ticket management:
+TripRep currently focuses on travel management:
 
 - User signup, login, logout, and profile updates
-- Ticket creation with manual entry fields
+- Ticket creation with manual entry fields, filled automatically with the help of AI after upload.
+- Reservation creation with manual entry fields.
 - Ticket PDF upload and thumbnail generation (first page preview)
 - AI extraction endpoint to read uploaded PDF tickets and prefill fields
-- Ticket list view and individual ticket detail pages
-- Basic statistics page (ticket count and spending)
+- Ticket list view and individual ticket detail pages with a quick-to-see image of the ticket.
+- Reservation list view and individual reservation detail pages.
+- Statistics page to get a glance at spending based on platforms, fights, hotels, and much more.
 - AI agents to book tickets and create itineraries (in progress)
+- Trip creation and linking tickets and reservations to the trip.
 
 
 ## Tech Stack
@@ -143,17 +146,27 @@ Open:
 ### Flow 1: Create an account and access dashboard
 
 1. Visit `/signup/`
-2. Register with name, email, and password
+2. Register with email and password
 3. After signup/login, go to `/dashboard/`
 
-### Flow 2: Add a ticket manually
+### Flow 2: Add a ticket
 
 1. Go to `/add_ticket/`
-2. Upload a ticket PDF
-3. Fill in title, source, destination, type, booked-through, date, and amount
-4. Submit to save ticket
+2. Upload a ticket PDF.
+3. Let the automatic parser fill all details automatically.
+4. Review and edit the title, source, destination, type, booked-through, date, and amount if required.
+5. Submit to save ticket.
+6. Link the ticket to a trip.
 
-### Flow 3: Use AI ticket extraction
+### Flow 3: Add a reservation
+
+1. Go to `/add_ticket/`
+2. Upload a reservation PDF.
+3. Review and edit the fields.
+4. Submit to save the reservation.
+5. Link the reservation to a trip.
+
+### Flow 4: Use AI ticket extraction
 
 1. On `/add_ticket/`, select a PDF
 2. Frontend JS posts the file to `/create_ticket/`
@@ -161,14 +174,14 @@ Open:
 4. Form fields auto-populate in the browser
 5. Submit to persist the ticket
 
-### Flow 4: Review saved tickets
+### Flow 5: Review saved tickets
 
 1. Open `/tickets/` for your personal ticket list
 2. Click a ticket to open `/view_ticket/<ticket_id>/`
 3. View metadata, thumbnail, and downloadable file
 4. Delete a ticket from the ticket detail page if needed
 
-### Flow 5: View summary stats
+### Flow 6: View summary stats
 
 Open `/statistics/` to see:
 
