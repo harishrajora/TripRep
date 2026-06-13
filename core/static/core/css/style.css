@@ -191,6 +191,14 @@ body{
   justify-content:center;
 }
 
+/* List views (tickets/reservations/trips) place the action bar at the top of
+   the container, where it would otherwise sit under the absolutely-positioned
+   nav. Push it below the nav so it never overlaps the top links (notably in
+   the ~960-1000px band before the nav collapses to the hamburger). */
+.container > .hero-actions{
+  margin-top:6rem;
+}
+
 
 .btn-signup{
   display:inline-block;
