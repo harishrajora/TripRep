@@ -110,7 +110,15 @@ body{
   box-shadow:0 10px 30px rgba(2,6,23,0.04);
   position: relative;
   z-index: 100;
-} 
+}
+
+/* On mobile, drop the white frame around the container so it goes edge-to-edge
+   and reclaims screen space. Rounded corners are removed since they'd sit
+   flush against the screen edge. */
+@media (max-width:640px){
+  .site-main{padding:0}
+  .container{border-radius:0}
+}
 
 .hero{ 
   text-align:center; 
