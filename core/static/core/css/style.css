@@ -1419,6 +1419,42 @@ input[type="number"] {
   }
 }
 
+/* Attach Trip page */
+.attach-trip-section {
+  padding: 6rem 1rem 2rem;
+}
+
+@media (max-width: 640px) {
+  .attach-trip-section { padding-top: 5rem; }
+}
+
+.attach-trip-form {
+  max-width: 640px;
+  margin: 28px auto 0;
+  padding: 14px 8px 26px;
+  border-radius: 18px;
+  background: var(--card);
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  box-shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
+}
+
+.attach-trip-empty {
+  max-width: 640px;
+  margin: 36px auto 0;
+  padding: 36px 24px;
+  text-align: center;
+  border-radius: 18px;
+  background: var(--card);
+  border: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+.attach-trip-empty p {
+  margin: 0 0 20px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
 /* Small T / R type badge on trip item cards */
 .trip-type-badge {
   flex: 0 0 auto;

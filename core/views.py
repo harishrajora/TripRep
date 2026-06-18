@@ -235,7 +235,10 @@ def save_ticket(request):
         # miles = int(float(distance)*1.60934)
         UserProfile.objects.filter(user=request.user).update(miles_traveled=F('miles_traveled') + miles)
         generate_travel_score(request, miles)
-        return booking_saved(request, bookingType='ticket', result='Successful', ticket.id='ticketID')
+        ticketInfo = {}
+        ticketInfo['ticket_title'] = title
+        ticketInfo['date_of_journey'] = date_of_journey
+        return booking_saved(request, bookingType='ticket', result='Successful', ticketID=ticket.id)
         # return redirect('core:tickets')
     else:
         return booking_saved(request, bookingType='ticket', result='Failure')
@@ -588,13 +591,13 @@ def view_reservation(request, reservation_id):
         reservation.amount_paid = convert_INR_to_currency(selected_currency, reservation.amount_paid)
     return render(request, 'core/view_reservation.html', {'reservation': reservation})
 
-def booking_saved(request, bookingType, result):
+def booking_saved(request, bookingType, result, ticketID=None):
     if request.user.is_anonymous:
         return redirect('core:login')
     if request.method != 'POST':
         return redirect('core:dashboard')
     return render(request, 'core/booking_saved.html', {'bookingType': bookingType,
-                                                       'result' : result,})
+                                                       'result' : result, 'ticketID': ticketID})
 
 def ai_world(request):
     if request.user.is_anonymous:
@@ -632,14 +635,20 @@ def attach_trip(request, ticketID):
         return redirect('core:login')
     try:
         ticket = Tickets.objects.get(id=ticketID, user=request.user)
-        ticket_info = {}
-        ticket_info['ticket_title'] = ticket.title
-        ticket_info['ticket_booking_date'] = ticket.uploaded_at
         if ticket.user != request.user:
             return redirect('core:tickets')
     except Tickets.DoesNotExist:
         return redirect('core:tickets')
-    return render(request, 'core/attach_trip.html', {'ticketInfo': ticket_info})
+    trips = Trips.objects.filter(user=request.user)
+    if trips.count() == 0:
+        ticket_info['message'] = "No Trip Found"
+        return render(request, 'core/attach_trip.html', {'ticketInfo': ticket_info,})
+    else:
+        ticket_info = {}
+        ticket_info['ticket_id'] = ticket.id
+        ticket_info['ticket_title'] = ticket.title
+        ticket_info['ticket_booking_date'] = ticket.uploaded_at.strftime('%Y-%m-%d')
+    return render(request, 'core/attach_trip.html', {'ticketInfo': ticket_info, 'trips': trips})
 
 def generate_travel_score(request, miles_traveled):
     """

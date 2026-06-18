@@ -1,0 +1,42 @@
+{% extends 'core/base.html' %}
+
+{% block title %}
+<title>Attach Trip</title>
+{% endblock %}
+
+{% block content %}
+  <section class="add-ticket-section attach-trip-section">
+    <center>
+      <h1 class="add-ticket-title">
+        Attach the trip for ticket &ldquo;{{ ticketInfo.ticket_title }}&rdquo;
+        booked on {{ ticketInfo.ticket_booking_date }}
+      </h1>
+    </center>
+
+    {% if ticketInfo.message %}
+      <div class="attach-trip-empty">
+        <p>You haven&rsquo;t created any trips yet.</p>
+        <a href="{% url 'core:trips' %}" class="btn-save-ticket">Create a Trip</a>
+      </div>
+    {% else %}
+      <form method="post" action="" class="add-ticket-form attach-trip-form">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="trip">Select a trip</label>
+          <select name="trip" id="trip" required>
+            <option value="" disabled selected>Choose one of your trips&hellip;</option>
+            {% for trip in trips %}
+              <option value="{{ trip.id }}">
+                {{ trip.trip_name }} ({{ trip.start_date_of_trip }} &rarr; {{ trip.end_date_of_trip }})
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+        <br>
+        <center>
+          <button type="submit" id="attach_trip_btn" class="btn-save-ticket">Attach Trip</button>
+        </center>
+      </form>
+    {% endif %}
+  </section>
+{% endblock %}
