@@ -235,7 +235,7 @@ def save_ticket(request):
         # miles = int(float(distance)*1.60934)
         UserProfile.objects.filter(user=request.user).update(miles_traveled=F('miles_traveled') + miles)
         generate_travel_score(request, miles)
-        return booking_saved(request, bookingType='ticket', result='Successful')
+        return booking_saved(request, bookingType='ticket', result='Successful', ticket.id='ticketID')
         # return redirect('core:tickets')
     else:
         return booking_saved(request, bookingType='ticket', result='Failure')
@@ -626,6 +626,20 @@ def view_trip(request, trip_id):
         'total_count': tickets_count + reservations_count,
     }
     return render(request, 'core/view_trip.html', context)
+
+def attach_trip(request, ticketID):
+    if request.user.is_anonymous:
+        return redirect('core:login')
+    try:
+        ticket = Tickets.objects.get(id=ticketID, user=request.user)
+        ticket_info = {}
+        ticket_info['ticket_title'] = ticket.title
+        ticket_info['ticket_booking_date'] = ticket.uploaded_at
+        if ticket.user != request.user:
+            return redirect('core:tickets')
+    except Tickets.DoesNotExist:
+        return redirect('core:tickets')
+    return render(request, 'core/attach_trip.html', {'ticketInfo': ticket_info})
 
 def generate_travel_score(request, miles_traveled):
     """
