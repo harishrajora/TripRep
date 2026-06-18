@@ -61,13 +61,11 @@ class Tickets(models.Model):
 
     def save(self, *args, **kwargs):
         is_new = self.pk is None
-        print(f"Args = {args}, Kwargs = {kwargs}")
-        if is_new:
-            # Save first to get the file path
-            super().save(*args, **kwargs)
-            # Then generate thumbnail
-            if self.ticket_file:
-                self.generate_thumbnail()
+        # Always persist the row (creates or updates it)
+        super().save(*args, **kwargs)
+        # Generate the thumbnail only on first creation
+        if is_new and self.ticket_file:
+            self.generate_thumbnail()
 
     def __str__(self):
         return self.title
@@ -93,13 +91,11 @@ class Reservations(models.Model):
     
     def save(self, *args, **kwargs):
         is_new = self.pk is None
-        print(f"Args = {args}, Kwargs = {kwargs}")
-        if is_new:
-            # Save first to get the file path
-            super().save(*args, **kwargs)
-            # Then generate thumbnail
-            if self.reservation_file:
-                self.generate_thumbnail()
+        # Always persist the row (creates or updates it)
+        super().save(*args, **kwargs)
+        # Generate the thumbnail only on first creation
+        if is_new and self.reservation_file:
+            self.generate_thumbnail()
 
     def generate_thumbnail(self):
         if not self.reservation_file:
