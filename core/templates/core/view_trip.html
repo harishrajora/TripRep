@@ -37,6 +37,7 @@
     {% for ticket in trip.tickets.all %}
     <a href="{% url 'core:view_ticket' ticket.id %}" class="view-tickets-card trip-item trip-ticket" aria-label="Ticket" role="link">
       <div class="view-tickets-inner">
+        <span class="trip-type-badge trip-type-ticket" title="Ticket" aria-hidden="true">T</span>
         <h2 class="view-ticket-title">{{ ticket.title }}</h2>
         <p class="view-ticket-date"><em>Booked date: {{ ticket.date_of_journey }}</em></p>
       </div>
@@ -46,6 +47,7 @@
     {% for reservation in trip.reservations.all %}
     <a href="{% url 'core:view_reservation' reservation.id %}" class="view-tickets-card trip-item trip-reservation" aria-label="Reservation" role="link">
       <div class="view-tickets-inner">
+        <span class="trip-type-badge trip-type-reservation" title="Reservation" aria-hidden="true">R</span>
         <h2 class="view-ticket-title">{{ reservation.reservation_name }}</h2>
         <p class="view-ticket-date"><em>Booked date: {{ reservation.date_of_reservation }}</em></p>
       </div>
