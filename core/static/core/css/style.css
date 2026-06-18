@@ -1455,6 +1455,134 @@ input[type="number"] {
   color: var(--muted);
 }
 
+/* Custom trip dropdown */
+.trip-select {
+  position: relative;
+  width: 100%;
+}
+
+.trip-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 16px;
+  font-family: inherit;
+  text-align: left;
+  color: #333;
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.trip-select-trigger:hover { border-color: #aaa; }
+
+.trip-select.open .trip-select-trigger {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.trip-select-value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.trip-select-arrow {
+  flex: 0 0 auto;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #333;
+  transition: transform 0.2s ease;
+}
+
+.trip-select.open .trip-select-arrow { transform: rotate(180deg); }
+
+.trip-select-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 50;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  max-height: 280px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 18px 48px rgba(15, 23, 42, 0.16);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+}
+
+.trip-select.open .trip-select-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.trip-select-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.trip-select-option:hover,
+.trip-select-option:focus-visible {
+  background: rgba(102, 126, 234, 0.1);
+  outline: none;
+}
+
+.trip-select-option.selected {
+  background: linear-gradient(135deg, #7b1f2d 0%, var(--accent) 48%, #e46f58 100%);
+}
+
+.trip-select-option.selected .trip-option-name,
+.trip-select-option.selected .trip-option-dates {
+  color: #fff;
+}
+
+.trip-option-name {
+  font-weight: 700;
+  color: #0b1220;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.trip-option-dates {
+  flex: 0 0 auto;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* On smaller screens, stack the dates below the trip name */
+@media (max-width: 560px) {
+  .trip-select-option {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .trip-option-dates { font-size: 13px; }
+}
+
 /* Small T / R type badge on trip item cards */
 .trip-type-badge {
   flex: 0 0 auto;
