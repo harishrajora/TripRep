@@ -9,7 +9,7 @@
       <br>
       <div class="view-ticket-grid"></div>
       {% for trip in trips %}
-      <a href="#" class="view-tickets-card" aria-label="Trips" role="link">
+      <a href="{% url 'core:view_trip' trip.id %}" class="view-tickets-card" aria-label="Trips" role="link">
         <div class="view-tickets-inner">
           <h2 class="view-ticket-title">{{ trip.trip_name }}</h2>
           <p class="view-ticket-route">{{ trip.trip_type }}</p>

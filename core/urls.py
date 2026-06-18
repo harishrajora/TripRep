@@ -35,6 +35,7 @@ urlpatterns = [
     path('ai-world/', views.ai_world, name='ai-world'),
     path('trips/', views.trips, name='trips'),
     path('delete_reservation/<int:reservation_id>/', views.delete_reservation, name='delete_reservation'),
+    path('view_trip/<int:trip_id>/', views.view_trip, name='view_trip'),
 ]
 
 if settings.DEBUG:

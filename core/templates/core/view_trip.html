@@ -1,0 +1,77 @@
+{% extends 'core/base.html' %}
+
+{% block title %}
+<title> {{ trip.trip_name }} </title>
+{% endblock %}
+
+{% block content %}
+  <section class="view_ticket-container">
+    <h1 class="view_ticket_title"> {{ trip.trip_name }} </h1>
+    <div class="ticket-details">
+      <p><strong>Trip Type:</strong> {{ trip.trip_type }}</p>
+      <p><strong>Start Date:</strong> {{ trip.start_date_of_trip }}</p>
+      <p><strong>End Date:</strong> {{ trip.end_date_of_trip }}</p>
+      <p><strong>Created at:</strong> {{ trip.trip_created_at }}</p>
+    </div>
+
+    <div class="trip-filter">
+      <span class="trip-filter-label">Show</span>
+      <div class="trip-filter-group" role="tablist" aria-label="Filter trip items">
+        <button type="button" class="trip-filter-btn active" data-filter="all" onclick="filterTripItems(this)">
+          All
+          <span class="trip-filter-count">{{ total_count }}</span>
+        </button>
+        <button type="button" class="trip-filter-btn" data-filter="tickets" onclick="filterTripItems(this)">
+          Tickets
+          <span class="trip-filter-count">{{ tickets_count }}</span>
+        </button>
+        <button type="button" class="trip-filter-btn" data-filter="reservations" onclick="filterTripItems(this)">
+          Reservations
+          <span class="trip-filter-count">{{ reservations_count }}</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="view-ticket-grid"></div>
+
+    {% for ticket in trip.tickets.all %}
+    <a href="{% url 'core:view_ticket' ticket.id %}" class="view-tickets-card trip-item trip-ticket" aria-label="Ticket" role="link">
+      <div class="view-tickets-inner">
+        <h2 class="view-ticket-title">{{ ticket.title }}</h2>
+        <p class="view-ticket-date"><em>Booked date: {{ ticket.date_of_journey }}</em></p>
+      </div>
+    </a>
+    {% endfor %}
+
+    {% for reservation in trip.reservations.all %}
+    <a href="{% url 'core:view_reservation' reservation.id %}" class="view-tickets-card trip-item trip-reservation" aria-label="Reservation" role="link">
+      <div class="view-tickets-inner">
+        <h2 class="view-ticket-title">{{ reservation.reservation_name }}</h2>
+        <p class="view-ticket-date"><em>Booked date: {{ reservation.date_of_reservation }}</em></p>
+      </div>
+    </a>
+    {% endfor %}
+
+    {% if not trip.tickets.all and not trip.reservations.all %}
+    <p>No tickets or reservations attached to this trip yet.</p>
+    {% endif %}
+  </section>
+
+  <script>
+    function filterTripItems(btn) {
+      var value = btn.getAttribute('data-filter');
+
+      document.querySelectorAll('.trip-filter-btn').forEach(function (b) {
+        b.classList.toggle('active', b === btn);
+      });
+
+      document.querySelectorAll('.trip-item').forEach(function (item) {
+        var show =
+          value === 'all' ||
+          (value === 'tickets' && item.classList.contains('trip-ticket')) ||
+          (value === 'reservations' && item.classList.contains('trip-reservation'));
+        item.style.display = show ? '' : 'none';
+      });
+    }
+  </script>
+{% endblock %}

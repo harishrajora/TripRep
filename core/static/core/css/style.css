@@ -1292,6 +1292,133 @@ input[type="number"] {
   margin: 0.5rem 0; /* Add some spacing */
 }
 
+/* ========== TRIP FILTER (segmented control) ========== */
+
+.trip-filter {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 28px 0 22px;
+}
+
+.trip-filter-label {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.trip-filter-group {
+  display: inline-flex;
+  gap: 6px;
+  padding: 6px;
+  max-width: 100%;
+  border-radius: 16px;
+  background: rgba(15, 23, 42, 0.05);
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.06);
+}
+
+.trip-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 12px 26px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: #0b1220;
+  font-size: 16px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 200ms ease, color 200ms ease, transform 140ms ease, box-shadow 200ms ease;
+}
+
+.trip-filter-btn:hover {
+  background: rgba(255, 255, 255, 0.7);
+  transform: translateY(-1px);
+}
+
+.trip-filter-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(163, 0, 27, 0.16);
+}
+
+.trip-filter-btn.active {
+  background: linear-gradient(135deg, #7b1f2d 0%, var(--accent) 48%, #e46f58 100%);
+  color: #fff;
+  box-shadow: 0 12px 30px rgba(163, 0, 27, 0.28);
+  transform: translateY(-1px);
+}
+
+.trip-filter-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 8px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+  background: rgba(15, 23, 42, 0.1);
+  color: #0b1220;
+}
+
+.trip-filter-btn.active .trip-filter-count {
+  background: rgba(255, 255, 255, 0.28);
+  color: #fff;
+}
+
+@media (max-width: 640px) {
+  .trip-filter {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .trip-filter-label { text-align: center; }
+  .trip-filter-group { width: 100%; }
+  .trip-filter-btn {
+    flex: 1 1 0;
+    padding: 12px 10px;
+    font-size: 15px;
+    gap: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .trip-filter-group { gap: 4px; padding: 4px; }
+  .trip-filter-btn {
+    padding: 11px 6px;
+    font-size: 13px;
+  }
+  .trip-filter-count {
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 450px) {
+  .trip-filter-group {
+    flex-direction: column;
+    gap: 6px;
+    padding: 6px;
+  }
+  .trip-filter-btn {
+    width: 100%;
+    justify-content: space-between;
+    padding: 13px 16px;
+    font-size: 15px;
+  }
+}
+
 /* ========== ABOUT PAGE STYLES ========== */
 
 .about-page {

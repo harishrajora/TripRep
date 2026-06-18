@@ -608,6 +608,25 @@ def trips(request):
     trips = Trips.objects.filter(user=request.user).order_by('-trip_created_at')
     return render(request, 'core/trips.html', {'trips': trips})
 
+def view_trip(request, trip_id):
+    if request.user.is_anonymous:
+        return redirect('core:login')
+    try:
+        trip = Trips.objects.get(id=trip_id, user=request.user)
+        if trip.user != request.user:
+            return redirect('core:trips')
+    except Trips.DoesNotExist:
+        return redirect('core:trips')
+    tickets_count = trip.tickets.count()
+    reservations_count = trip.reservations.count()
+    context = {
+        'trip': trip,
+        'tickets_count': tickets_count,
+        'reservations_count': reservations_count,
+        'total_count': tickets_count + reservations_count,
+    }
+    return render(request, 'core/view_trip.html', context)
+
 def generate_travel_score(request, miles_traveled):
     """
     Generate a travel score for the user based on their tickets and reservations.
