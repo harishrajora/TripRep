@@ -647,7 +647,7 @@ def attach_trip(request, ticketID):
         ticket_info = {}
         ticket_info['ticket_id'] = ticket.id
         ticket_info['ticket_title'] = ticket.title
-        ticket_info['ticket_booking_date'] = ticket.uploaded_at.strftime('%Y-%m-%d')
+        ticket_info['ticket_booking_date'] = ticket.uploaded_at.strftime('%d-%m-%Y')
     return render(request, 'core/attach_trip.html', {'ticketInfo': ticket_info, 'trips': trips})
 
 def generate_travel_score(request, miles_traveled):
