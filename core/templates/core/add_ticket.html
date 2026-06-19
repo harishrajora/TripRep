@@ -139,6 +139,31 @@
         </div>
 
       </div>
+
+      <div class="form-group">
+        <label id="trip-label">Attach to a trip (optional)</label>
+        <input type="hidden" name="trip" id="trip">
+        <div class="trip-select" id="trip-select">
+          <button type="button" class="trip-select-trigger" id="trip-select-trigger"
+                  aria-haspopup="listbox" aria-expanded="false" aria-labelledby="trip-label">
+            <span class="trip-select-value" id="trip-select-value">&mdash; No trip &mdash;</span>
+            <span class="trip-select-arrow" aria-hidden="true"></span>
+          </button>
+          <ul class="trip-select-menu" id="trip-select-menu" role="listbox" aria-labelledby="trip-label">
+            <li class="trip-select-option selected" role="option" tabindex="0" data-value="" data-name="&mdash; No trip &mdash;">
+              <span class="trip-option-name">&mdash; No trip &mdash;</span>
+            </li>
+            {% for trip in trips %}
+              <li class="trip-select-option" role="option" tabindex="0"
+                  data-value="{{ trip.id }}" data-name="{{ trip.trip_name }}">
+                <span class="trip-option-name">{{ trip.trip_name }}</span>
+                <span class="trip-option-dates">{{ trip.start_date_of_trip }} &rarr; {{ trip.end_date_of_trip }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
         <br>
         <center>
         <button type="submit" id="save_ticket_btn" class="btn-save-ticket">Save Ticket</button>
@@ -152,6 +177,43 @@
           currencySelect.value = preferredCurrency;
         }
       });
+    </script>
+
+    <script>
+      (function () {
+        var root = document.getElementById('trip-select');
+        if (!root) return;
+        var trigger = document.getElementById('trip-select-trigger');
+        var menu = document.getElementById('trip-select-menu');
+        var valueEl = document.getElementById('trip-select-value');
+        var hidden = document.getElementById('trip');
+
+        function openMenu() { root.classList.add('open'); trigger.setAttribute('aria-expanded', 'true'); }
+        function closeMenu() { root.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false'); }
+
+        function selectOption(opt) {
+          hidden.value = opt.getAttribute('data-value');
+          valueEl.textContent = opt.getAttribute('data-name');
+          root.querySelectorAll('.trip-select-option').forEach(function (o) {
+            o.classList.toggle('selected', o === opt);
+          });
+          closeMenu();
+        }
+
+        trigger.addEventListener('click', function () {
+          root.classList.contains('open') ? closeMenu() : openMenu();
+        });
+
+        menu.querySelectorAll('.trip-select-option').forEach(function (opt) {
+          opt.addEventListener('click', function () { selectOption(opt); });
+          opt.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectOption(opt); }
+          });
+        });
+
+        document.addEventListener('click', function (e) { if (!root.contains(e.target)) closeMenu(); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+      })();
     </script>
 
 {% endblock %}

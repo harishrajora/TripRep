@@ -14,12 +14,12 @@
     {% if bookingType == 'ticket' %}
     <div class="hero-actions">
       <a href="{% url 'core:tickets' %}" class="btn-signup">VIEW TICKETS</a>
-      <a href="{% url 'core:attach_trip' ticketID %}" class="btn-signup">ATTACH TRIP</a>
+      <a href="{% url 'core:attach_trip' ticketID %}" class="btn-signup">ATTACH NEW TRIP</a>
     </div>
     {% else %}
     <div class="hero-actions">
       <a href="{% url 'core:reservations' %}" class="btn-signup">VIEW RESERVATIONS</a>
-      <a href="{% url 'core:attach_trip' %}" class="btn-signup">ATTACH TRIP</a>
+      <a href="{% url 'core:attach_trip' %}" class="btn-signup">ATTACH NEW TRIP</a>
     </div>
   </section>
     {% endif %}

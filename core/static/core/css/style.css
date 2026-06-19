@@ -915,6 +915,14 @@ body.login-page{
 
 /* # CSS for ticket PDF upload - add_ticket.html */
 
+.add-ticket-section {
+  padding: 6rem 1rem 2rem;
+}
+
+@media (max-width: 640px) {
+  .add-ticket-section { padding-top: 5rem; }
+}
+
 .form-group {
   max-width: 600px;
   margin: 0 auto;
@@ -1420,14 +1428,6 @@ input[type="number"] {
 }
 
 /* Attach Trip page */
-.attach-trip-section {
-  padding: 6rem 1rem 2rem;
-}
-
-@media (max-width: 640px) {
-  .attach-trip-section { padding-top: 5rem; }
-}
-
 .attach-trip-form {
   max-width: 640px;
   margin: 28px auto 0;
