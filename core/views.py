@@ -576,7 +576,8 @@ def add_reservation(request):
     if request.user.is_anonymous:
         return redirect('core:login')
     user_profile, _ = UserProfile.objects.get_or_create(user=request.user)
-    return render(request, 'core/add_reservation.html', {'preferred_currency': user_profile.currency})
+    trips = Trips.objects.filter(user=request.user)
+    return render(request, 'core/add_reservation.html', {'preferred_currency': user_profile.currency, 'trips': trips})
 
 def view_reservation(request, reservation_id):
     if request.user.is_anonymous:
