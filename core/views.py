@@ -110,7 +110,8 @@ def add_ticket(request):
     if request.user.is_anonymous:
         return redirect('core:login')
     user_profile, _ = UserProfile.objects.get_or_create(user=request.user)
-    return render(request, 'core/add_ticket.html', {'preferred_currency': user_profile.currency})
+    trips = Trips.objects.filter(user=request.user)
+    return render(request, 'core/add_ticket.html', {'preferred_currency': user_profile.currency, 'trips': trips})
 
 def process_file(file):
     file_pdf = file.read()
