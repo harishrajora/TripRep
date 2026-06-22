@@ -194,6 +194,7 @@ def save_ticket(request):
         ticket_type = request.POST.get('ticket_type_dropdown')
         booked_through = request.POST.get('booked_through')
         ticket_pdf = request.FILES.get('ticket_pdf')
+        trip = request.POST.get('trip')
         amount_paid = request.POST.get('amount_paid', '0.00')
         currency_chosen = request.POST.get('currency', 'INR')
         # only keep digits and decimal point
@@ -214,6 +215,9 @@ def save_ticket(request):
             amount_paid = get_converted_INR(currency_chosen, amount_paid)
 
         print(ticket_pdf)
+        trip_link = None
+        if trip:
+            trip_link = Trips.objects.filter(id=trip, user=request.user).first()
         ticket = Tickets(
             user=request.user,
             title=title,
@@ -224,7 +228,8 @@ def save_ticket(request):
             date_of_journey=date_of_journey,
             ticket_type=ticket_type,
             booked_through=booked_through,
-            amount_paid=amount_paid
+            amount_paid=amount_paid,
+            trip_link=trip_link,
         )
         ticket.save()
         try:
