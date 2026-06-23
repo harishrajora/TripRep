@@ -662,6 +662,13 @@ def attach_trip(request, ticketID):
         ticket_info['ticket_booking_date'] = ticket.uploaded_at.strftime('%d-%m-%Y')
     return render(request, 'core/attach_trip.html', {'ticketInfo': ticket_info, 'trips': trips})
 
+def add_trip(request):
+    if request.user.is_anonymous:
+        return redirect('core:login')
+    tickets = Tickets.objects.filter(user=request.user)
+    reservations = Reservations.objects.filter(user=request.user)
+    return render(request, 'core/add_trip.html', {'tickets' : tickets, 'reservations': reservations})
+
 def generate_travel_score(request, miles_traveled):
     """
     Generate a travel score for the user based on their tickets and reservations.
