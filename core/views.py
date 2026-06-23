@@ -665,8 +665,9 @@ def attach_trip(request, ticketID):
 def add_trip(request):
     if request.user.is_anonymous:
         return redirect('core:login')
-    tickets = Tickets.objects.filter(user=request.user)
-    reservations = Reservations.objects.filter(user=request.user)
+    # Only surface tickets/reservations that are not already attached to a trip.
+    tickets = Tickets.objects.filter(user=request.user, trip_link__isnull=True)
+    reservations = Reservations.objects.filter(user=request.user, trip_link__isnull=True)
     return render(request, 'core/add_trip.html', {'tickets' : tickets, 'reservations': reservations})
 
 def generate_travel_score(request, miles_traveled):

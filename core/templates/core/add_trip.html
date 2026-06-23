@@ -1,0 +1,151 @@
+{% extends 'core/base.html' %}
+
+{% block title %}
+<title>Create New Trip</title>
+{% endblock %}
+
+{% block content %}
+  <section class="add-ticket-section">
+    <center>
+      <h1 class="add-ticket-title">Create New Trip</h1>
+    </center>
+
+    <form method="post" action="" class="add-ticket-form">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label for="trip_name">Trip Name:</label>
+        <input type="text" id="trip_name" name="trip_name" required><br>
+
+        <label for="description">Trip Description:</label>
+        <textarea id="description" name="description" rows="4" required></textarea><br>
+
+        <label for="trip_type">Trip Type:</label>
+        <select name="trip_type" id="trip_type" required>
+          <option value="business">Business</option>
+          <option value="leisure">Leisure</option>
+          <option value="family">Family</option>
+          <option value="couple">Couple</option>
+          <option value="group">Group</option>
+          <option value="solo">Solo</option>
+          <option value="personal" selected>Personal</option>
+        </select><br>
+
+        <label for="start_date_of_trip">Start Date:</label>
+        <input type="date" id="start_date_of_trip" name="start_date_of_trip" required><br>
+
+        <label for="end_date_of_trip">End Date:</label>
+        <input type="date" id="end_date_of_trip" name="end_date_of_trip" required><br>
+      </div>
+
+      <div class="form-group">
+        <label id="ticket-label">Ticket</label>
+        <div class="trip-select" data-trip-select>
+          <input type="hidden" name="ticket" value="">
+          <button type="button" class="trip-select-trigger"
+                  aria-haspopup="listbox" aria-expanded="false" aria-labelledby="ticket-label">
+            <span class="trip-select-value">&mdash; None &mdash;</span>
+            <span class="trip-select-arrow" aria-hidden="true"></span>
+          </button>
+          <ul class="trip-select-menu" role="listbox" aria-labelledby="ticket-label">
+            <li class="trip-select-option selected" role="option" tabindex="0" data-value="" data-name="&mdash; None &mdash;">
+              <span class="trip-option-name">&mdash; None &mdash;</span>
+            </li>
+            {% for ticket in tickets %}
+              <li class="trip-select-option" role="option" tabindex="0"
+                  data-value="{{ ticket.id }}" data-name="{{ ticket.title }}">
+                <span class="trip-option-name">{{ ticket.title }}</span>
+                <span class="trip-option-dates">{{ ticket.date_of_journey }}</span>
+              </li>
+            {% empty %}
+              <li class="trip-select-empty">No unattached tickets available</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label id="reservation-label">Reservation</label>
+        <div class="trip-select" data-trip-select>
+          <input type="hidden" name="reservation" value="">
+          <button type="button" class="trip-select-trigger"
+                  aria-haspopup="listbox" aria-expanded="false" aria-labelledby="reservation-label">
+            <span class="trip-select-value">&mdash; None &mdash;</span>
+            <span class="trip-select-arrow" aria-hidden="true"></span>
+          </button>
+          <ul class="trip-select-menu" role="listbox" aria-labelledby="reservation-label">
+            <li class="trip-select-option selected" role="option" tabindex="0" data-value="" data-name="&mdash; None &mdash;">
+              <span class="trip-option-name">&mdash; None &mdash;</span>
+            </li>
+            {% for reservation in reservations %}
+              <li class="trip-select-option" role="option" tabindex="0"
+                  data-value="{{ reservation.id }}" data-name="{{ reservation.reservation_name }}">
+                <span class="trip-option-name">{{ reservation.reservation_name }}</span>
+                <span class="trip-option-dates">{{ reservation.date_of_reservation }}</span>
+              </li>
+            {% empty %}
+              <li class="trip-select-empty">No unattached reservations available</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <br>
+      <center>
+        <button type="submit" id="create_trip_btn" class="btn-save-ticket">Create Trip</button>
+      </center>
+    </form>
+
+    <script>
+      (function () {
+        var roots = document.querySelectorAll('[data-trip-select]');
+
+        function closeAll(except) {
+          roots.forEach(function (root) {
+            if (root !== except) {
+              root.classList.remove('open');
+              root.querySelector('.trip-select-trigger').setAttribute('aria-expanded', 'false');
+            }
+          });
+        }
+
+        roots.forEach(function (root) {
+          var trigger = root.querySelector('.trip-select-trigger');
+          var valueEl = root.querySelector('.trip-select-value');
+          var hidden = root.querySelector('input[type="hidden"]');
+          var options = root.querySelectorAll('.trip-select-option');
+
+          function selectOption(opt) {
+            hidden.value = opt.getAttribute('data-value');
+            valueEl.textContent = opt.getAttribute('data-name');
+            options.forEach(function (o) { o.classList.toggle('selected', o === opt); });
+            root.classList.remove('open');
+            trigger.setAttribute('aria-expanded', 'false');
+          }
+
+          trigger.addEventListener('click', function () {
+            var willOpen = !root.classList.contains('open');
+            closeAll(root);
+            root.classList.toggle('open', willOpen);
+            trigger.setAttribute('aria-expanded', String(willOpen));
+          });
+
+          options.forEach(function (opt) {
+            opt.addEventListener('click', function () { selectOption(opt); });
+            opt.addEventListener('keydown', function (e) {
+              if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectOption(opt); }
+            });
+          });
+        });
+
+        document.addEventListener('click', function (e) {
+          var inside = Array.prototype.some.call(roots, function (r) { return r.contains(e.target); });
+          if (!inside) closeAll(null);
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') closeAll(null);
+        });
+      })();
+    </script>
+  </section>
+{% endblock %}
