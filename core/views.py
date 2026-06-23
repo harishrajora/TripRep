@@ -358,6 +358,10 @@ def save_reservation(request):
             return redirect('core:login')
         # Process reservation data here
         print("Reservation data received:", request.POST)
+        trip = request.POST.get('trip')
+        trip_link = None
+        if trip:
+            trip_link = Trips.objects.filter(id=trip, user=request.user).first()
         reservation = Reservations(
             user=request.user,
             reservation_name=request.POST.get('title'),
@@ -367,6 +371,7 @@ def save_reservation(request):
             reservation_type=request.POST.get('reservation_type'),
             booked_through=request.POST.get('booked_through'),
             amount_paid=request.POST.get('amount_paid', '0.00'),
+            trip_link=trip_link,
         )
         currency_chosen=request.POST.get('currency', 'INR')
         if currency_chosen != 'INR':
@@ -376,7 +381,7 @@ def save_reservation(request):
             reservation.amount_paid = amount_paid
         reservation.save()
         # nights = get_nights(request.POST.get('description'))
-        return booking_saved(request, bookingType='reservation', result='Successful')
+        return booking_saved(request, bookingType='reservation', result='Successful', ticketID=reservation.id)
         # return redirect('core:reservations')
     else:
         return booking_saved(request, bookingType='reservation', result='failure')
