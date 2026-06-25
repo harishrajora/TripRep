@@ -288,9 +288,13 @@ Before deployment, update the following:
 
 ## Contributing
 
-Contributions are welcome. A practical workflow:
+Contributions are welcome! Please read the [Contributing Guide](CONTRIBUTING.md) for
+setup instructions, branching workflow, and the pre-PR checklist. A practical workflow:
 
 1. Create a feature branch
 2. Make focused changes
-3. Run migrations/tests as needed
+3. Run `python manage.py check` and add migrations if models changed
 4. Open a pull request with a clear description of behavior changes
+
+By participating, you agree to follow our [Code of Conduct](CODE_OF_CONDUCT.md).
+To report a security issue, see our [Security Policy](SECURITY.md).
