@@ -23,11 +23,8 @@
       {% endif %}
       {% if reservation.reservation_file and reservation.reservation_file.url %}
       <div class="ticket-pdf">
-        <h2><a href="{{ reservation.reservation_file.url }}" target="_blank" rel="noopener noreferrer"><button class="download_pdf">Download</button>
-        </a>
-        <a href="{% url 'core:delete_reservation' reservation.id %}">
-          <button class="btn-delete">Delete</button></h2>
-        </a>
+        <a href="{{ reservation.reservation_file.url }}" class="download_pdf" target="_blank" rel="noopener noreferrer">Download</a>
+        <a href="{% url 'core:delete_reservation' reservation.id %}" class="btn-delete">Delete</a>
       </div>
       {% endif %}
     </div>

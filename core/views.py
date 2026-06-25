@@ -21,6 +21,8 @@ from pathlib import Path
 import http.client
 
 def index(request):
+    if request.user.is_authenticated:
+        return redirect('core:dashboard')
     update_exchange_rates_file()
     return render(request, 'core/index.html')
 

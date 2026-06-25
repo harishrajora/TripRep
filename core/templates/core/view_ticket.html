@@ -25,11 +25,8 @@
       {% endif %}
       {% if ticket.ticket_file and ticket.ticket_file.url %}
       <div class="ticket-pdf">
-        <h2><a href="{{ ticket.ticket_file.url }}" target="_blank" rel="noopener noreferrer"><button class="download_pdf">Download</button>
-        </a>
-        <a href="{% url 'core:delete_ticket' ticket.id %}">
-          <button class="btn-delete">Delete</button></h2>
-        </a>
+        <a href="{{ ticket.ticket_file.url }}" class="download_pdf" target="_blank" rel="noopener noreferrer">Download</a>
+        <a href="{% url 'core:delete_ticket' ticket.id %}" class="btn-delete">Delete</a>
       </div>
       {% endif %}
     </div>

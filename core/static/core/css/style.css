@@ -1080,25 +1080,59 @@ input[type="number"] {
 }
 
 .download_pdf {
-  display:inline-block;
+  position:relative;
+  overflow:hidden;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
   padding:0.95rem 1.8rem;
   font-size:1.125rem;
   font-weight:800;
   border-radius:12px;
-  background:var(--download_pdf);
+  border:1px solid rgba(255,255,255,0.5);
+  background:linear-gradient(135deg, #162f91 0%, var(--download_pdf) 48%, #5f7dff 100%);
   color:#fff;
   text-decoration:none;
-  box-shadow:0 8px 28px rgb(75, 11, 11);
-  transition:transform 160ms ease, box-shadow 160ms ease;
+  cursor:pointer;
+  box-shadow:0 14px 30px rgba(35,66,205,0.28), 0 1px 0 rgba(255,255,255,0.34) inset;
+  transition:transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
   margin-right: 10px;
   margin-bottom: 10px;
 }
-
-.download_pdf:hover{
-  transform:translateY(-3px);
-  box-shadow:0 14px 40px rgba(35, 66, 205,0.12);
-  background:var(--download_pdf-hover)
+.download_pdf::before{
+  content:"";
+  position:absolute;
+  inset:1px;
+  border-radius:11px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.28), rgba(255,255,255,0) 52%);
+  pointer-events:none;
 }
+.download_pdf::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-40%;
+  width:32%;
+  height:100%;
+  background:linear-gradient(105deg, rgba(255,255,255,0), rgba(255,255,255,0.54), rgba(255,255,255,0));
+  transform:skewX(-18deg);
+  opacity:0;
+  pointer-events:none;
+  transition:transform 620ms cubic-bezier(.2,.9,.3,1), opacity 220ms ease;
+}
+.download_pdf:hover, .download_pdf:focus-visible{
+  transform:translateY(-2px);
+  filter:saturate(1.08);
+  outline:none;
+  color:#fff;
+  text-decoration:none;
+  box-shadow:0 18px 38px rgba(35,66,205,0.36), 0 1px 0 rgba(255,255,255,0.42) inset;
+}
+.download_pdf:hover::after, .download_pdf:focus-visible::after{
+  transform:translateX(440%) skewX(-18deg);
+  opacity:0.9;
+}
+.download_pdf:active{ transform:translateY(0); }
 
 .profile-actions{
   display:flex;
@@ -1200,28 +1234,65 @@ input[type="number"] {
 }
 
 .btn-delete {
-  display:inline-block;
+  position:relative;
+  overflow:hidden;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
   margin-bottom: 10px;
   padding:0.95rem 1.8rem;
   font-size:1.125rem;
   font-weight:800;
   border-radius:12px;
-  background:var(--accent);
+  border:1px solid rgba(255,255,255,0.5);
+  background:linear-gradient(135deg, #7b1f2d 0%, var(--accent) 48%, #e46f58 100%);
   color:#fff;
   text-decoration:none;
-  box-shadow:0 8px 28px rgb(75, 11, 11);
-  transition:transform 160ms ease, box-shadow 160ms ease;
+  cursor:pointer;
+  box-shadow:0 14px 30px rgba(75,11,18,0.28), 0 1px 0 rgba(255,255,255,0.34) inset;
+  transition:transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
 }
-.btn-delete:hover {
-  transform:translateY(-3px);
-  box-shadow:0 14px 40px rgba(255,155,107,0.12);
-  background:var(--accent-hover)
+.btn-delete::before{
+  content:"";
+  position:absolute;
+  inset:1px;
+  border-radius:11px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.28), rgba(255,255,255,0) 52%);
+  pointer-events:none;
 }
+.btn-delete::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-40%;
+  width:32%;
+  height:100%;
+  background:linear-gradient(105deg, rgba(255,255,255,0), rgba(255,255,255,0.54), rgba(255,255,255,0));
+  transform:skewX(-18deg);
+  opacity:0;
+  pointer-events:none;
+  transition:transform 620ms cubic-bezier(.2,.9,.3,1), opacity 220ms ease;
+}
+.btn-delete:hover, .btn-delete:focus-visible {
+  transform:translateY(-2px);
+  filter:saturate(1.08);
+  outline:none;
+  color:#fff;
+  text-decoration:none;
+  box-shadow:0 18px 38px rgba(75,11,18,0.36), 0 1px 0 rgba(255,255,255,0.42) inset;
+}
+.btn-delete:hover::after, .btn-delete:focus-visible::after{
+  transform:translateX(440%) skewX(-18deg);
+  opacity:0.9;
+}
+.btn-delete:active{ transform:translateY(0); }
 
-.ticket-pdf h2 {
+.ticket-pdf {
     display: flex;
     flex-wrap: wrap;
-    gap: 5px;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
 }
 
 .view_ticket-container { 
