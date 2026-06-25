@@ -1300,6 +1300,11 @@ input[type="number"] {
   box-shadow: 0 28px 64px rgba(75, 11, 18, 0.22), 0 1px 0 rgba(255, 255, 255, 0.7) inset;
 }
 
+/* Center the action buttons row */
+.ticket-pdf {
+  justify-content: center;
+}
+
 .view_ticket_title {
   margin: 0 0 1.2rem;
   padding-bottom: 0.85rem;
@@ -1307,6 +1312,7 @@ input[type="number"] {
   font-weight: 900;
   letter-spacing: -0.01em;
   color: #0b1220;
+  text-align: center;
   border-bottom: 3px solid var(--accent);
 }
 
