@@ -1,7 +1,7 @@
 # [TripRep](https://www.triprep.in)
 
 TripRep is a Django web app for travelers who want one place to store and review trip tickets, reservations, and do much more.  
-You can upload ticket PDFs, create and store trip details, view a clean list of past tickets and reservations, and track simple spending statistics. In addition, TripRep comes
+You can upload ticket and reservation PDFs, organize them into trips, view clean lists and detail pages, record spending in any currency (auto-converted to INR), and track spending statistics. In addition, TripRep comes
 with AI agents that can help you book flight tickets, create itineraries, and help answer travel questions (Currently In Progress).
 
 The app also includes an AI-assisted flow that reads a ticket PDF and auto-fills ticket fields using Google Gemini.
@@ -24,16 +24,18 @@ The app also includes an AI-assisted flow that reads a ticket PDF and auto-fills
 
 TripRep currently focuses on travel management:
 
-- User signup, login, logout, and profile updates
-- Ticket creation with manual entry fields, filled automatically with the help of AI after upload.
-- Reservation creation with manual entry fields.
-- Ticket PDF upload and thumbnail generation (first page preview)
+- User signup, login, logout, profile updates, and password changes
+- Per-user preferred currency, with amounts auto-converted to INR using daily exchange rates
+- Ticket creation with manual entry fields, filled automatically with the help of AI after upload
+- Reservation creation with manual entry fields
+- Ticket/reservation PDF upload and thumbnail generation (first page preview)
 - AI extraction endpoint to read uploaded PDF tickets and prefill fields
-- Ticket list view and individual ticket detail pages with a quick-to-see image of the ticket.
-- Reservation list view and individual reservation detail pages.
-- Statistics page to get a glance at spending based on platforms, fights, hotels, and much more.
+- Ticket list view and individual ticket detail pages with a quick-to-see image of the ticket
+- Reservation list view and individual reservation detail pages
+- Trip creation, plus linking tickets and reservations to a trip — from the add pages, a standalone attach page, or while creating the trip
+- Trip detail page that lists attached tickets and reservations with a Tickets/Reservations/All filter
+- Statistics page to get a glance at spending across platforms, flights, hotels, and more, plus a TripRep score
 - AI agents to book tickets and create itineraries (in progress)
-- Trip creation and linking tickets and reservations to the trip.
 
 
 ## Tech Stack
@@ -43,6 +45,8 @@ TripRep currently focuses on travel management:
 - SQLite (default local database)
 - `google-genai` for Gemini ticket parsing
 - PyMuPDF (`fitz`) + Pillow for ticket thumbnail generation
+- `python-dotenv` for loading environment variables
+- Cached exchange rates (`static/core/exchange_rates.json`) for multi-currency to INR conversion
 
 ## Project Structure
 
@@ -155,16 +159,16 @@ Open:
 2. Upload a ticket PDF.
 3. Let the automatic parser fill all details automatically.
 4. Review and edit the title, source, destination, type, booked-through, date, and amount if required.
-5. Submit to save ticket.
-6. Link the ticket to a trip.
+5. Optionally attach the ticket to an existing trip using the trip dropdown.
+6. Submit to save ticket.
 
 ### Flow 3: Add a reservation
 
-1. Go to `/add_ticket/`
+1. Go to `/add_reservation/`
 2. Upload a reservation PDF.
 3. Review and edit the fields.
-4. Submit to save the reservation.
-5. Link the reservation to a trip.
+4. Optionally attach the reservation to an existing trip using the trip dropdown.
+5. Submit to save the reservation.
 
 ### Flow 4: Use AI ticket extraction
 
@@ -181,17 +185,27 @@ Open:
 3. View metadata, thumbnail, and downloadable file
 4. Delete a ticket from the ticket detail page if needed
 
-### Flow 6: View summary stats
+### Flow 6: Create and review trips
 
-Open `/statistics/` to see:
+1. Go to `/add_trip/` and fill in the trip name, description, type, and start/end dates
+2. Optionally pick one unattached ticket and one unattached reservation to link
+3. Save the trip, then open it at `/view_trip/<trip_id>/`
+4. On the trip page, use the Tickets/Reservations/All filter to review attached items
+5. You can also attach an existing ticket to a trip later from `/attach_trip/<ticket_id>/`
+
+### Flow 7: View summary stats
+
+Open `/statistics/` to see a spending dashboard with charts, including:
 
 - Total ticket count
-- Total spending amount
-- Counts grouped by ticket type
+- Total spending amount (in INR)
+- Counts and spending grouped by ticket type and booking platform
 
 ## Route Guide
 
-Main user-facing routes from `core/urls.py`:
+Routes from `core/urls.py`:
+
+Accounts and pages
 
 - `/` home page
 - `/about_triprep/` about page
@@ -200,15 +214,41 @@ Main user-facing routes from `core/urls.py`:
 - `/logout/` user logout
 - `/dashboard/` post-login dashboard
 - `/profile/` profile page
-- `/update_profile/` profile update action
+- `/update_profile/` profile update action (POST)
+- `/updatepassword/` change password
+- `/ai-world/` AI features landing (in progress)
+
+Tickets
+
 - `/tickets/` ticket listing
 - `/add_ticket/` add ticket form
 - `/create_ticket/` AI extraction endpoint (POST)
+- `/process_ticket_pdf/` PDF processing endpoint
 - `/save_ticket/` save ticket endpoint (POST)
 - `/view_ticket/<ticket_id>/` ticket details
 - `/delete_ticket/<ticket_id>/` delete ticket
-- `/statistics/` ticket statistics
-- `/reservations/` reservations page (currently minimal)
+
+Reservations
+
+- `/reservations/` reservation listing
+- `/add_reservation/` add reservation form
+- `/save_reservation/` save reservation endpoint (POST)
+- `/view_reservation/<reservation_id>/` reservation details
+- `/delete_reservation/<reservation_id>/` delete reservation
+
+Trips
+
+- `/trips/` trip listing
+- `/add_trip/` create a trip and optionally link a ticket/reservation
+- `/view_trip/<trip_id>/` trip details with Tickets/Reservations/All filter
+- `/attach_trip/<ticketID>/` attach an existing ticket to a trip
+
+Statistics and misc
+
+- `/statistics/` spending statistics dashboard
+- `/statistics/data/` statistics data endpoint (JSON, used by charts)
+- `/booking_saved/` booking confirmation page
+- `/robots.txt` robots file
 
 ## Troubleshooting
 
