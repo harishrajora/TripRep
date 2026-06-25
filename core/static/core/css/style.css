@@ -1228,11 +1228,6 @@ input[type="number"] {
   }
 }
 
-.thumbnail-image {
-  width: 200px;
-  height: 200px;
-}
-
 .btn-delete {
   position:relative;
   overflow:hidden;
@@ -1295,8 +1290,33 @@ input[type="number"] {
     margin-top: 16px;
 }
 
-.view_ticket-container { 
-  margin-top: 100px;
+.view_ticket-container {
+  max-width: 820px;
+  margin: 110px auto 3rem;
+  padding: 2.2rem 2.4rem 2.6rem;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 22px;
+  box-shadow: 0 28px 64px rgba(75, 11, 18, 0.22), 0 1px 0 rgba(255, 255, 255, 0.7) inset;
+}
+
+.view_ticket_title {
+  margin: 0 0 1.2rem;
+  padding-bottom: 0.85rem;
+  font-size: 2.3rem;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  color: #0b1220;
+  border-bottom: 3px solid var(--accent);
+}
+
+@media (max-width: 640px) {
+  .view_ticket-container {
+    margin-top: 96px;
+    padding: 1.5rem 1.3rem 1.8rem;
+    border-radius: 18px;
+  }
+  .view_ticket_title { font-size: 1.8rem; }
 }
 
 .view-tickets-card {
@@ -1368,7 +1388,41 @@ input[type="number"] {
   word-wrap: break-word;
   word-break: break-word; /* More aggressive breaking if needed */
   white-space: normal; /* Ensure text wraps */
-  margin: 0.5rem 0; /* Add some spacing */
+  margin: 0; /* spacing handled by padding below */
+  padding: 0.7rem 0;
+  font-size: 1.08rem;
+  color: #1f2937;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.ticket-details p strong {
+  color: #0b1220;
+  margin-right: 6px;
+}
+
+.ticket-details h4 {
+  margin: 1.3rem 0 0.6rem;
+  font-size: 1.05rem;
+  color: var(--muted);
+}
+
+.ticket-thumbnail {
+  margin: 0.4rem 0 1rem;
+}
+
+.thumbnail-image {
+  width: 220px;
+  height: auto;
+  max-width: 100%;
+  border-radius: 12px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.16);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.thumbnail-image:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.22);
 }
 
 /* ========== TRIP FILTER (segmented control) ========== */
