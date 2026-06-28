@@ -10,7 +10,7 @@
       <h1 class="add-ticket-title">Create New Trip</h1>
     </center>
 
-    <form method="post" action="" class="add-ticket-form">
+    <form method="post" action="{% url 'core:create_trip' %}" class="add-ticket-form">
       {% csrf_token %}
 
       <div class="form-group">
