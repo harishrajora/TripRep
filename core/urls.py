@@ -38,6 +38,7 @@ urlpatterns = [
     path('view_trip/<int:trip_id>/', views.view_trip, name='view_trip'),
     path('attach_trip/<int:ticketID>/', views.attach_trip, name='attach_trip'),
     path('add_trip/', views.add_trip, name='add_trip'),
+    path('create_trip/', views.create_trip, name='create_trip'),
 ]
 
 if settings.DEBUG:

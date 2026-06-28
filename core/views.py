@@ -10,6 +10,7 @@ from google import genai
 from google.genai import types
 from django.conf import settings
 from django.utils import timezone
+from django.db import transaction
 from django.db.models import Sum, Count
 from decimal import Decimal
 from django.core.paginator import Paginator
@@ -671,6 +672,44 @@ def add_trip(request):
     tickets = Tickets.objects.filter(user=request.user, trip_link__isnull=True)
     reservations = Reservations.objects.filter(user=request.user, trip_link__isnull=True)
     return render(request, 'core/add_trip.html', {'tickets' : tickets, 'reservations': reservations})
+
+def create_trip(request):
+    if request.user.is_anonymous:
+        return redirect('core:login')
+    if request.method == 'POST':
+        trip_name = request.POST.get('trip_name')
+        selected_ticket_id = request.POST.getlist('ticket')
+        selected_reservation_id = request.POST.getlist('reservation')
+        trip_description = request.POST.get('description')
+        trip_type = request.POST.get('trip_type')
+        start_date = request.POST.get('start_date_of_trip')
+        end_date = request.POST.get('end_date_of_trip')
+        if end_date and start_date and end_date < start_date:
+            return render(request, 'core/add_trip.html', {'error': 'End date cannot be before start date.'})
+        if trip_name is None or trip_name.strip() == "":
+            return render(request, 'core/add_trip.html', {'error': 'Trip name cannot be empty.'})
+        if trip_name and Trips.objects.filter(user=request.user, trip_name=trip_name).exists():
+            return render(request, 'core/add_trip.html', {'error': 'Trip name already exists. Please choose a different name.'})
+        # Create the trip and attach selected tickets/reservations as one all-or-nothing unit
+        with transaction.atomic():
+            trip = Trips()
+            trip.user = request.user
+            trip.trip_name = trip_name
+            trip.description = trip_description
+            trip.trip_type = trip_type
+            trip.start_date_of_trip = start_date
+            trip.end_date_of_trip = end_date
+            trip.save()
+            # Attach selected tickets to the trip
+            Tickets.objects.filter(id__in=selected_ticket_id, user=request.user).update(trip_link=trip)
+
+            # Attach selected reservations to the trip
+            Reservations.objects.filter(id__in=selected_reservation_id, user=request.user).update(trip_link=trip)
+
+        print(f"Trip '{trip_name}' created with ID {trip.id} for user {request.user.username}")
+        return redirect('core:view_trip', trip_id=trip.id)
+    else:
+        return redirect('core:add_trip')
 
 def generate_travel_score(request, miles_traveled):
     """
