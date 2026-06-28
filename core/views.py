@@ -10,7 +10,7 @@ from google import genai
 from google.genai import types
 from django.conf import settings
 from django.utils import timezone
-from django.db import transaction
+from django.db import transaction, IntegrityError
 from django.db.models import Sum, Count
 from decimal import Decimal
 from django.core.paginator import Paginator
@@ -691,20 +691,25 @@ def create_trip(request):
         if trip_name and Trips.objects.filter(user=request.user, trip_name=trip_name).exists():
             return render(request, 'core/add_trip.html', {'error': 'Trip name already exists. Please choose a different name.'})
         # Create the trip and attach selected tickets/reservations as one all-or-nothing unit
-        with transaction.atomic():
-            trip = Trips()
-            trip.user = request.user
-            trip.trip_name = trip_name
-            trip.description = trip_description
-            trip.trip_type = trip_type
-            trip.start_date_of_trip = start_date
-            trip.end_date_of_trip = end_date
-            trip.save()
-            # Attach selected tickets to the trip
-            Tickets.objects.filter(id__in=selected_ticket_id, user=request.user).update(trip_link=trip)
+        try:
+            with transaction.atomic():
+                trip = Trips()
+                trip.user = request.user
+                trip.trip_name = trip_name
+                trip.description = trip_description
+                trip.trip_type = trip_type
+                trip.start_date_of_trip = start_date
+                trip.end_date_of_trip = end_date
+                trip.save()
+                # Attach selected tickets to the trip
+                Tickets.objects.filter(id__in=selected_ticket_id, user=request.user).update(trip_link=trip)
 
-            # Attach selected reservations to the trip
-            Reservations.objects.filter(id__in=selected_reservation_id, user=request.user).update(trip_link=trip)
+                # Attach selected reservations to the trip
+                Reservations.objects.filter(id__in=selected_reservation_id, user=request.user).update(trip_link=trip)
+        except IntegrityError:
+            # DB-level guard for the (user, trip_name) unique constraint, covering the
+            # race the .exists() check above can't (e.g. double submit).
+            return render(request, 'core/add_trip.html', {'error': 'Trip name already exists. Please choose a different name.'})
 
         print(f"Trip '{trip_name}' created with ID {trip.id} for user {request.user.username}")
         return redirect('core:view_trip', trip_id=trip.id)
