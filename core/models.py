@@ -257,6 +257,7 @@ class Trips(models.Model):
     default='personal')
 
     class Meta:
+        ordering = ['-trip_created_at']
         constraints = [
             models.UniqueConstraint(fields=['user', 'trip_name'], name='unique_trip_name_per_user'),
         ]
