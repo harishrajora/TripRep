@@ -255,4 +255,8 @@ class Trips(models.Model):
     ]
     trip_type = models.CharField(max_length=100, null=False, blank=False, choices=trip_type_choices,
     default='personal')
-    
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'trip_name'], name='unique_trip_name_per_user'),
+        ]
