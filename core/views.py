@@ -702,10 +702,12 @@ def create_trip(request):
                 trip.end_date_of_trip = end_date
                 trip.save()
                 # Attach selected tickets to the trip
-                Tickets.objects.filter(id__in=selected_ticket_id, user=request.user).update(trip_link=trip)
+                if selected_ticket_id and selected_ticket_id[0] != '':
+                    Tickets.objects.filter(id__in=selected_ticket_id, user=request.user).update(trip_link=trip)
 
                 # Attach selected reservations to the trip
-                Reservations.objects.filter(id__in=selected_reservation_id, user=request.user).update(trip_link=trip)
+                if selected_reservation_id and selected_reservation_id[0] != '':
+                    Reservations.objects.filter(id__in=selected_reservation_id, user=request.user).update(trip_link=trip)
         except IntegrityError:
             # DB-level guard for the (user, trip_name) unique constraint, covering the
             # race the .exists() check above can't (e.g. double submit).

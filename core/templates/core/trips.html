@@ -23,7 +23,7 @@
   <section class="hero">
     <h1 class="hero-title">You Have Not Created Any Trips Yet</h1>
     <div class="hero-actions">
-      <a href="#" class="btn-signup">CREATE A TRIP</a>
+      <a href="{% url 'core:add_trip' %}" class="btn-signup">CREATE A TRIP</a>
     </div>
    </section>
   {% endif %}
