@@ -137,11 +137,34 @@
             });
           });
         });
+        var startDateInput = document.getElementById('start_date_of_trip');
+        var endDateInput = document.getElementById('end_date_of_trip');
+
+        function updateDateLimits() {
+          if (startDateInput.value) {
+            endDateInput.min = startDateInput.value;
+          } else {
+            endDateInput.removeAttribute('min');
+          }
+
+          if (endDateInput.value) {
+            startDateInput.max = endDateInput.value;
+          } else {
+            startDateInput.removeAttribute('max');
+          }
+        }
+
+        startDateInput.addEventListener('change', updateDateLimits);
+        endDateInput.addEventListener('change', updateDateLimits);
+        updateDateLimits();
 
         document.addEventListener('click', function (e) {
-          var inside = Array.prototype.some.call(roots, function (r) { return r.contains(e.target); });
+          var inside = Array.prototype.some.call(roots, function (r) {
+            return r.contains(e.target);
+          });
           if (!inside) closeAll(null);
         });
+
         document.addEventListener('keydown', function (e) {
           if (e.key === 'Escape') closeAll(null);
         });
