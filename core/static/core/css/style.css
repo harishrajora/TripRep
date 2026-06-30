@@ -1166,6 +1166,7 @@ input[type="number"] {
   border:1.5px solid rgba(15,23,42,0.25);
   background:transparent;
   color:#0b1220;
+  text-decoration:none;
   cursor:pointer;
   vertical-align:middle;
   transition:background 160ms ease, border-color 160ms ease, transform 140ms ease;
@@ -1174,6 +1175,7 @@ input[type="number"] {
   background:var(--accent);
   border-color:var(--accent);
   color:#fff;
+  text-decoration:none;
   outline:none;
   transform:translateY(-1px);
 }

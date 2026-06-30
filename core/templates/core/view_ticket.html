@@ -17,7 +17,7 @@
         <a href="{% url 'core:view_trip' ticket.trip_link.id %}" class="download_pdf download_pdf--sm">{{ ticket.trip_link.trip_name }}</a>
         <button type="button" class="btn-trip-action">Detach</button>
         {% else %}
-        <button type="button" class="btn-trip-action">Attach</button>
+        <a href="{% url 'core:attach_trip' ticket.id %}" class="btn-trip-action">Attach</a>
         {% endif %}
       </p>
       <p><strong>Uploaded at:</strong> {{ ticket.uploaded_at }}</p>
