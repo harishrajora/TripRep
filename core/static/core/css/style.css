@@ -1138,6 +1138,16 @@ input[type="number"] {
   margin-right: 10px;
   margin-bottom: 10px;
 }
+/* Small-size variant of the glossy button (keeps the gloss/shine, smaller footprint) */
+.download_pdf--sm{
+  padding:0.32rem 0.85rem;
+  font-size:0.92rem;
+  border-radius:9px;
+  box-shadow:0 8px 18px rgba(35,66,205,0.24), 0 1px 0 rgba(255,255,255,0.3) inset;
+  margin:0 0 0 6px;
+  vertical-align:middle;
+}
+.download_pdf--sm::before{ border-radius:8px; }
 .download_pdf::before{
   content:"";
   position:absolute;
