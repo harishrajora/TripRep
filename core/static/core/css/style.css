@@ -1143,14 +1143,14 @@ input[type="number"] {
   padding:0.32rem 0.85rem;
   font-size:0.92rem;
   border-radius:9px;
-  background:linear-gradient(135deg, #0f766e 0%, #14b8a6 48%, #2dd4bf 100%);
-  box-shadow:0 8px 18px rgba(13,148,136,0.28), 0 1px 0 rgba(255,255,255,0.3) inset;
+  background:linear-gradient(135deg, #5e0f1c 0%, #7d1426 48%, #9c2436 100%);
+  box-shadow:0 8px 18px rgba(94,15,28,0.28), 0 1px 0 rgba(255,255,255,0.22) inset;
   margin:0 0 0 6px;
   vertical-align:middle;
 }
 .download_pdf--sm::before{ border-radius:8px; }
 .download_pdf--sm:hover, .download_pdf--sm:focus-visible{
-  box-shadow:0 12px 24px rgba(13,148,136,0.36), 0 1px 0 rgba(255,255,255,0.4) inset;
+  box-shadow:0 12px 24px rgba(94,15,28,0.34), 0 1px 0 rgba(255,255,255,0.3) inset;
 }
 .download_pdf::before{
   content:"";
