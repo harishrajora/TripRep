@@ -15,9 +15,9 @@
       <p><strong>Trip:</strong>
         {% if ticket.trip_link %}
         <a href="{% url 'core:view_trip' ticket.trip_link.id %}" class="download_pdf download_pdf--sm">{{ ticket.trip_link.trip_name }}</a>
-        <button type="button" class="btn-trip-action">Detach</button>
+        <a href="{% url 'core:detach_trip' 'ticket' ticket.id %}" class="btn-trip-action">Detach</a>
         {% else %}
-        <a href="{% url 'core:attach_trip' ticket.id %}" class="btn-trip-action">Attach</a>
+        <a href="{% url 'core:attach_trip' 'ticket' ticket.id %}" class="btn-trip-action">Attach</a>
         {% endif %}
       </p>
       <p><strong>Uploaded at:</strong> {{ ticket.uploaded_at }}</p>

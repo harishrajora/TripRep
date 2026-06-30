@@ -645,25 +645,63 @@ def view_trip(request, trip_id):
     }
     return render(request, 'core/view_trip.html', context)
 
-def attach_trip(request, ticketID):
+def attach_trip(request, ticketID, resourceType):
     if request.user.is_anonymous:
         return redirect('core:login')
-    try:
-        ticket = Tickets.objects.get(id=ticketID, user=request.user)
-        if ticket.user != request.user:
+    if resourceType == 'ticket':
+        try:
+            ticket = Tickets.objects.get(id=ticketID, user=request.user)
+            if ticket.user != request.user:
+                return redirect('core:tickets')
+        except Tickets.DoesNotExist:
             return redirect('core:tickets')
-    except Tickets.DoesNotExist:
-        return redirect('core:tickets')
-    trips = Trips.objects.filter(user=request.user)
-    if trips.count() == 0:
-        ticket_info['message'] = "No Trip Found"
-        return render(request, 'core/attach_trip.html', {'ticketInfo': ticket_info,})
-    else:
-        ticket_info = {}
-        ticket_info['ticket_id'] = ticket.id
-        ticket_info['ticket_title'] = ticket.title
-        ticket_info['ticket_booking_date'] = ticket.uploaded_at.strftime('%d-%m-%Y')
-    return render(request, 'core/attach_trip.html', {'ticketInfo': ticket_info, 'trips': trips})
+        trips = Trips.objects.filter(user=request.user)
+        if trips.count() == 0:
+            ticket_info['message'] = "No Trip Found"
+            return render(request, 'core/attach_trip.html', {'ticketInfo': ticket_info,})
+        else:
+            ticket_info = {}
+            ticket_info['ticket_id'] = ticket.id
+            ticket_info['ticket_title'] = ticket.title
+            ticket_info['ticket_booking_date'] = ticket.uploaded_at.strftime('%d-%m-%Y')
+        return render(request, 'core/attach_trip.html', {'ticketInfo': ticket_info, 'trips': trips})
+    elif resourceType == 'reservation':
+        try:
+            reservation = Reservations.objects.get(id=ID, user=request.user)
+            if reservation.user != request.user:
+                return redirect('core:reservations')
+        except Reservations.DoesNotExist:
+            return redirect('core:reservations')
+        trips = Trips.objects.filter(user=request.user)
+        if trips.count() == 0:
+            reservation_info['message'] = "No Trip Found"
+            return render(request, 'core/attach_trip_reservation.html', {'reservationInfo': reservation_info,})
+        else:
+            reservation_info = {}
+            reservation_info['reservation_id'] = reservation.id
+            reservation_info['reservation_title'] = reservation.reservation_name
+            reservation_info['reservation_booking_date'] = reservation.uploaded_at.strftime('%d-%m-%Y')
+        return render(request, 'core/attach_trip_reservation.html', {'reservationInfo': reservation_info, 'trips': trips})
+
+# def attach_trip_reservation(request, ID):
+#     if request.user.is_anonymous:
+#         return redirect('core:login')
+#     try:
+#         reservation = Reservations.objects.get(id=ID, user=request.user)
+#         if reservation.user != request.user:
+#             return redirect('core:reservations')
+#     except Reservations.DoesNotExist:
+#         return redirect('core:reservations')
+#     trips = Trips.objects.filter(user=request.user)
+#     if trips.count() == 0:
+#         reservation_info['message'] = "No Trip Found"
+#         return render(request, 'core/attach_trip_reservation.html', {'reservationInfo': reservation_info,})
+#     else:
+#         reservation_info = {}
+#         reservation_info['reservation_id'] = reservation.id
+#         reservation_info['reservation_title'] = reservation.reservation_name
+#         reservation_info['reservation_booking_date'] = reservation.uploaded_at.strftime('%d-%m-%Y')
+#     return render(request, 'core/attach_trip_reservation.html', {'reservationInfo': reservation_info, 'trips': trips})
 
 def add_trip(request):
     if request.user.is_anonymous:

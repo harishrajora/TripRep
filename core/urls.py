@@ -36,7 +36,8 @@ urlpatterns = [
     path('trips/', views.trips, name='trips'),
     path('delete_reservation/<int:reservation_id>/', views.delete_reservation, name='delete_reservation'),
     path('view_trip/<int:trip_id>/', views.view_trip, name='view_trip'),
-    path('attach_trip/<int:ticketID>/', views.attach_trip, name='attach_trip'),
+    path('attach_trip/<str:resourceType>/<int:id>/', views.attach_trip, name='attach_trip'),
+    path('detach_trip/<str:resourceType>/<int:id>/', views.detach_trip, name='detach_trip'),
     path('add_trip/', views.add_trip, name='add_trip'),
     path('create_trip/', views.create_trip, name='create_trip'),
 ]
