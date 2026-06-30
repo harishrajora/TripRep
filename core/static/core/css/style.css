@@ -1152,6 +1152,32 @@ input[type="number"] {
 .download_pdf--sm:hover, .download_pdf--sm:focus-visible{
   box-shadow:0 12px 24px rgba(94,15,28,0.34), 0 1px 0 rgba(255,255,255,0.3) inset;
 }
+
+/* Compact neutral action button for Attach / Detach trip */
+.btn-trip-action{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:0.3rem 0.85rem;
+  margin-left:8px;
+  font-size:0.9rem;
+  font-weight:700;
+  border-radius:8px;
+  border:1.5px solid rgba(15,23,42,0.25);
+  background:transparent;
+  color:#0b1220;
+  cursor:pointer;
+  vertical-align:middle;
+  transition:background 160ms ease, border-color 160ms ease, transform 140ms ease;
+}
+.btn-trip-action:hover, .btn-trip-action:focus-visible{
+  background:var(--accent);
+  border-color:var(--accent);
+  color:#fff;
+  outline:none;
+  transform:translateY(-1px);
+}
+.btn-trip-action:active{ transform:translateY(0); }
 .download_pdf::before{
   content:"";
   position:absolute;

@@ -10,9 +10,14 @@
     <div class="ticket-details">
       <p><strong>Date of Reservation:</strong> {{ reservation.date_of_reservation }}</p>
       <p><strong>Reservation Amount:</strong> {{ reservation.amount_paid }}</p>
-      {% if reservation.trip_link %}
-      <p><strong>Trip:</strong> <a href="{% url 'core:view_trip' reservation.trip_link.id %}" class="download_pdf download_pdf--sm">{{ reservation.trip_link.trip_name }}</a></p>
-      {% endif %}
+      <p><strong>Trip:</strong>
+        {% if reservation.trip_link %}
+        <a href="{% url 'core:view_trip' reservation.trip_link.id %}" class="download_pdf download_pdf--sm">{{ reservation.trip_link.trip_name }}</a>
+        <button type="button" class="btn-trip-action">Detach</button>
+        {% else %}
+        <button type="button" class="btn-trip-action">Attach</button>
+        {% endif %}
+      </p>
       <p><strong>Uploaded at:</strong> {{ reservation.uploaded_at }}</p>
       <p><strong>Reserved Through:</strong> {{ reservation.booked_through }} </p>
       {% if reservation.image_thumbnail and reservation.image_thumbnail.url %}
