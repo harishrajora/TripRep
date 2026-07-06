@@ -683,6 +683,38 @@ def attach_trip(request, resourceType, ticketID):
             reservation_info['reservation_booking_date'] = reservation.uploaded_at.strftime('%d-%m-%Y')
         return render(request, 'core/attach_trip_reservation.html', {'reservationInfo': reservation_info, 'trips': trips})
 
+def attach_trip_to_resource(request, resourceType, ticketID, tripID):
+    if request.user.is_anonymous:
+        return redirect('core:login')
+    if resourceType == 'ticket':
+        try:
+            ticket = Tickets.objects.get(id=ticketID, user=request.user)
+            trip = Trips.objects.get(id=tripID, user=request.user)
+            if ticket.user != request.user or trip.user != request.user:
+                print("User mismatch when trying to attach ticket to trip. Redirecting to tickets page.")
+                return redirect('core:tickets')
+        except (Tickets.DoesNotExist, Trips.DoesNotExist):
+            print("Ticket or Trip does not exist or does not belong to user. Redirecting to tickets page.")
+            return redirect('core:tickets')
+        ticket.trip_link = trip
+        ticket.save()
+        print(f"Ticket with ID {ticketID} attached to Trip with ID {tripID} for user {request.user.username}")
+        return redirect('core:view_ticket', ticket_id=ticket.id)
+    elif resourceType == 'reservation':
+        try:
+            reservation = Reservations.objects.get(id=ticketID, user=request.user)
+            trip = Trips.objects.get(id=tripID, user=request.user)
+            if reservation.user != request.user or trip.user != request.user:
+                print("User mismatch when trying to attach reservation to trip. Redirecting to reservations page.")
+                return redirect('core:reservations')
+        except (Reservations.DoesNotExist, Trips.DoesNotExist):
+            print("Reservation or Trip does not exist or does not belong to user. Redirecting to reservations page.")
+            return redirect('core:reservations')
+        reservation.trip_link = trip
+        reservation.save()
+        print(f"Reservation with ID {ticketID} attached to Trip with ID {tripID} for user {request.user.username}")
+        return redirect('core:view_reservation', reservation_id=reservation.id)
+
 def detach_trip(request, ticketID, resourceType):
     pass
 

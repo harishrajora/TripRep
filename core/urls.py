@@ -38,6 +38,7 @@ urlpatterns = [
     path('view_trip/<int:trip_id>/', views.view_trip, name='view_trip'),
     path('attach_trip/<str:resourceType>/<int:ticketID>/', views.attach_trip, name='attach_trip'),
     path('detach_trip/<str:resourceType>/<int:reservationID>/', views.detach_trip, name='detach_trip'),
+    path('attach_trip_to_resource/<str:resourceType>/<int:ticketID>/<int:tripID>/', views.attach_trip_to_resource, name='attach_trip_to_resource'),
     path('add_trip/', views.add_trip, name='add_trip'),
     path('create_trip/', views.create_trip, name='create_trip'),
 ]
