@@ -8,19 +8,18 @@
   <section class="add-ticket-section attach-trip-section">
     <center>
       <h1 class="add-ticket-title">
-        Attach the trip for ticket &ldquo;{{ ticketInfo.ticket_title }}&rdquo;
-        booked on {{ ticketInfo.ticket_booking_date }}
+        Attach the trip for {{ resourceInfo.resource_title }} booked on {{ resourceInfo.resource_booking_date }}
       </h1>
     </center>
 
-    {% if ticketInfo.message %}
+    {% if resourceInfo.message %}
       <div class="attach-trip-empty">
         <p>You haven&rsquo;t created any trips yet.</p>
         <a href="{% url 'core:trips' %}" class="btn-save-ticket">Create a Trip</a>
       </div>
     {% else %}
       <form method="post" action="" id="attach-trip-form"
-            data-attach-base="{% url 'core:attach_trip_to_resource' 'ticket' ticketInfo.ticket_id 0 %}"
+            data-attach-base="{% url 'core:attach_trip_to_resource' resourceInfo.resourceType resourceInfo.resource_id 0 %}"
             class="add-ticket-form attach-trip-form">
         {% csrf_token %}
         <div class="form-group">
