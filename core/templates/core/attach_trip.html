@@ -19,7 +19,9 @@
         <a href="{% url 'core:trips' %}" class="btn-save-ticket">Create a Trip</a>
       </div>
     {% else %}
-      <form method="post" action="" class="add-ticket-form attach-trip-form">
+      <form method="post" action="" id="attach-trip-form"
+            data-attach-base="{% url 'core:attach_trip_to_resource' 'ticket' ticketInfo.ticket_id 0 %}"
+            class="add-ticket-form attach-trip-form">
         {% csrf_token %}
         <div class="form-group">
           <label id="trip-label">Select a trip</label>
@@ -92,6 +94,16 @@
           });
           document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') closeMenu();
+          });
+
+          // On submit, point the form at attach_trip_to_resource with the chosen trip id.
+          var form = document.getElementById('attach-trip-form');
+          form.addEventListener('submit', function (e) {
+            if (!hidden.value) {
+              e.preventDefault();
+              return;
+            }
+            form.action = form.getAttribute('data-attach-base').replace(/\/0\/$/, '/' + hidden.value + '/');
           });
         })();
       </script>
