@@ -719,8 +719,36 @@ def attach_trip_to_resource(request, resourceType, ticketID, tripID):
         print(f"Reservation with ID {ticketID} attached to Trip with ID {tripID} for user {request.user.username}")
         return redirect('core:view_reservation', reservation_id=reservation.id)
 
-def detach_trip(request, ticketID, resourceType):
-    pass
+def detach_trip(request, resourceType, resourceID):
+    if request.user.is_anonymous:
+        return redirect('core:login')
+    if resourceType == 'ticket':
+        try:
+            ticket = Tickets.objects.get(id=resourceID, user=request.user)
+            if ticket.user != request.user:
+                print("User mismatch when trying to detach ticket from trip. Redirecting to tickets page.")
+                return redirect('core:tickets')
+        except Tickets.DoesNotExist:
+            print(f"Ticket with ID {resourceID} does not exist or does not belong to user {request.user.username}")
+            return redirect('core:tickets')
+        ticket.trip_link = None
+        ticket.save()
+        print(f"Ticket with ID {resourceID} detached from trip for user {request.user.username}")
+        return redirect('core:view_ticket', ticket_id=resourceID)
+    elif resourceType == 'reservation':
+        try:
+            reservation = Reservations.objects.get(id=resourceID, user=request.user)
+            if reservation.user != request.user:
+                print("User mismatch when trying to detach reservation from trip. Redirecting to reservations page.")
+                return redirect('core:reservations')
+        except Reservations.DoesNotExist:
+            print(f"Reservation with ID {resourceID} does not exist or does not belong to user {request.user.username}")
+            return redirect('core:reservations')
+        reservation.trip_link = None
+        reservation.save()
+        print(f"Reservation with ID {resourceID} detached from trip for user {request.user.username}")
+        return redirect('core:view_reservation', reservation_id=resourceID)
+    
 
 # def attach_trip_reservation(request, ID):
 #     if request.user.is_anonymous:
