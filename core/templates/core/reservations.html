@@ -11,7 +11,7 @@
       {% for reservation in reservations %}
       <a href="{% url 'core:view_reservation' reservation.id %}" class="view-tickets-card" aria-label="Tickets" role="link">
         <div class="view-tickets-inner">
-          <h2 class="view-ticket-title">{{ reservation.name }}</h2>
+          <h2 class="view-ticket-title">{{ reservation.reservation_name }}</h2>
           <p class="view-ticket-route">{{ reservation.reservation_type }}</p>
           <p class="view-ticket-date">{{ reservation.date_of_reservation }}</p>
           <p class="view-ticket-uploaded"><em>Uploaded at: {{ reservation.uploaded_at }}</em></p>
