@@ -28,6 +28,10 @@ document.getElementById('ticket_pdf').addEventListener('change', function(event)
             title = data.ticket_data['Title'];
             source = data.ticket_data['Source'];
             destination = data.ticket_data['Destination'];
+            // Prefer Source - Destination; PDF Title is often wrong.
+            if (source && destination) {
+                title = source + ' - ' + destination;
+            }
             // ticket_type = data.ticket_data['Ticket Type'];
             description = data.ticket_data['Description'];
             date_of_journey = data.ticket_data['Date of Journey'];
