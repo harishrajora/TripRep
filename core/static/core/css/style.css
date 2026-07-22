@@ -1817,6 +1817,12 @@ input[type="number"] {
 
 /* ========== ABOUT PAGE STYLES ========== */
 
+/* Scoped softer top gradient for the About page only (brand red, lower opacity).
+   Overrides the site-wide .container red without affecting other pages. */
+.container--about {
+  background: linear-gradient(180deg, rgba(163, 0, 27, 0.75), rgba(0, 0, 0, 0.02));
+}
+
 .about-page {
   padding: 0;
   max-width: 100%;
