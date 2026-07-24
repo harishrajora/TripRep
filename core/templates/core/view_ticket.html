@@ -20,7 +20,7 @@
         <a href="{% url 'core:attach_trip' 'ticket' ticket.id %}" class="btn-trip-action">Attach</a>
         {% endif %}
       </p>
-      <p><strong>Uploaded at:</strong> {{ ticket.uploaded_at }}</p>
+      <p><strong>Uploaded at:</strong> {{ ticket.uploaded_at|localtime }}</p>
       <p><strong>Booked Through:</strong> {{ticket.booked_through}} </p>
       {% if ticket.image_thumbnail and ticket.image_thumbnail.url %}
       <div class="ticket-thumbnail">

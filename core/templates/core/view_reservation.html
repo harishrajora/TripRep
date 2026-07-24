@@ -18,7 +18,7 @@
         <a href="{% url 'core:attach_trip' 'reservation' reservation.id %}" class="btn-trip-action">Attach</a>
         {% endif %}
       </p>
-      <p><strong>Uploaded at:</strong> {{ reservation.uploaded_at }}</p>
+      <p><strong>Uploaded at:</strong> {{ reservation.uploaded_at|localtime }}</p>
       <p><strong>Reserved Through:</strong> {{ reservation.booked_through }} </p>
       {% if reservation.image_thumbnail and reservation.image_thumbnail.url %}
       <div class="ticket-thumbnail">

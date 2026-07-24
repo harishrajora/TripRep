@@ -14,7 +14,7 @@
           <h2 class="view-ticket-title">{{ reservation.reservation_name }}</h2>
           <p class="view-ticket-route">{{ reservation.reservation_type }}</p>
           <p class="view-ticket-date">{{ reservation.date_of_reservation }}</p>
-          <p class="view-ticket-uploaded"><em>Uploaded at: {{ reservation.uploaded_at }}</em></p>
+          <p class="view-ticket-uploaded"><em>Uploaded at: {{ reservation.uploaded_at|localtime }}</em></p>
         </div>
       </a>
       {% endfor %}

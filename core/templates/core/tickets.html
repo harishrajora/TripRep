@@ -14,7 +14,7 @@
           <h2 class="view-ticket-title">{{ ticket.title }}</h2>
           <p class="view-ticket-route">{{ ticket.source }} <strong>---></strong> {{ ticket.destination }}</p>
           <p class="view-ticket-date">{{ ticket.date_of_journey }}</p>
-          <p class="view-ticket-uploaded"><em>Uploaded at: {{ ticket.uploaded_at }}</em></p>
+          <p class="view-ticket-uploaded"><em>Uploaded at: {{ ticket.uploaded_at|localtime }}</em></p>
         </div>
       </a>
       {% endfor %}
